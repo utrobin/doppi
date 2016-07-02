@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+<form action="{% url 'find' %}" method="get">
+    {% csrf_token %}
 
+    {% for field in form %}
+        {{ field }}
+    {% endfor %}
+
+    <button type="submit">search</button>
+</form>
 </body>
 </html>
