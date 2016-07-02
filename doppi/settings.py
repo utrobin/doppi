@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'doppi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'doppi',
+        'USER': 'doppi',
+        'PASSWORD': 'doppi54154167q',
+        'HOST': '31.31.199.223',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
