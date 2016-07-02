@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -77,11 +78,14 @@ WSGI_APPLICATION = 'doppi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-
-        },
+        'NAME': 'doppi',
+        'USER': 'doppi',
+        'PASSWORD': 'doppi54154167q',
+        'HOST': '31.31.199.223',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
