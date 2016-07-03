@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from search.models import CourseInfo, Course
+from django.forms.widgets import CheckboxSelectMultiple
 
 class SearchBarForm(forms.Form):
     OTHER = 'OR'
@@ -25,7 +26,7 @@ class SearchBarForm(forms.Form):
     is_12_15_age = forms.BooleanField()
     is_16_18_age = forms.BooleanField()
     # Вид курса
-    activity = forms.MultipleChoiceField(choices=COURSE_ACTIVITIES)
+    activity = forms.MultipleChoiceField(choices=COURSE_ACTIVITIES, widget=CheckboxSelectMultiple)
     # На улице или в здании
     is_indoors = forms.BooleanField()
     # Местоположение
