@@ -5,15 +5,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 # Create your models here.
 
-##debug
 class Course(models.Model):
     title = models.CharField(max_length=128)
-    # Связь с информацией
-    info = models.OneToOneField('CourseInfo')
     description = models.TextField(max_length=1024, default='')
     phone_number = models.CharField(max_length=20, default='')
+    # Связь с информацией
+    info = models.OneToOneField('CourseInfo')
 
 
 class CourseInfo(models.Model):
@@ -31,12 +31,9 @@ class CourseInfo(models.Model):
         (EDUCATION, u'Образование'),
         (ENTERTAINMENT, u'Развлечения'),
     )
-    # Возраст (может быть несолько одновременно)
-    is_0_3_age = models.BooleanField(default=False)
-    is_4_6_age = models.BooleanField(default=False)
-    is_7_11_age = models.BooleanField(default=False)
-    is_12_15_age = models.BooleanField(default=False)
-    is_16_18_age = models.BooleanField(default=False)
+    # Возраст
+    age_from = models.PositiveSmallIntegerField(default=0)
+    age_to = models.PositiveSmallIntegerField(default=18)
     # Вид курса
     activity = models.CharField(max_length=2, choices=COURSE_ACTIVITIES, default=OTHER)
     # На улице или в здании
@@ -46,9 +43,9 @@ class CourseInfo(models.Model):
     # Цена
     price = models.IntegerField(default=0)
     # Длительность в днях
-    length = models.IntegerField(default=0)
+    length = models.PositiveSmallIntegerField(default=0)
     # Частота занятий в днях недели
-    frequency = models.IntegerField(default=0)
+    frequency = models.PositiveSmallIntegerField(default=0)
 
 
 class Comment(models.Model):
@@ -56,4 +53,3 @@ class Comment(models.Model):
     author = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     added_at = models.DateTimeField(default=timezone.now)
-

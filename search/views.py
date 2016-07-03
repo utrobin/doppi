@@ -17,27 +17,21 @@ def searchbar(request):
         # Сортируем по названию
         courses = Course.objects.all().filter(title__icontains=request.GET['query'])
         # Сортируем по остальным настройкам
-        if 'is_0_3_age' in request.GET:
-            courses = courses.filter(info__is_0_3_age=request.GET['is_0_3_age'])
-        if 'is_4_6_age' in request.GET:
-            courses = courses.filter(info__is_4_6_age=request.GET['is_4_6_age'])
-        if 'is_7_11_age' in request.GET:
-            courses = courses.filter(info__is_7_11_age=request.GET['is_7_11_age'])
-        if 'is_12_15_age' in request.GET:
-            courses = courses.filter(info__is_12_15_age=request.GET['is_12_15_age'])
-        if 'is_16_18_age' in request.GET:
-            courses = courses.filter(info__is_16_18_age=request.GET['is_16_18_age'])
+        if 'age_from' in request.GET:
+            courses = courses.filter(info__age_from__gte=request.GET['age_from'])
+        if 'age_to' in request.GET:
+            courses = courses.filter(info__age_from__lte=request.GET['age_to'])
         if 'activity' in request.GET:
             courses = courses.filter(info__activity__in=request.GET.getlist('activity'))
         if 'is_indoors' in request.GET:
             courses = courses.filter(info__is_indoors=request.GET['is_indoors'])
         if 'location' in request.GET:
             courses = courses.filter(info__location__icontains=request.GET['location'])
-        if 'price' in request.GET and request.GET['price'] != '':
+        if 'price' in request.GET and request.GET['price'] != '0':
             courses = courses.filter(info__price__lte=request.GET['price'])
-        if 'length' in request.GET and request.GET['length'] != '':
+        if 'length' in request.GET and request.GET['length'] != '0':
             courses = courses.filter(info__length__lte=request.GET['length'])
-        if 'frequency' in request.GET and request.GET['frequency'] != '':
+        if 'frequency' in request.GET and request.GET['frequency'] != '0':
             courses = courses.filter(info__frequency__lte=request.GET['frequency'])
 
     else:
@@ -49,28 +43,32 @@ def searchbar(request):
 def single_course(request, course_id):
     course = Course.objects.get(id=course_id)
     comments = Comment.objects.filter(course=course)
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            id = form.save(request, course)
+            comment = form.save(commit=False)
+            comment.course = course
+            comment.author = request.user
+            comment.save()
             return HttpResponseRedirect('/course/' + str(course_id))
     form = CommentForm()
+
     return render(request, 'course_page.html', {'course': course, 'comments': comments, 'form': form})
 
 
 def add_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
-        forminfo = CourseInfoForm(request.POST)
-        if (form.is_valid() and forminfo.is_valid()):
+        form_info = CourseInfoForm(request.POST)
+        if form.is_valid() and form_info.is_valid():
             course = form.save(commit=False)
-            info = forminfo.save()
+            info = form_info.save()
             course.info = info
             course.author = request.user
             course.save()
             return HttpResponseRedirect('/search')
-
     else:
         form = CourseForm()
-        forminfo = CourseInfoForm()
-    return render(request, 'add_course.html', {'form': form, 'forminfo': forminfo})
+        form_info = CourseInfoForm()
+    return render(request, 'add_course.html', {'form': form, 'forminfo': form_info})
