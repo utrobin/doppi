@@ -4,7 +4,7 @@
     <div class="container">
 
       <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
-        <h2 class="form-signin-heading">Sign in to Doppi</h2>
+        <h2 class="form-signin-heading">Sign up to Doppi</h2>
         {% csrf_token %}
 
 
@@ -23,7 +23,7 @@
             {{ user_profile_signup_form.avatar.errors }}
 
             <!-- Display filename inside the button instead of its label -->
-                {{ user_profile_signup_form.avatar }}
+            {{ user_profile_signup_form.avatar }}
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>

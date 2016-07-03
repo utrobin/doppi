@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+
+      <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
+        <h2 class="form-signin-heading">Edit profile</h2>
+        {% csrf_token %}
+        <div class="{% if field.errors %}error{% endif %}">
+            <label>Nickname</label>
+            <h3>{{ u.username }}</h3>
+        </div>
+        {%for field in form  %}
+             <div class="{% if field.errors %}error{% endif %}">
+                {{ field.errors }}
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+      </form>
+    </div>
+{% endblock %}

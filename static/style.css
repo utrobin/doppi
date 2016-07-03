@@ -56,3 +56,7 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
   width: 300px;
   margin-bottom: 10px;
 }
+.form-signin h3{
+  text-align: center;
+  margin: 0;
+}

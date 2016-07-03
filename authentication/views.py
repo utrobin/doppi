@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm
+from django.forms.models import model_to_dict
+from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, ProfileEditForm
 
 
 def signin(request):
@@ -51,3 +52,21 @@ def signup(request):
         'title': 'Signup'
     }
     return render(request, 'signup.html', context)
+
+def profile_edit(request):
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(request.user)
+            return HttpResponseRedirect('/')
+    else:
+        u = model_to_dict(request.user)
+        up = request.user.userprofile
+        u['info'] = up.info
+        form = ProfileEditForm(u)
+
+    return render(request, 'profile_edit.html', {
+            'form': form,
+            'u': request.user,
+            'title': 'Именить профиль'
+        })
