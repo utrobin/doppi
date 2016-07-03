@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
 
-      <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
+      <form class="form-signin" method="post" role="form" action="{% url 'edit' %}" enctype="multipart/form-data">
         <h2 class="form-signin-heading">Edit profile</h2>
         {% csrf_token %}
         <div class="{% if field.errors %}error{% endif %}">

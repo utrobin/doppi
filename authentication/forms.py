@@ -112,7 +112,7 @@ class ProfileEditForm(forms.Form):
             )
     email = forms.EmailField(
             widget=forms.TextInput( attrs={ 'class': 'form-control', 'placeholder': 'me@gmail.com', }),
-            required = False, max_length=254, label=u'E-mail'
+            max_length=254, label=u'E-mail'
             )
     password1 = forms.CharField(
             widget=forms.PasswordInput( attrs={ 'class': 'form-control', 'placeholder': '*****' }),
