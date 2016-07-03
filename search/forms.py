@@ -48,3 +48,16 @@ class CommentForm(forms.Form):
         comment = Comment(text=self.cleaned_data.get('text'), author=request.user, course=c)
         comment.save()
         return comment.id
+
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['title', 'description', 'phone_number']
+
+
+class CourseInfoForm(forms.ModelForm):
+    class Meta:
+        model = CourseInfo
+        fields = ['is_0_3_age', 'is_4_6_age', 'is_7_11_age', 'is_12_15_age', 'is_16_18_age', 'is_indoors', 'activity',
+                  'location', 'price', 'length', 'frequency']

@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'add_course' %}"></a>
 <form action="{% url 'bar' %}" method="get">
     {% csrf_token %}
 

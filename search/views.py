@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from search.forms import SearchBarForm,  CommentForm
+from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from search.models import *
 from django.http.response import HttpResponseRedirect
+from django.forms import inlineformset_factory
+
 
 # Create your views here.
 
@@ -45,13 +47,30 @@ def searchbar(request):
 
 
 def single_course(request, course_id):
-    course = Course.objects.get(id = course_id)
+    course = Course.objects.get(id=course_id)
     comments = Comment.objects.filter(course=course)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             id = form.save(request, course)
-            return HttpResponseRedirect('/course/'+str(course_id))
+            return HttpResponseRedirect('/course/' + str(course_id))
     form = CommentForm()
     return render(request, 'course_page.html', {'course': course, 'comments': comments, 'form': form})
 
+
+def add_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        forminfo = CourseInfoForm(request.POST)
+        if (form.is_valid() and forminfo.is_valid()):
+            course = form.save(commit=False)
+            info = forminfo.save()
+            course.info = info
+            course.author = request.user
+            course.save()
+            return HttpResponseRedirect('/search')
+
+    else:
+        form = CourseForm()
+        forminfo = CourseInfoForm()
+    return render(request, 'add_course.html', {'form': form, 'forminfo': forminfo})

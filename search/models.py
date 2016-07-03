@@ -56,3 +56,4 @@ class Comment(models.Model):
     author = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     added_at = models.DateTimeField(default=timezone.now)
+
