@@ -27,12 +27,32 @@ body {
   z-index: 2;
 }
 .form-signin input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  margin-bottom: 10px;
 }
 .form-signin input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+}
+.form-signin h2{
+  text-align: center;
+}
+
+.error input{
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1
+}
+
+.signup {
+    background-color: #6fecaa;
+    border: 1px solid #47ad96;
+    color: #fff;
+}
+.signup:hover{
+    background-color: #1cc97d;
+    border-color: #208c6d;
+}
+
+a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
+  width: 300px;
+  margin-bottom: 10px;
 }
