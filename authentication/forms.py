@@ -84,7 +84,7 @@ class UserProfileSignupForm(forms.ModelForm):
         required=False, label='Пара слов о себе'
     )
     avatar = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'ask-signup-avatar-input',}),
+        widget=forms.ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
         required=False, label='Аватар'
     )
 
@@ -127,7 +127,7 @@ class ProfileEditForm(forms.Form):
             required=False, label=u'Пара слов о себе'
             )
     avatar = forms.FileField(
-            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', }),
+            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
             required=False, label=u'Аватар'
             )
 
