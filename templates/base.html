@@ -29,8 +29,11 @@
           </ul>
       </li>
     {% else %}
-        <a href="{% url 'login' %}">
-            <button type="button" class="btn btn-default navbar-btn">Войти</button>
+        <a href="{% url 'signin' %}">
+            <button type="button" class="btn btn-default navbar-btn signin">Sign in</button>
+        </a>
+        <a href="{% url 'signup' %}">
+            <button type="button" class="btn btn-default navbar-btn signup">Sign up</button>
         </a>
     {% endif %}
     </ul>
@@ -43,4 +46,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap.file-input.js"></script>
+    <script>
+    $(document).ready(function(){
+      $('input[type=file]').bootstrapFileInput();
+    });
+    </script>
 </body>
