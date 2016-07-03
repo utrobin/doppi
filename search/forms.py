@@ -45,7 +45,6 @@ class CommentForm(forms.Form):
     text = forms.CharField(max_length=1024, widget=Textarea())
 
     def save(self, request, c):
-                                                                     #debug
-        comment = Comment(text=self.cleaned_data.get('text'), author=User.objects.get(id=1), course=c)
+        comment = Comment(text=self.cleaned_data.get('text'), author=request.user, course=c)
         comment.save()
         return comment.id
