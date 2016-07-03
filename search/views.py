@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from search.forms import SearchBarForm
+from search.forms import SearchBarForm,  CommentForm
 from search.models import *
-
+from django.http.response import HttpResponseRedirect
 
 # Create your views here.
 
@@ -42,3 +42,16 @@ def searchbar(request):
         form = SearchBarForm()
         courses = Course.objects.all()
     return render(request, 'searchbar.html', {'form': form, 'courses': courses})
+
+
+def single_course(request, course_id):
+    course = Course.objects.get(id = course_id)
+    comments = Comment.objects.filter(course=course)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            id = form.save(request, course)
+            return HttpResponseRedirect('/course/'+str(course_id))
+    form = CommentForm()
+    return render(request, 'course_page.html', {'course': course, 'comments': comments, 'form': form})
+

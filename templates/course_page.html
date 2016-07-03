@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.title }}</title>
+</head>
+<body>
+{% include 'single_cource.html' %}
+{% for comment in comments %}
+    {% include 'comment.html' %}
+{% endfor %}
+
+<form method="post" action="{% url 'single_course' course.id %}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Ответить</button>
+</form>
+</body>
+</html>

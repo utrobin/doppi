@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from search.models import CourseInfo, Course
-from django.forms.widgets import CheckboxSelectMultiple
+from search.models import CourseInfo, Course, Comment
+from django.forms.widgets import CheckboxSelectMultiple, Textarea
+from django.contrib.auth.models import User
+
 
 class SearchBarForm(forms.Form):
     OTHER = 'OR'
@@ -37,3 +39,13 @@ class SearchBarForm(forms.Form):
     length = forms.DecimalField(min_value=1, max_value=1000)
     # Частота занятий в днях недели
     frequency = forms.DecimalField(min_value=1, max_value=7)
+
+
+class CommentForm(forms.Form):
+    text = forms.CharField(max_length=1024, widget=Textarea())
+
+    def save(self, request, c):
+                                                                     #debug
+        comment = Comment(text=self.cleaned_data.get('text'), author=User.objects.get(id=1), course=c)
+        comment.save()
+        return comment.id

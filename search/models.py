@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -11,6 +12,9 @@ class Course(models.Model):
     title = models.CharField(max_length=128)
     # Связь с информацией
     info = models.OneToOneField('CourseInfo')
+    description = models.TextField(max_length=1024, default='')
+    phone_number = models.CharField(max_length=20, default='')
+
 
 class CourseInfo(models.Model):
     OTHER = 'OR'
@@ -27,21 +31,28 @@ class CourseInfo(models.Model):
         (EDUCATION, u'Образование'),
         (ENTERTAINMENT, u'Развлечения'),
     )
-    #Возраст (может быть несолько одновременно)
+    # Возраст (может быть несолько одновременно)
     is_0_3_age = models.BooleanField(default=False)
     is_4_6_age = models.BooleanField(default=False)
     is_7_11_age = models.BooleanField(default=False)
     is_12_15_age = models.BooleanField(default=False)
     is_16_18_age = models.BooleanField(default=False)
-    #Вид курса
+    # Вид курса
     activity = models.CharField(max_length=2, choices=COURSE_ACTIVITIES, default=OTHER)
-    #На улице или в здании
+    # На улице или в здании
     is_indoors = models.BooleanField(default=True)
-    #Местоположение
+    # Местоположение
     location = models.CharField(max_length=50, default='')
-    #Цена
+    # Цена
     price = models.IntegerField(default=0)
-    #Длительность в днях
+    # Длительность в днях
     length = models.IntegerField(default=0)
-    #Частота занятий в днях недели
+    # Частота занятий в днях недели
     frequency = models.IntegerField(default=0)
+
+
+class Comment(models.Model):
+    text = models.TextField(max_length=1024)
+    author = models.ForeignKey(User)
+    course = models.ForeignKey(Course)
+    added_at = models.DateTimeField(default=timezone.now)

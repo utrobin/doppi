@@ -1,5 +1,7 @@
 <div>
-    <h3>Название: {{ course.title }}</h3>
+    <h3><a href="{% url 'single_course' course.id %}">Название: {{ course.title }}</a></h3>
+    {% if course.phone_number != '' %}Телефон: {{ course.phone_number }}<br>{% endif %}
+    {% if course.description != '' %}{{ course.description }}<br>{% endif %}
     {% if course.info.is_indoors %}В помещении{% else %} На открытом воздухе {% endif %}<br>
     {% if course.info.is_0_3_age %}0 - 3 года{% endif %}
     {% if course.info.is_4_7_age %}4 - 7 года{% endif %}
