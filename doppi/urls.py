@@ -18,5 +18,6 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^', include('search.urls')),
+    url(r'^authentication/', include('authentication.urls')),
     url(r'^admin/', admin.site.urls),
 ]
