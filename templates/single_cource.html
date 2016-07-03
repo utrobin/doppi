@@ -1,0 +1,17 @@
+<div>
+    <h3><a href="{% url 'single_course' course.id %}">Название: {{ course.title }}</a></h3>
+    {% if course.phone_number != '' %}Телефон: {{ course.phone_number }}<br>{% endif %}
+    {% if course.description != '' %}{{ course.description }}<br>{% endif %}
+    {% if course.info.is_indoors %}В помещении{% else %} На открытом воздухе {% endif %}<br>
+    {% if course.info.is_0_3_age %}0 - 3 года{% endif %}
+    {% if course.info.is_4_7_age %}4 - 7 года{% endif %}
+    {% if course.info.is_8_11_age %}8 - 11 года{% endif %}
+    {% if course.info.is_12_15_age %}12 - 15 года{% endif %}
+    {% if course.info.is_16_18_age %}16 - 18 года{% endif %}<br>
+    Тематика: {{ course.info.get_activity_display }}<br>
+    Местоположение: {{ course.info.location }}<br>
+    Цена: {{ course.info.price }} р.<br>
+    Длительность: {{ course.info.length }}<br>
+    Частота:{{ course.info.frequency }} раз в неделю
+
+</div>
