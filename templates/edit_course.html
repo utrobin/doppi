@@ -3,8 +3,8 @@
 {% block content %}
 
     <div class="container">
-        <form class="form-signin" method="post" role="form" action="{% url 'add_course' %}">
-            <h2 class="form-signin-heading">Добавление курса</h2>
+        <form class="form-signin" method="post" role="form" action="{% url 'edit_course' course.id %}">
+            <h2 class="form-signin-heading">Редактирование курса "{{ course.title }}"</h2>
             {% csrf_token %}
         
             {% for error in form.non_field_errors %}

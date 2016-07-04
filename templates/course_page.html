@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ course.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
+
 {% include 'single_cource.html' %}
 {% for comment in comments %}
     {% include 'comment.html' %}
@@ -15,5 +12,4 @@
     {{ form }}
     <button type="submit">Ответить</button>
 </form>
-</body>
-</html>
+{% endblock %}

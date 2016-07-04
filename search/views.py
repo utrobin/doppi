@@ -72,3 +72,18 @@ def add_course(request):
         form = CourseForm()
         form_info = CourseInfoForm()
     return render(request, 'add_course.html', {'form': form, 'forminfo': form_info})
+
+
+def edit_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        form = CourseForm(request.POST, instance=course)
+        form_info = CourseInfoForm(request.POST, instance=course.info)
+        if form.is_valid() and form_info.is_valid():
+            form.save()
+            form_info.save()
+            return HttpResponseRedirect('/course/' + str(course_id))
+    else:
+        form = CourseForm(instance=course)
+        form_info = CourseInfoForm(instance=course.info)
+    return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
