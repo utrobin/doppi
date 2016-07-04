@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-
-    {% include 'single_cource.html' %}
-    <div id="AjaxMagic">
-        {% for comment in comments %}
-            {% include 'comment.html' %}
-        {% endfor %}
-
+    <div class="container">
+        <div class="row">
+            {% include 'single_cource.html' %}
+            <div class="col-xs-8">
+                <div class="row">
+                    <div id="AjaxMagic" class="col-xs-12">
+                        {% for comment in comments %}
+                            {% include 'comment.html' %}
+                        {% endfor %}
+                    </div>
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'single_course' course.id %}" class="comment_form">
+                            {% csrf_token %}
+                            <textarea title="ajax"  id="comment_text" class="col-xs-12" placeholder="Ваш комментарий"></textarea>
+                            <button type="button" class="btn btn-default btn-md" id="comment_button" data-commentid="{{ course.id }}">Ответить</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'single_course' course.id %}">
-            {% csrf_token %}
-            <label for="comment_text">Оставить комментарий</label>
-            <input title="ajax" type="text" id="comment_text">
-            <button type="button" id="comment_button" data-commentid="{{ course.id }}">Ответить</button>
-        </form>
-    {% endif %}
-
 {% endblock %}

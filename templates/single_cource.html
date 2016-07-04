@@ -1,15 +1,14 @@
-<div>
-    <h3><a href="{% url 'single_course' course.id %}">Название: {{ course.title }}</a></h3>
-    Добавлено {{ course.author.username }} в {{ course.added_at }}<br>
-    <img src="{{ course.pic.url }}"><br>
-    {% if course.phone_number != '' %}Телефон: {{ course.phone_number }}<br>{% endif %}
-    {% if course.description != '' %}{{ course.description }}<br>{% endif %}
-    {% if course.info.is_indoors %}В помещении{% else %} На открытом воздухе {% endif %}<br>
-    {{ course.info.age_from }} - {{ course.info.age_to }} лет<br>
-    Тематика: {{ course.info.get_activity_display }}<br>
-    Местоположение: {{ course.info.location }}<br>
-    Цена: {{ course.info.price }} р.<br>
-    Длительность: {{ course.info.length }}<br>
-    Частота:{{ course.info.frequency }} раз в неделю
-
+<div class="col-xs-4 course">
+    <h3><a href="{% url 'single_course' course.id %}">{{ course.title }}</a></h3>
+    <dd>Добавлено {{ course.author.username }} в {{ course.added_at }}</dd>
+    <img src="{{ course.pic.url }}" width="276"><br>
+    {% if course.phone_number != '' %}<label>Телефон:</label> <span>{{ course.phone_number }}</span><br>{% endif %}
+    {% if course.description != '' %}<p>{{ course.description }}</p>{% endif %}
+    {% if course.info.is_indoors %}<label>В помещении</label><br>{% else %}<label>На открытом воздухе</label><br>{% endif %}
+    <label>{{ course.info.age_from }} - {{ course.info.age_to }} лет</label><br>
+    <label>Тематика:</label> <span>{{ course.info.get_activity_display }}</span><br>
+    <label>Местоположение:</label> <span>{{ course.info.location }}</span><br>
+    <label>Цена:</label><span>{{ course.info.price }} р.</span><br>
+    <label>Длительность:</label><span>{{ course.info.length }}</span><br>
+    <label>Частота:</label><span>{{ course.info.frequency }} раз в неделю</span>
 </div>

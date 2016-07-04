@@ -60,3 +60,48 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
   text-align: center;
   margin: 0;
 }
+.courses{
+    margin-top: 25px;
+}
+.course{
+    width: 32%;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+.course:nth-child(3n+2){
+    margin-right: 2%;
+}
+.course:nth-child(3n+3){
+    margin-right: 2%;
+}
+.course h3{
+    margin: 5px 0;
+    color: #30c2ec;
+}
+.course img{
+    border: 1px solid #b6b6b6;
+    border-radius: 3px;
+    margin: 10px 0;
+}
+.course dd{
+    font-size: 10px;
+    float: right;
+}
+.course span{
+    float: right;
+}
+.course p{
+    color:  rgb(47, 148, 255);
+    margin: 5px 0;
+}
+.comment_form textarea{
+    width: 96%;
+    margin: 0 2%;
+}
+.comment_form button{
+    float: right;
+    margin-right: 12px;
+    margin-top: 10px;
+}
