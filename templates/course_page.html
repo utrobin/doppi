@@ -2,15 +2,18 @@
 {% block content %}
 
     {% include 'single_cource.html' %}
-    {% for comment in comments %}
-        {% include 'comment.html' %}
-    {% endfor %}
+    <div id="AjaxMagic">
+        {% for comment in comments %}
+            {% include 'comment.html' %}
+        {% endfor %}
 
+    </div>
     {% if user.is_authenticated %}
         <form method="post" action="{% url 'single_course' course.id %}">
             {% csrf_token %}
-            {{ form }}
-            <button type="submit">Ответить</button>
+            <label for="comment_text">Оставить комментарий</label>
+            <input title="ajax" type="text" id="comment_text">
+            <button type="button" id="comment_button" data-commentid="{{ course.id }}">Ответить</button>
         </form>
     {% endif %}
 

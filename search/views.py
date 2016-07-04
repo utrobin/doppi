@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from search.models import *
-from django.http.response import HttpResponseRedirect
-from django.forms import inlineformset_factory
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+import json
 
 
 # Create your views here.
@@ -98,3 +98,17 @@ def delete_comment(request, comment_id):
     id = comment.course.id
     comment.delete()
     return HttpResponseRedirect('/course/' + str(id))
+
+
+@login_required(login_url='/authentication/signin')
+def post_comment(request, course_id):
+    user = request.user
+    course = Course.objects.get(id=course_id)
+    comment = Comment(text=request.POST['text'], course=course, author=user)
+    comment.save()
+    return HttpResponse(json.dumps({"comment_id": comment.id}), content_type="application/json")
+
+
+def single_comment(request):
+    comment = Comment.objects.get(id=request.GET['commentid'])
+    return render(request, "comment.html", {'comment': comment})
