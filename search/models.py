@@ -4,14 +4,22 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import os
 
 
 # Create your models here.
+
+def picture_upload_to(instance, filename):
+    return os.path.join('', instance.author.username + os.path.splitext(filename)[1])
+
 
 class Course(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=1024, default='')
     phone_number = models.CharField(max_length=20, default='')
+    author = models.ForeignKey(User, default=1)
+    pic = models.ImageField(upload_to=picture_upload_to, default='miss.png')
+    added_at = models.DateTimeField(default=timezone.now)
     # Связь с информацией
     info = models.OneToOneField('CourseInfo')
 

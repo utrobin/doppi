@@ -3,6 +3,7 @@ from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from search.models import *
 from django.http.response import HttpResponseRedirect
 from django.forms import inlineformset_factory
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -57,9 +58,10 @@ def single_course(request, course_id):
     return render(request, 'course_page.html', {'course': course, 'comments': comments, 'form': form})
 
 
+@login_required(login_url='/authentication/signin/')
 def add_course(request):
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = CourseForm(request.POST, request.FILES)
         form_info = CourseInfoForm(request.POST)
         if form.is_valid() and form_info.is_valid():
             course = form.save(commit=False)
@@ -74,10 +76,11 @@ def add_course(request):
     return render(request, 'add_course.html', {'form': form, 'forminfo': form_info})
 
 
+@login_required(login_url='/authentication/signin/')
 def edit_course(request, course_id):
     course = Course.objects.get(id=course_id)
     if request.method == 'POST':
-        form = CourseForm(request.POST, instance=course)
+        form = CourseForm(request.POST, request.FILES, instance=course)
         form_info = CourseInfoForm(request.POST, instance=course.info)
         if form.is_valid() and form_info.is_valid():
             form.save()
@@ -87,3 +90,11 @@ def edit_course(request, course_id):
         form = CourseForm(instance=course)
         form_info = CourseInfoForm(instance=course.info)
     return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
+
+
+@login_required(login_url='/authentication/signin/')
+def delete_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    id = comment.course.id
+    comment.delete()
+    return HttpResponseRedirect('/course/' + str(id))

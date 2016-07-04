@@ -1,15 +1,17 @@
 {% extends "base.html" %}
-
 {% block content %}
 
-{% include 'single_cource.html' %}
-{% for comment in comments %}
-    {% include 'comment.html' %}
-{% endfor %}
+    {% include 'single_cource.html' %}
+    {% for comment in comments %}
+        {% include 'comment.html' %}
+    {% endfor %}
 
-<form method="post" action="{% url 'single_course' course.id %}">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Ответить</button>
-</form>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'single_course' course.id %}">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Ответить</button>
+        </form>
+    {% endif %}
+
 {% endblock %}

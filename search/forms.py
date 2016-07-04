@@ -24,9 +24,15 @@ class CommentForm(forms.ModelForm):
 
 
 class CourseForm(forms.ModelForm):
+    pic = forms.FileField(
+        widget=forms.ClearableFileInput(
+            attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
+        required=False, label=u'Картинка'
+    )
+
     class Meta:
         model = Course
-        fields = ['title', 'description', 'phone_number']
+        fields = ['title', 'description', 'phone_number', 'pic']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': u'Название',}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': u'Описание',}),
@@ -37,6 +43,15 @@ class CourseForm(forms.ModelForm):
             'description': u'Описание',
             'phone_number': u'Номер телефона',
         }
+
+    def save(self, commit=True):
+        instance = super(CourseForm, self).save(commit=False)
+        if self.cleaned_data.get('pic') is not None:
+            instance.pic = self.cleaned_data.get('pic')
+            # instance.pic.save('%s_%s' % (instance.author.username, instance.pic.name), instance.pic, save=True)
+        if commit:
+            instance.save()
+        return instance
 
 
 class CourseInfoForm(forms.ModelForm):
@@ -65,8 +80,3 @@ class CourseInfoForm(forms.ModelForm):
             'length': u'Длительность в днях',
             'frequency': u'Количество занятий в неделю',
         }
-
-
-class CourseEdit(forms.ModelForm):
-    title = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': u'Адрес',}),
-                            label=u'Местоположение', required=False)

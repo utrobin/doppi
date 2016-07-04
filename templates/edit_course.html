@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="container">
-        <form class="form-signin" method="post" role="form" action="{% url 'edit_course' course.id %}">
+        <form class="form-signin" method="post" role="form" enctype="multipart/form-data" action="{% url 'edit_course' course.id %}">
             <h2 class="form-signin-heading">Редактирование курса "{{ course.title }}"</h2>
             {% csrf_token %}
         
