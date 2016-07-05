@@ -7,18 +7,35 @@ var courseid = document.getElementById('course_id').innerHTML;
 
 var Comment = React.createClass({
     dateTransformer: function (date) {
-        //2016-07-03T14:46:20Z
-        // return date;
-        return date.slice(8,10) + '.' + date.slice(5,7) + '.' + date.slice(0,4) + ' в ' + date.slice(11,19) + ' ';
+        if (date[0] == '2') {
+            return date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4) + ' в ' + date.slice(11, 19) + ' ';
+        } else {
+            return "";
+        }
     },
     render: function () {
         var owner = (username == this.props.author);
         return (
-            <div>
-                <p>{this.props.author} отставил комментарий {this.dateTransformer(this.props.added_at)}
-                    <a onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Удалить</a>
-                </p>
-                <p>{this.props.children}</p>
+            <div className="row">
+                <div className="col-xs-2">
+                    <div className="thumbnail">
+                        <img className="img-responsive user-photo"
+                             src={this.props.pic}/>
+                    </div>
+                </div>
+
+                <div className="col-xs-10">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
+                            <strong>{this.props.author}</strong> <span
+                            className="text-muted">прокомментировал {this.dateTransformer(this.props.added_at)}<a
+                            onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Удалить</a></span>
+                        </div>
+                        <div className="panel-body">
+                            <p>{this.props.children}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -26,6 +43,7 @@ var Comment = React.createClass({
 
 var CommentList = React.createClass({
     onRemove: function (comment, e) {
+        e.preventDefault();
         this.props.onCommentRemove(comment);
     },
 
@@ -33,7 +51,7 @@ var CommentList = React.createClass({
         var comments = this.props.data.map(function (comment) {
             return (
                 <Comment key={comment.pk} author={comment.fields.author} added_at={comment.fields.added_at}
-                         onRemove={this.onRemove.bind(this, comment)}>
+                         pic={comment.pic} onRemove={this.onRemove.bind(this, comment)}>
                     {comment.fields.text}
                 </Comment>
             );
@@ -67,7 +85,7 @@ var CommentForm = React.createClass({
     },
     render: function () {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className={(username.length == 0) ? 'none' : ''} onSubmit={this.handleSubmit}>
                 <input type="text" value={this.state.text} placeholder="Enter you comment"
                        onChange={this.handleTextChange} ref="commentInput"/>
                 <input type="submit" value="Post"/>
@@ -78,6 +96,9 @@ var CommentForm = React.createClass({
 
 var CommentWidget = React.createClass({
     handleCommentRemove: function (comment) {
+        //Если пытаются удалить еще не добавленный коментарий ничего не делаем
+        if (comment.pk > 10000000)
+            return;
         var comments = this.state.data;
         var newComments = this.state.data;
         newComments.splice(newComments.indexOf(comment), 1);

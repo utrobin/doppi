@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
+from authentication.models import UserProfile
 from search.models import *
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -93,14 +94,6 @@ def edit_course(request, course_id):
     return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
 
 
-@login_required(login_url='/authentication/signin/')
-def delete_comment(request, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    id = comment.course.id
-    comment.delete()
-    return HttpResponseRedirect('/course/' + str(id))
-
-
 def return_comments(request):
     if request.method == 'POST':
         courseid = request.POST['courseid']
@@ -108,15 +101,21 @@ def return_comments(request):
         comment.save()
     else:
         courseid = request.GET['courseid']
-    data = serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
-                                 fields=('author', 'text', 'added_at'),
-                                 use_natural_foreign_keys=True, )
-    return HttpResponse(data, content_type="application/json")
+    data = json.loads(serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+                                            fields=('author', 'text', 'added_at'),
+                                            use_natural_foreign_keys=True, ))
+
+    for item in data:
+        # print(UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar)
+        item['pic'] = UserProfile.objects.get(user = Comment.objects.get(id=item['pk']).author).avatar.url
+        # print(item)
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 
 def delete_comment(request):
-    comment = Comment.objects.get(id=request.POST['commentid'])
     courseid = request.POST['courseid']
+    comment = Comment.objects.get(id=request.POST['commentid'])
     if comment.author == request.user:
         comment.delete()
     data = serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
