@@ -118,9 +118,15 @@ def delete_comment(request):
     comment = Comment.objects.get(id=request.POST['commentid'])
     if comment.author == request.user:
         comment.delete()
-    data = serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+    data = json.loads(serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
                                  fields=('author', 'text', 'added_at'),
-                                 use_natural_foreign_keys=True, )
+                                 use_natural_foreign_keys=True, ))
+
+    for item in data:
+        # print(UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar)
+        item['pic'] = UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar.url
+        # print(item)
+
     return HttpResponse(data, content_type="application/json")
 
 def pinki(request):
