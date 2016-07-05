@@ -122,3 +122,6 @@ def delete_comment(request):
                                  fields=('author', 'text', 'added_at'),
                                  use_natural_foreign_keys=True, )
     return HttpResponse(data, content_type="application/json")
+
+def pinki(request):
+    return render(request, 'pinki_drag.html')

@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^edit/(?P<course_id>\d+)$', views.edit_course, name='edit_course'),
     url(r'^delete/(?P<comment_id>\d+)$', views.delete_comment, name='delete_comment'),
     url(r'^get/comments', views.return_comments, name='get'),
-    url(r'^remove/comments', views.delete_comment, name='remove')
+    url(r'^remove/comments', views.delete_comment, name='remove'),
+    url(r'^pinki', views.pinki, name='pinki')
 ]

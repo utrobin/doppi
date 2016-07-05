@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.16/browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+
+
+    <div id='content'></div>
+
+    <script type="text/babel">
+
+        var courses = [
+            {
+                id: 1,
+                name: 'Спорт',
+                phoneNumber: '+250966666666',
+                image: 'http://127.0.0.1:8000/uploads/miss.png',
+                descreption: 'петушок вышел на охоту'
+            }, {
+                id: 2,
+                name: 'Арт2',
+                phoneNumber: '+250966344466',
+                image: 'http://127.0.0.1:8000/uploads/miss.png',
+                descreption: 'македонцев, один из славянских языков. В генетическом плане наиболее близок болгарскому языку, вместе с которым образует восточную подгруппу в рамках южнославянской языковой группы. По типологическим особенн'
+
+            }, {
+                id: 3,
+                name: 'Курс',
+                phoneNumber: '+250976654433',
+                image: 'http://127.0.0.1:8000/uploads/miss.png',
+                descreption: 'Маша мы не уважаем менеджеров'
+            }, {
+                id: 4,
+                name: 'Пинки тащит',
+                phoneNumber: '+250456784935',
+                image: 'http://127.0.0.1:8000/uploads/miss.png',
+                descreption: 'Трагические воспоминания нашли отражение в творчестве детского писателя и привели его к получению премии имени Х. К. Андерсена.Культурная революция пыталась помешать первому полному переводу «Дон Кихота» с испанского на китайский язык.'
+            }, {
+                id: 5,
+                name: 'Пинки тащит капустку',
+                phoneNumber: '+250456784935',
+                image: 'http://127.0.0.1:8000/uploads/miss.png',
+                descreption: 'Трагические воспоминания нашли отражение в творчестве детского писателя и привели его к получению премии имени Х. К. Андерсена.Культурная революция пыталась помешать первому полному переводу «Дон Кихота» с испанского на китайский язык.'
+            }
+        ];
+
+        var Contact = React.createClass({
+            render: function() {
+                return (
+                    <li className="course">
+                        <img className="course-image" src={this.props.image} width="60px" height="60px" />
+                        <div className="course-info">
+                            <div className="course-name"> {this.props.name} </div>
+                            <div className="course-number"> {this.props.phoneNumber} </div>
+                            <div className="course-descreption"> {this.props.descreption} </div>
+                        </div>
+                    </li>
+                );
+            }
+        });
+
+        var СoursesList = React.createClass({
+            getInitialState: function() {
+                return {
+                    displayedСourses: courses
+                };
+            },
+
+            handleSearch: function(event) {
+                var searchQuery = event.target.value.toLowerCase();
+                var displayedСourses = courses.filter(function(el) {
+                    var searchValue1 = el.name.toLowerCase();
+                    var searchValue2 = el.descreption.toLowerCase();
+                    return (searchValue1.indexOf(searchQuery) && searchValue2.indexOf(searchQuery)) !== -1;
+                });
+
+                this.setState({
+                    displayedСourses: displayedСourses
+                });
+            },
+
+            render: function() {
+                return (
+                    <div className="courses">
+                        <input type="text" className="search-field" onChange={this.handleSearch} />
+                        <ul className="courses-list">
+                            {
+                               this.state.displayedСourses.map(function(el) {
+                                    return <Contact
+                                        key={el.id}
+                                        name={el.name}
+                                        phoneNumber={el.phoneNumber}
+                                        image={el.image}
+                                        descreption={el.descreption}
+                                    />;
+                               })
+                            }
+                        </ul>
+                    </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+            <СoursesList />,
+            document.getElementById("content")
+        );
+
+    </script>
+{% endblock %}
