@@ -6,12 +6,17 @@ var username = document.getElementById('name').innerHTML;
 var courseid = document.getElementById('course_id').innerHTML;
 
 var Comment = React.createClass({
+    dateTransformer: function (date) {
+        //2016-07-03T14:46:20Z
+        // return date;
+        return date.slice(8,10) + '.' + date.slice(5,7) + '.' + date.slice(0,4) + ' в ' + date.slice(11,19) + ' ';
+    },
     render: function () {
         var owner = (username == this.props.author);
         return (
             <div>
-                <p>{this.props.author} commented at {this.props.added_at}
-                    <a onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Delete</a>
+                <p>{this.props.author} отставил комментарий {this.dateTransformer(this.props.added_at)}
+                    <a onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Удалить</a>
                 </p>
                 <p>{this.props.children}</p>
             </div>
@@ -99,7 +104,7 @@ var CommentWidget = React.createClass({
     handleCommentSubmit: function (comment) {
         var comments = this.state.data;
         comment.pk = Date.now();
-        comment.fields.added_at = Date.now();
+        comment.fields.added_at = Date.now().toString();
         comment.fields.author = username;
         var newComments = comments.concat([comment]);
         this.setState({data: newComments});
