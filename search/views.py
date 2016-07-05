@@ -3,6 +3,7 @@ from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from search.models import *
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 import json
 
 
@@ -100,15 +101,25 @@ def delete_comment(request, comment_id):
     return HttpResponseRedirect('/course/' + str(id))
 
 
-@login_required(login_url='/authentication/signin')
-def post_comment(request, course_id):
-    user = request.user
-    course = Course.objects.get(id=course_id)
-    comment = Comment(text=request.POST['text'], course=course, author=user)
-    comment.save()
-    return HttpResponse(json.dumps({"comment_id": comment.id}), content_type="application/json")
+def return_comments(request):
+    if request.method == 'POST':
+        courseid = request.POST['courseid']
+        comment = Comment(author=request.user, course=Course.objects.get(id=courseid), text=request.POST['text'])
+        comment.save()
+    else:
+        courseid = request.GET['courseid']
+    data = serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+                                 fields=('author', 'text', 'added_at'),
+                                 use_natural_foreign_keys=True, )
+    return HttpResponse(data, content_type="application/json")
 
 
-def single_comment(request):
-    comment = Comment.objects.get(id=request.GET['commentid'])
-    return render(request, "comment.html", {'comment': comment})
+def delete_comment(request):
+    comment = Comment.objects.get(id=request.POST['commentid'])
+    courseid = request.POST['courseid']
+    if comment.author == request.user:
+        comment.delete()
+    data = serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+                                 fields=('author', 'text', 'added_at'),
+                                 use_natural_foreign_keys=True, )
+    return HttpResponse(data, content_type="application/json")
