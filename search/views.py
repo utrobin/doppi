@@ -6,9 +6,18 @@ from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 import json
+import pusher
 
 
 # Create your views here.
+
+pusher_client = pusher.Pusher(
+    app_id='223104',
+    key='3140ed0ba3ff0af4856a',
+    secret='96c8ed472fdf00dd0038',
+    cluster='eu',
+    ssl=True
+)
 
 def hello(request):
     return render(request, 'hello.html')
@@ -99,16 +108,18 @@ def return_comments(request):
         courseid = request.POST['courseid']
         comment = Comment(author=request.user, course=Course.objects.get(id=courseid), text=request.POST['text'])
         comment.save()
+        pusher_client.trigger('comments', 'new_comment', {})
+
     else:
         courseid = request.GET['courseid']
-    data = json.loads(serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
-                                            fields=('author', 'text', 'added_at'),
-                                            use_natural_foreign_keys=True, ))
+
+    data = json.loads(
+        serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+                              fields=('author', 'text', 'added_at'),
+                              use_natural_foreign_keys=True, ))
 
     for item in data:
-        # print(UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar)
-        item['pic'] = UserProfile.objects.get(user = Comment.objects.get(id=item['pk']).author).avatar.url
-        # print(item)
+        item['pic'] = UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar.url
 
     return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -118,16 +129,9 @@ def delete_comment(request):
     comment = Comment.objects.get(id=request.POST['commentid'])
     if comment.author == request.user:
         comment.delete()
-    data = json.loads(serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
-                                 fields=('author', 'text', 'added_at'),
-                                 use_natural_foreign_keys=True, ))
+        pusher_client.trigger('comments', 'new_comment', {})
+    return HttpResponse({}, content_type="application/json")
 
-    for item in data:
-        # print(UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar)
-        item['pic'] = UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar.url
-        # print(item)
-
-    return HttpResponse(data, content_type="application/json")
 
 def pinki(request):
     return render(request, 'pinki_drag.html')

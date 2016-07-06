@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^delete/(?P<comment_id>\d+)$', views.delete_comment, name='delete_comment'),
     url(r'^get/comments', views.return_comments, name='get'),
     url(r'^remove/comments', views.delete_comment, name='remove'),
-    url(r'^pinki', views.pinki, name='pinki')
+    url(r'^pinki', views.pinki, name='pinki'),
+    url(r'^pusher', views.push_it, name='pusher'),
+    url(r'^generate', views.generate, name='generate'),
 ]

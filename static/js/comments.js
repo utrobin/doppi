@@ -113,7 +113,8 @@ var CommentWidget = React.createClass({
             },
             dataType: 'json',
             success: function (data) {
-                this.setState({data: data});
+                // this.setState({data: data});
+                console.log("success");
             }.bind(this),
             error: function (xth, status, error) {
                 this.setState({data: comments});
@@ -139,7 +140,8 @@ var CommentWidget = React.createClass({
             },
             dataType: 'json',
             success: function (data) {
-                this.setState({data: data});
+                // this.setState({data: data});
+                console.log("success");
             }.bind(this),
             error: function (xth, status, error) {
                 this.setState({data: comments});
@@ -166,9 +168,19 @@ var CommentWidget = React.createClass({
     getInitialState: function () {
         return {data: []};
     },
+    componentWillMount: function () {
+        this.pusher = new Pusher('3140ed0ba3ff0af4856a', {
+            cluster: 'eu',
+            encrypted: true
+        });
+        this.channel = this.pusher.subscribe('comments');
+
+    },
     componentDidMount: function () {
-        // this.setState({data: data});
         this.getComments();
+        this.channel.bind('new_comment', function (comment) {
+            this.getComments();
+        }, this)
     },
     render: function () {
         return (
