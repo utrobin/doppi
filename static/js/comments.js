@@ -127,7 +127,7 @@ var CommentWidget = React.createClass({
         comment.fields.added_at = Date.now().toString();
         comment.fields.author = username;
         var newComments = comments.concat([comment]);
-        this.setState({data: newComments});
+        this.setState({data: newComments, sendflag: true});
         $.ajax({
             url: this.props.post_url,
             type: 'POST',
@@ -139,7 +139,7 @@ var CommentWidget = React.createClass({
             dataType: 'json',
             success: function (data) {
                 //Коментарий добавлен в базу
-                
+                console.log("success");
             }.bind(this),
             error: function (xth, status, error) {
                 this.setState({data: comments});
@@ -164,8 +164,7 @@ var CommentWidget = React.createClass({
         });
     },
     getInitialState: function () {
-        return {data: [],
-                loadRequired: true};
+        return {data: [], sendflag: false};
     },
     componentWillMount: function () {
         this.pusher = new Pusher('3140ed0ba3ff0af4856a', {
@@ -177,7 +176,7 @@ var CommentWidget = React.createClass({
     componentDidMount: function () {
         this.getComments();
         this.channel.bind('new_comment', function (comment) {
-            this.getComments();
+                this.getComments();
         }, this)
     },
     render: function () {

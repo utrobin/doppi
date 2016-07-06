@@ -122,7 +122,7 @@ def delete_comment(request):
     if comment.author == request.user:
         comment.delete()
         pusher_client.trigger('comments', 'new_comment', {})
-    return HttpResponse({}, content_type="application/json")
+    return HttpResponse(json.dumps({}), content_type="application/json")
 
 
 @login_required(login_url='/authentication/signin/')
@@ -131,7 +131,7 @@ def post_comment(request):
     comment = Comment(author=request.user, course=Course.objects.get(id=course_id), text=request.POST['text'])
     comment.save()
     pusher_client.trigger('comments', 'new_comment', {})
-    return HttpResponse({}, content_type="application/json")
+    return HttpResponse(json.dumps({}), content_type="application/json")
 
 
 def pinki(request):
