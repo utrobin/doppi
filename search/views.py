@@ -8,7 +8,6 @@ from django.core import serializers
 import json
 import pusher
 
-
 # Create your views here.
 
 pusher_client = pusher.Pusher(
@@ -18,6 +17,7 @@ pusher_client = pusher.Pusher(
     cluster='eu',
     ssl=True
 )
+
 
 def hello(request):
     return render(request, 'hello.html')
@@ -103,18 +103,10 @@ def edit_course(request, course_id):
     return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
 
 
-def return_comments(request):
-    if request.method == 'POST':
-        courseid = request.POST['courseid']
-        comment = Comment(author=request.user, course=Course.objects.get(id=courseid), text=request.POST['text'])
-        comment.save()
-        pusher_client.trigger('comments', 'new_comment', {})
-
-    else:
-        courseid = request.GET['courseid']
-
+def get_comments(request):
+    course_id = request.GET['course_id']
     data = json.loads(
-        serializers.serialize('json', Comment.objects.filter(course__pk=courseid).order_by('added_at'),
+        serializers.serialize('json', Comment.objects.filter(course__pk=course_id).order_by('added_at'),
                               fields=('author', 'text', 'added_at'),
                               use_natural_foreign_keys=True, ))
 
@@ -124,12 +116,21 @@ def return_comments(request):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
+@login_required(login_url='/authentication/signin/')
 def delete_comment(request):
-    courseid = request.POST['courseid']
-    comment = Comment.objects.get(id=request.POST['commentid'])
+    comment = Comment.objects.get(id=request.POST['comment_id'])
     if comment.author == request.user:
         comment.delete()
         pusher_client.trigger('comments', 'new_comment', {})
+    return HttpResponse({}, content_type="application/json")
+
+
+@login_required(login_url='/authentication/signin/')
+def post_comment(request):
+    course_id = request.POST['course_id']
+    comment = Comment(author=request.user, course=Course.objects.get(id=course_id), text=request.POST['text'])
+    comment.save()
+    pusher_client.trigger('comments', 'new_comment', {})
     return HttpResponse({}, content_type="application/json")
 
 

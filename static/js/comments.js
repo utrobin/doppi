@@ -104,21 +104,19 @@ var CommentWidget = React.createClass({
         newComments.splice(newComments.indexOf(comment), 1);
         this.setState({data: newComments});
         $.ajax({
-            url: this.props.removeurl,
+            url: this.props.delete_url,
             type: 'POST',
             data: {
-                commentid: comment.pk,
+                comment_id: comment.pk,
                 csrfmiddlewaretoken: Cookies.get('csrftoken'),
-                courseid: courseid
             },
             dataType: 'json',
             success: function (data) {
-                // this.setState({data: data});
-                console.log("success");
+                //Комментарий удален из базы
             }.bind(this),
             error: function (xth, status, error) {
                 this.setState({data: comments});
-                console.error(this.props.url, status, err.toString());
+                console.error(this.props.delete_url, status, err.toString());
             }.bind(this)
         });
     },
@@ -131,42 +129,43 @@ var CommentWidget = React.createClass({
         var newComments = comments.concat([comment]);
         this.setState({data: newComments});
         $.ajax({
-            url: this.props.geturl,
+            url: this.props.post_url,
             type: 'POST',
             data: {
                 text: comment.fields.text,
                 csrfmiddlewaretoken: Cookies.get('csrftoken'),
-                courseid: courseid
+                course_id: courseid
             },
             dataType: 'json',
             success: function (data) {
-                // this.setState({data: data});
-                console.log("success");
+                //Коментарий добавлен в базу
+                
             }.bind(this),
             error: function (xth, status, error) {
                 this.setState({data: comments});
-                console.error(this.props.url, status, err.toString());
+                console.error(this.props.post_url, status, err.toString());
             }.bind(this)
         });
     },
 
     getComments: function () {
         $.ajax({
-            url: this.props.geturl,
+            url: this.props.get_url,
             type: 'GET',
-            data: {courseid: courseid},
+            data: {course_id: courseid},
             dataType: 'json',
             cache: false,
             success: function (data) {
                 this.setState({data: data});
             }.bind(this),
             error: function (xrh, status, error) {
-                console.error(this.props.url, status, err.toString());
+                console.error(this.props.get_url, status, err.toString());
             }.bind(this)
         });
     },
     getInitialState: function () {
-        return {data: []};
+        return {data: [],
+                loadRequired: true};
     },
     componentWillMount: function () {
         this.pusher = new Pusher('3140ed0ba3ff0af4856a', {
@@ -174,7 +173,6 @@ var CommentWidget = React.createClass({
             encrypted: true
         });
         this.channel = this.pusher.subscribe('comments');
-
     },
     componentDidMount: function () {
         this.getComments();
@@ -193,6 +191,6 @@ var CommentWidget = React.createClass({
 });
 
 ReactDOM.render(
-    <CommentWidget geturl="/get/comments" removeurl="/remove/comments"/>,
+    <CommentWidget get_url="/api/get/comments" delete_url="/api/delete/comment" post_url="/api/post/comment"/>,
     document.getElementById('root')
 );
