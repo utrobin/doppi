@@ -46,7 +46,40 @@
             }
         ];
 
-        var Contact = React.createClass({
+        var section = [
+            {
+                id: 1,
+                value: 'плавание',
+                label: 'плавание'
+            }, {
+                id: 2,
+                value: 'вышивание',
+                label: 'вышивание'
+            }, {
+                id: 3,
+                value: 'кружок для машы',
+                label: 'кружок для машы'
+            }
+        ];
+
+        var CheckOption = React.createClass({
+            getInitialState: function () {
+                return {checked: false};
+            },
+
+            render: function () {
+                return (
+                    <div>
+                        <label>
+                            <input type="checkbox" value={this.props.value} checked={this.state.checked} onChange={this.props.filter}/>
+                            {this.props.label}
+                        </label>
+                    </div>
+                );
+            }
+        });
+
+        var Сourses = React.createClass({
             render: function() {
                 return (
                     <li className="course">
@@ -64,8 +97,18 @@
         var СoursesList = React.createClass({
             getInitialState: function() {
                 return {
-                    displayedСourses: courses
+                    displayedСourses: courses,
+                    isChecked: false
                 };
+            },
+
+            filter: function(chekbox, event) {
+                this.setState({
+                  isChecked: !this.state.isChecked
+                },
+                function() {
+                  console.log(this.state);
+                }.bind(this));
             },
 
             handleSearch: function(event) {
@@ -85,10 +128,24 @@
                 return (
                     <div className="courses">
                         <input type="text" className="search-field" onChange={this.handleSearch} />
+
+                        <div>
+                            {
+                                section.map(function (option) {
+                                    return <CheckOption
+                                            key={option.id}
+                                            value={option.value}
+                                            label={option.label}
+                                            filter={this.filter}
+                                    />
+                                })
+                            }
+                        </div>
+
                         <ul className="courses-list">
                             {
                                this.state.displayedСourses.map(function(el) {
-                                    return <Contact
+                                    return <Сourses
                                         key={el.id}
                                         name={el.name}
                                         phoneNumber={el.phoneNumber}
