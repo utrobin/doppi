@@ -46,66 +46,64 @@
             }
         ];
 
-        var Contact = React.createClass({
-            render: function() {
+        var section = [
+            {
+                id: 1,
+                value: 'плавание',
+                label: 'плавание'
+            }, {
+                id: 2,
+                value: 'вышивание',
+                label: 'вышивание'
+            }, {
+                id: 3,
+                value: 'кружок для машы',
+                label: 'кружок для машы'
+            }
+        ];
+
+        var CheckOption = React.createClass({
+            getInitialState: function () {
+                return {checked: false};
+            },
+
+            handleClick: function (event) {
+                this.setState({checked: !this.state.checked});
+                console.log(this.state.checked);
+            },
+
+            render: function () {
                 return (
-                    <li className="course">
-                        <img className="course-image" src={this.props.image} width="60px" height="60px" />
-                        <div className="course-info">
-                            <div className="course-name"> {this.props.name} </div>
-                            <div className="course-number"> {this.props.phoneNumber} </div>
-                            <div className="course-descreption"> {this.props.descreption} </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" value={this.props.value} checked={this.state.checked}
+                                       onClick={this.handleClick}/>
+                                {this.props.label}
+                            </label>
                         </div>
-                    </li>
                 );
             }
         });
 
-        var СoursesList = React.createClass({
-            getInitialState: function() {
-                return {
-                    displayedСourses: courses
-                };
+        var CoursesList = React.createClass({
+            onCheckBox: function (checkbox, event) {
+                checkbox.state.checked = !checkbox.state.checked;
             },
 
-            handleSearch: function(event) {
-                var searchQuery = event.target.value.toLowerCase();
-                var displayedСourses = courses.filter(function(el) {
-                    var searchValue1 = el.name.toLowerCase();
-                    var searchValue2 = el.descreption.toLowerCase();
-                    return (searchValue1.indexOf(searchQuery) && searchValue2.indexOf(searchQuery)) !== -1;
-                });
-
-                this.setState({
-                    displayedСourses: displayedСourses
-                });
-            },
-
-            render: function() {
-                return (
-                    <div className="courses">
-                        <input type="text" className="search-field" onChange={this.handleSearch} />
-                        <ul className="courses-list">
-                            {
-                               this.state.displayedСourses.map(function(el) {
-                                    return <Contact
-                                        key={el.id}
-                                        name={el.name}
-                                        phoneNumber={el.phoneNumber}
-                                        image={el.image}
-                                        descreption={el.descreption}
-                                    />;
-                               })
-                            }
-                        </ul>
-                    </div>
-                );
+            render: function () {
+                var options = section.map(function (option) {
+                    return (
+                            <CheckOption key={option.id} value={option.value} label={option.label}
+                                         onCheckBox={this.onCheckBox.bind(this, option)}/>
+                    )
+                }, this);
+                return (<div> {options} </div>)
             }
         });
 
         ReactDOM.render(
-            <СoursesList />,
-            document.getElementById("content")
+                <CoursesList />,
+                document.getElementById("content")
         );
 
     </script>

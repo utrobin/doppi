@@ -3,10 +3,9 @@
 {% block content %}
     <div class="container">
 
-      <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
-        <h2 class="form-signin-heading">Sign up to Doppi</h2>
-        {% csrf_token %}
-
+        <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
+            <h2 class="form-signin-heading">Sign up to Doppi</h2>
+            {% csrf_token %}
 
             {% for field in signup_form %}
                 <div class="{% if field.errors %}error{% endif %}">
@@ -16,17 +15,16 @@
                 </div>
             {% endfor %}
 
-            {{ user_profile_signup_form.info.errors }}
-            <label for="{{ user_profile_signup_form.info.id_for_label }}">Пару слов о себе:</label>
-            {{ user_profile_signup_form.info }}
-
-            {{ user_profile_signup_form.avatar.errors }}
-
-            <!-- Display filename inside the button instead of its label -->
-            {{ user_profile_signup_form.avatar }}
+            {% for field in user_profile_signup_form %}
+                <div class="{% if field.errors %}error{% endif %}">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endfor %}
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+        </form>
 
     </div>
 {% endblock %}

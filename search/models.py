@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User
+from authentication.models import UserProfile
 from django.utils import timezone
 import os
 
@@ -13,51 +13,45 @@ def picture_upload_to(instance, filename):
     return os.path.join('', instance.author.username + os.path.splitext(filename)[1])
 
 
+# Курс
 class Course(models.Model):
-    title = models.CharField(max_length=128)
-    description = models.TextField(max_length=1024, default='')
-    phone_number = models.CharField(max_length=20, default='')
-    author = models.ForeignKey(User, default=1)
-    pic = models.ImageField(upload_to=picture_upload_to, default='miss.png')
-    added_at = models.DateTimeField(default=timezone.now)
-    # Связь с информацией
-    info = models.OneToOneField('CourseInfo')
+    title = models.CharField(max_length=128)  # Название
+    description = models.TextField(max_length=1024, blank=True)  # Описание
+    author = models.ForeignKey(UserProfile, default=1)  # Автор
+    pic = models.ImageField(upload_to=picture_upload_to, default='miss.png')  # Картинка
+    added_at = models.DateTimeField(default=timezone.now)  # Дата добавления
+    views = models.PositiveSmallIntegerField(default=0)  # Просмотры
+    likes = models.ManyToManyField(UserProfile, related_name='likes_userprofiles', through='Like')  # Лайки
+    info = models.OneToOneField('CourseInfo')  # Связь с информацией
 
 
+# Информация о курсе
 class CourseInfo(models.Model):
-    OTHER = 'OR'
-    LANGUAGE = 'LN'
-    SPORTS = 'SP'
-    ART = 'AR'
-    EDUCATION = 'ED'
-    ENTERTAINMENT = 'ET'
-    COURSE_ACTIVITIES = (
-        (OTHER, u'Другое'),
-        (LANGUAGE, u'Иностранные языки'),
-        (SPORTS, u'Спорт'),
-        (ART, u'Искусство'),
-        (EDUCATION, u'Образование'),
-        (ENTERTAINMENT, u'Развлечения'),
-    )
-    # Возраст
-    age_from = models.PositiveSmallIntegerField(default=0)
-    age_to = models.PositiveSmallIntegerField(default=18)
-    # Вид курса
-    activity = models.CharField(max_length=2, choices=COURSE_ACTIVITIES, default=OTHER)
-    # На улице или в здании
-    is_indoors = models.BooleanField(default=True)
-    # Местоположение
-    location = models.CharField(max_length=50, default='')
-    # Цена
-    price = models.IntegerField(default=0)
-    # Длительность в днях
-    length = models.PositiveSmallIntegerField(default=0)
-    # Частота занятий в днях недели
-    frequency = models.PositiveSmallIntegerField(default=0)
+    age_from = models.PositiveSmallIntegerField(default=0)  # Возраст от
+    age_to = models.PositiveSmallIntegerField(default=18)  # Возраст до
+    time_from = models.PositiveSmallIntegerField(default=0)  # Время от
+    time_to = models.PositiveSmallIntegerField(default=23)  # Время до
+    activity = models.ManyToManyField('CourseType', blank=True)  # Вид курса
+    location = models.CharField(max_length=50, blank=True)  # Местоположение
+    price = models.PositiveIntegerField(default=0)  # Цена
+    frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
 
 
 class Comment(models.Model):
     text = models.TextField(max_length=1024)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(UserProfile)
     course = models.ForeignKey(Course)
     added_at = models.DateTimeField(default=timezone.now)
+
+
+class CourseType(models.Model):
+    title = models.TextField(max_length=128)
+
+    def __str__(self):
+        return self.title
+
+
+class Like(models.Model):
+    user = models.ForeignKey(UserProfile)
+    course = models.ForeignKey(Course)
+    is_liked = models.BooleanField(default=False)

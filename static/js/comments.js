@@ -6,13 +6,6 @@ var username = document.getElementById('name').innerHTML;
 var courseid = document.getElementById('course_id').innerHTML;
 
 var Comment = React.createClass({
-    dateTransformer: function (date) {
-        if (date[0] == '2') {
-            return date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4) + ' в ' + date.slice(11, 19) + ' ';
-        } else {
-            return "";
-        }
-    },
     render: function () {
         var owner = (username == this.props.author);
         return (
@@ -28,7 +21,7 @@ var Comment = React.createClass({
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <strong>{this.props.author}</strong> <span
-                            className="text-muted">прокомментировал {this.dateTransformer(this.props.added_at)}<a
+                            className="text-muted">прокомментировал {this.props.added_at}<a
                             onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Удалить</a></span>
                         </div>
                         <div className="panel-body">
@@ -50,9 +43,9 @@ var CommentList = React.createClass({
     render: function () {
         var comments = this.props.data.map(function (comment) {
             return (
-                <Comment key={comment.pk} author={comment.fields.author} added_at={comment.fields.added_at}
+                <Comment key={comment.id} author={comment.author} added_at={comment.added_at}
                          pic={comment.pic} onRemove={this.onRemove.bind(this, comment)}>
-                    {comment.fields.text}
+                    {comment.text}
                 </Comment>
             );
         }, this);
@@ -79,7 +72,7 @@ var CommentForm = React.createClass({
         var text = this.state.text.trim();
         if (!text)
             return;
-        this.props.onCommentSumbit({fields: {text: text}});
+        this.props.onCommentSumbit({text: text});
         this.setState({text: ''});
         this.refs.commentInput.focus();
     },
@@ -97,7 +90,7 @@ var CommentForm = React.createClass({
 var CommentWidget = React.createClass({
     handleCommentRemove: function (comment) {
         //Если пытаются удалить еще не добавленный коментарий ничего не делаем
-        if (comment.pk > 10000000)
+        if (comment.id > 10000000)
             return;
         var comments = this.state.data;
         var newComments = this.state.data;
@@ -107,7 +100,7 @@ var CommentWidget = React.createClass({
             url: this.props.delete_url,
             type: 'POST',
             data: {
-                comment_id: comment.pk,
+                comment_id: comment.id,
                 csrfmiddlewaretoken: Cookies.get('csrftoken'),
             },
             dataType: 'json',
@@ -123,16 +116,16 @@ var CommentWidget = React.createClass({
 
     handleCommentSubmit: function (comment) {
         var comments = this.state.data;
-        comment.pk = Date.now();
-        comment.fields.added_at = Date.now().toString();
-        comment.fields.author = username;
+        comment.id = Date.now();
+        comment.added_at = Date.now().toString();
+        comment.author = username;
         var newComments = comments.concat([comment]);
-        this.setState({data: newComments, sendflag: true});
+        this.setState({data: newComments});
         $.ajax({
             url: this.props.post_url,
             type: 'POST',
             data: {
-                text: comment.fields.text,
+                text: comment.text,
                 csrfmiddlewaretoken: Cookies.get('csrftoken'),
                 course_id: courseid
             },
@@ -164,7 +157,7 @@ var CommentWidget = React.createClass({
         });
     },
     getInitialState: function () {
-        return {data: [], sendflag: false};
+        return {data: []};
     },
     componentWillMount: function () {
         this.pusher = new Pusher('3140ed0ba3ff0af4856a', {

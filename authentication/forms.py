@@ -3,22 +3,27 @@
 from django.contrib.auth import authenticate
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from authentication.models import UserProfile
+from authentication.models import UserProfile, UserInfo, Child
 from django.contrib.auth.models import User
+from django.forms.widgets import CheckboxInput, RadioSelect, TextInput, PasswordInput, CheckboxSelectMultiple
 
-class LoginForm(forms.Form):
-    login = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Login', }),
-        max_length=30, label='Логин'
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password', })
-        , label='Пароль'
-    )
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control', 'placeholder': 'email',}),
+            'password': PasswordInput(attrs={'class': 'form-control', 'placeholder': '*********',}),
+        }
+        labels = {
+            'username': 'Адрес email',
+            'password': 'Пароль',
+        }
 
     def clean(self):
         data = self.cleaned_data
-        user = authenticate(username=data.get('login', ''), password=data.get('password', ''))
+        user = authenticate(username=data.get('username', ''), password=data.get('password', ''))
 
         if user is not None:
             if user.is_active:
@@ -30,14 +35,9 @@ class LoginForm(forms.Form):
 
 
 class SignupForm(UserCreationForm):
-
-    username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', }),
-        max_length=30, label=u'Логин'
-    )
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваша почта', }),
-        max_length=254, label=u'E-mail',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваша почта',}),
+        max_length=254, label=u'Адрес email',
     )
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '*******'}),
@@ -48,88 +48,59 @@ class SignupForm(UserCreationForm):
         min_length=6, label=u'Повторите пароль'
     )
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if len(User.objects.filter(email=email)) != 0:
+            raise forms.ValidationError('Пользователь с таким email уже зарегистрирован')
+        return email
+
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('email',)
 
 
 class UserProfileSignupForm(forms.ModelForm):
-
-    info = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Пара слов о себе',}),
-        required=False, label='Пара слов о себе'
-    )
     avatar = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside',}),
+        widget=forms.ClearableFileInput(
+            attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside',}),
         required=False, label='Аватар'
     )
 
-    def clean_avatar(self):
-        avatar = self.cleaned_data.get('avatar')
-        if avatar is None:
-            raise forms.ValidationError('Добавьте картинку')
-        if 'image' not in avatar.content_type:
-            raise forms.ValidationError('Неверный формат картинки')
-        return avatar
-
     class Meta:
         model = UserProfile
-        fields = ('info', 'avatar')
+        fields = ( 'user_type', 'avatar', 'subscribed',)
+        widgets = {
+            'subscribed': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
+            'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+        }
+        labels = {
+            'subscribed': 'Получать уведомления на электронную почту',
+            'user_type': 'Кто вы?',
+        }
 
-
-class UserProfileSignupForm(forms.ModelForm):
-
-    info = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Пара слов о себе',}),
-        required=False, label='Пара слов о себе'
-    )
-    avatar = forms.ImageField(
-        widget=forms.ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
-        required=False, label='Аватар'
-    )
-
-    def clean_avatar(self):
-        avatar = self.cleaned_data.get('avatar')
-        if avatar is None:
-            raise forms.ValidationError('Добавьте картинку')
-        if 'image' not in avatar.content_type:
-            raise forms.ValidationError('Неверный формат картинки')
-        return avatar
-
-    class Meta:
-        model = UserProfile
-        fields = ('info', 'avatar')
+    def save(self, commit=True):
+        instance = super(UserProfileSignupForm, self).save(commit=False)
+        if self.cleaned_data.get('avatar') is not None:
+            instance.pic = self.cleaned_data.get('pic')
+            # instance.pic.save('%s_%s' % (instance.author.username, instance.pic.name), instance.pic, save=True)
+        if commit:
+            instance.save()
+        return instance
 
 
 class ProfileEditForm(forms.Form):
-    first_name = forms.CharField(
-            widget=forms.TextInput( attrs={ 'class': 'form-control', 'placeholder': 'Иван', }),
-            max_length=30, label=u'Имя', required=False
-            )
-    last_name = forms.CharField(
-            widget=forms.TextInput( attrs={ 'class': 'form-control', 'placeholder': 'Иванов', }),
-            max_length=30, label=u'Фамилия', required=False
-            )
     email = forms.EmailField(
-            widget=forms.TextInput( attrs={ 'class': 'form-control', 'placeholder': 'me@gmail.com', }),
-            max_length=254, label=u'E-mail'
-            )
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'me@gmail.com',}),
+        max_length=254, label=u'E-mail', required=False
+    )
     password1 = forms.CharField(
-            widget=forms.PasswordInput( attrs={ 'class': 'form-control', 'placeholder': '*****' }),
-            min_length=6, label=u'Пароль', required=False
-            )
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '*****'}),
+        min_length=6, label=u'Пароль', required=False
+    )
     password2 = forms.CharField(
-            widget=forms.PasswordInput( attrs={ 'class': 'form-control', 'placeholder': '*****' }),
-            min_length=6, label=u'Повторите пароль', required=False
-            )
-    info = forms.CharField(
-            widget=forms.TextInput( attrs={ 'class': 'form-control', 'placeholder': 'Молод и горяч', }),
-            required=False, label=u'Пара слов о себе'
-            )
-    avatar = forms.FileField(
-            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
-            required=False, label=u'Аватар'
-            )
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '*****'}),
+        min_length=6, label=u'Повторите пароль', required=False
+    )
 
     def clean_password2(self):
         pass1 = self.cleaned_data.get('password1', '')
@@ -140,23 +111,47 @@ class ProfileEditForm(forms.Form):
 
     def save(self, user):
         data = self.cleaned_data
-        user.first_name = data.get('first_name')
-        user.last_name = data.get('last_name')
-        user.email = data.get('email')
+        user.name = user.email = data.get('email')
 
         pass1 = self.cleaned_data.get('password1', '')
         if pass1 != '':
             user.set_password(pass1)
 
         user.save()
-
-        up = user.userprofile
-        up.info = data.get('info')
-
-        if data.get('avatar') is not None:
-            avatar = data.get('avatar')
-            up.avatar.save('%s_%s' % (user.username, avatar.name), avatar, save=True)
-
-        up.save()
-
         return self
+
+
+class ParentForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['name', 'phone_number', 'is_payable', ]
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО'}),
+            'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
+            'is_payable': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
+        }
+        labels = {
+            'name': 'ФИО',
+            'phone_number': 'Номер телефона',
+            'is_payable': 'Хотели бы вы воспользоваться платными услугами психологов?',
+        }
+
+
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['title', 'phone_number', 'is_photo', 'is_notify', 'activity']
+        widgets = {
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО'}),
+            'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
+            'is_photo': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
+            'is_notify': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
+            'activity': CheckboxSelectMultiple(attrs={'class': ['form-control', 'checkbox-inline']}),
+        }
+        labels = {
+            'name': 'ФИО',
+            'phone_number': 'Номер телефона',
+            'is_photo': 'Готовы ли вы выкладывать фото с преведенных мероприятий?',
+            'is_notify': 'Готовы ли вы оповещать родителей об успехах их детей?',
+            'activity': 'Сфера услуг:',
+        }

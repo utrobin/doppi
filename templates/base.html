@@ -10,49 +10,53 @@
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'main' %}">Doppi</a>
-    </div>
-    <ul class="nav navbar-nav">
-    <li><a href="{% url 'bar' %}">Поиск</a></li>
-    <li><a href="{% url 'add_course' %}">Добавить курс</a></li>
-    </ul>
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'main' %}">Doppi</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'bar' %}">Поиск</a></li>
+            <li><a href="{% url 'add_course' %}">Добавить курс</a></li>
+        </ul>
 
-    <ul class="nav navbar-nav navbar-right">
-    {% if  user.is_authenticated %}
-      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'edit' %}">Изменить профиль</a></li>
-            <li><a href="{% url 'logout' %}">Выйти</a></li>
-          </ul>
-      </li>
-    {% else %}
-        <a href="{% url 'signin' %}">
-            <button type="button" class="btn btn-default navbar-btn signin">Sign in</button>
-        </a>
-        <a href="{% url 'signup' %}">
-            <button type="button" class="btn btn-default navbar-btn signup">Sign up</button>
-        </a>
-    {% endif %}
-    </ul>
-  </div>
+        <ul class="nav navbar-nav navbar-right">
+            {% if  user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'edit' %}">Изменить профиль</a></li>
+                        <li><a href="{% url 'logout' %}">Выйти</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <a href="{% url 'signin' %}">
+                    <button type="button" class="btn btn-default navbar-btn signin">Sign in</button>
+                </a>
+                <a href="{% url 'signup' %}">
+                    <button type="button" class="btn btn-default navbar-btn signup">Sign up</button>
+                </a>
+            {% endif %}
+        </ul>
+    </div>
 </nav>
 
 <div class="container">
     {% block content %}{% endblock %}
 </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/bootstrap.file-input.js"></script>
-    <script>
-    $(document).ready(function(){
-      $('input[type=file]').bootstrapFileInput();
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/bootstrap.file-input.js"></script>
+<script src="/static/js/react.js"></script>
+<script src="/static/js/react-dom.js"></script>
+<script src="/static/js/browser.js"></script>
+<script src="/static/js/pusher.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type=file]').bootstrapFileInput();
     });
-    </script>
-    <script src="/static/js/js.cookie.js"></script>
-    <script src="/static/js/post_comment.js"></script>
+</script>
+<script src="/static/js/js.cookie.js"></script>
+
+
 </body>

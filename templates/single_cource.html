@@ -1,14 +1,14 @@
 <div class="col-xs-4 course">
     <h3><a href="{% url 'single_course' course.id %}">{{ course.title }}</a></h3>
-    <dd>Добавлено {{ course.author.username }} в {{ course.added_at }}</dd>
+    <dd>Добавлено {{ course.author.user.username }} в {{ course.added_at }}</dd>
     <img src="{{ course.pic.url }}" width="276"><br>
-    {% if course.phone_number != '' %}<label>Телефон:</label> <span>{{ course.phone_number }}</span><br>{% endif %}
     {% if course.description != '' %}<p>{{ course.description }}</p>{% endif %}
-    {% if course.info.is_indoors %}<label>В помещении</label><br>{% else %}<label>На открытом воздухе</label><br>{% endif %}
     <label>{{ course.info.age_from }} - {{ course.info.age_to }} лет</label><br>
-    <label>Тематика:</label> <span>{{ course.info.get_activity_display }}</span><br>
+    <label>Тематика:</label>
+    {% for type in course.info.activity.all %}
+        <span>{{ type.title }}</span><br>
+    {% endfor %}
     <label>Местоположение:</label> <span>{{ course.info.location }}</span><br>
     <label>Цена:</label><span>{{ course.info.price }} р.</span><br>
-    <label>Длительность:</label><span>{{ course.info.length }}</span><br>
     <label>Частота:</label><span>{{ course.info.frequency }} раз в неделю</span>
 </div>

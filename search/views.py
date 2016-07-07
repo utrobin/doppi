@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from authentication.models import UserProfile
@@ -24,49 +25,14 @@ def hello(request):
 
 
 def searchbar(request):
-    if len(request.GET) != 0:
-        form = SearchBarForm(request.GET)
-        # Сортируем по названию
-        courses = Course.objects.all().filter(title__icontains=request.GET['query'])
-        # Сортируем по остальным настройкам
-        if 'age_from' in request.GET:
-            courses = courses.filter(info__age_from__gte=request.GET['age_from'])
-        if 'age_to' in request.GET:
-            courses = courses.filter(info__age_from__lte=request.GET['age_to'])
-        if 'activity' in request.GET:
-            courses = courses.filter(info__activity__in=request.GET.getlist('activity'))
-        if 'is_indoors' in request.GET:
-            courses = courses.filter(info__is_indoors=request.GET['is_indoors'])
-        if 'location' in request.GET:
-            courses = courses.filter(info__location__icontains=request.GET['location'])
-        if 'price' in request.GET and request.GET['price'] != '0':
-            courses = courses.filter(info__price__lte=request.GET['price'])
-        if 'length' in request.GET and request.GET['length'] != '0':
-            courses = courses.filter(info__length__lte=request.GET['length'])
-        if 'frequency' in request.GET and request.GET['frequency'] != '0':
-            courses = courses.filter(info__frequency__lte=request.GET['frequency'])
-
-    else:
-        form = SearchBarForm()
-        courses = Course.objects.all()
+    form = SearchBarForm()
+    courses = Course.objects.all()
     return render(request, 'searchbar.html', {'form': form, 'courses': courses})
 
 
 def single_course(request, course_id):
     course = Course.objects.get(id=course_id)
-    comments = Comment.objects.filter(course=course)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.course = course
-            comment.author = request.user
-            comment.save()
-            return HttpResponseRedirect('/course/' + str(course_id))
-    form = CommentForm()
-
-    return render(request, 'course_page.html', {'course': course, 'comments': comments, 'form': form})
+    return render(request, 'course_page.html', {'course': course})
 
 
 @login_required(login_url='/authentication/signin/')
@@ -78,7 +44,7 @@ def add_course(request):
             course = form.save(commit=False)
             info = form_info.save()
             course.info = info
-            course.author = request.user
+            course.author = UserProfile.objects.get(user=request.user)
             course.save()
             return HttpResponseRedirect('/search')
     else:
@@ -105,13 +71,10 @@ def edit_course(request, course_id):
 
 def get_comments(request):
     course_id = request.GET['course_id']
-    data = json.loads(
-        serializers.serialize('json', Comment.objects.filter(course__pk=course_id).order_by('added_at'),
-                              fields=('author', 'text', 'added_at'),
-                              use_natural_foreign_keys=True, ))
-
-    for item in data:
-        item['pic'] = UserProfile.objects.get(user=Comment.objects.get(id=item['pk']).author).avatar.url
+    data = []
+    for comment in Comment.objects.filter(course__pk=course_id).order_by('added_at'):
+        data.append({'id': comment.id, 'author': comment.author.user.username, 'text': comment.text,
+                     'added_at': comment.added_at.strftime('%Y-%m-%d %H:%M'), 'pic': comment.author.avatar.url})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -119,7 +82,7 @@ def get_comments(request):
 @login_required(login_url='/authentication/signin/')
 def delete_comment(request):
     comment = Comment.objects.get(id=request.POST['comment_id'])
-    if comment.author == request.user:
+    if comment.author == UserProfile.objects.get(user=request.user):
         comment.delete()
         pusher_client.trigger('comments', 'new_comment', {})
     return HttpResponse(json.dumps({}), content_type="application/json")
@@ -128,7 +91,8 @@ def delete_comment(request):
 @login_required(login_url='/authentication/signin/')
 def post_comment(request):
     course_id = request.POST['course_id']
-    comment = Comment(author=request.user, course=Course.objects.get(id=course_id), text=request.POST['text'])
+    comment = Comment(author=UserProfile.objects.get(user=request.user), course=Course.objects.get(id=course_id),
+                      text=request.POST['text'])
     comment.save()
     pusher_client.trigger('comments', 'new_comment', {})
     return HttpResponse(json.dumps({}), content_type="application/json")

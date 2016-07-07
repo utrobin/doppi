@@ -3,24 +3,26 @@
 {% block content %}
     <div class="container">
 
-      <form class="form-signin" method="post" role="form" action="{% url 'signin' %}">
-        <h2 class="form-signin-heading">Sign in to Doppi</h2>
-        {% csrf_token %}
+        <form class="form-signin" method="post" role="form" action="{% url 'signin' %}">
+            <h2 class="form-signin-heading">Sign in to Doppi</h2>
+            {% csrf_token %}
 
-        {% for error in form.non_field_errors %}
-            <div class="alert alert-danger" role="alert">
-                {{ error }}
-            </div>
-        {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
 
-        {%for field in form  %}
-            <div class="{% if field.errors %}error{% endif %}">
-                {{ field }}
-            </div>
-        {% endfor %}
+            {% for field in form %}
+                <div class="{% if field.errors %}error{% endif %}">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endfor %}
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
 
     </div>
 {% endblock %}

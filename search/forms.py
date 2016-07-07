@@ -10,8 +10,8 @@ class SearchBarForm(forms.ModelForm):
 
     class Meta:
         model = CourseInfo
-        fields = ['age_from', 'age_to', 'is_indoors', 'activity',
-                  'location', 'price', 'length', 'frequency']
+        fields = ['age_from', 'age_to', 'activity',
+                  'location', 'price', 'frequency']
         widgets = {
             'activity': CheckboxSelectMultiple(),
         }
@@ -32,16 +32,14 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ['title', 'description', 'phone_number', 'pic']
+        fields = ['title', 'description', 'pic']
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': u'Название',}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': u'Описание',}),
-            'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': u'Телефон',}),
         }
         labels = {
             'title': u'Название',
             'description': u'Описание',
-            'phone_number': u'Номер телефона',
         }
 
     def save(self, commit=True):
@@ -60,23 +58,19 @@ class CourseInfoForm(forms.ModelForm):
 
     class Meta:
         model = CourseInfo
-        fields = ['age_from', 'age_to', 'is_indoors', 'activity',
-                  'location', 'price', 'length', 'frequency']
+        fields = ['age_from', 'age_to', 'activity',
+                  'location', 'price', 'frequency']
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
-            'is_indoors': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline'],}),
             'activity': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
-            'length': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Длительность',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
         }
         labels = {
             'age_from': u'Минимальный возраст',
             'age_to': u'Максимальный возраст',
-            'is_indoors': u'В помещении',
             'activity': u'Тематика',
             'price': u'Цена',
-            'length': u'Длительность в днях',
             'frequency': u'Количество занятий в неделю',
         }

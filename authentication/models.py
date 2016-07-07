@@ -9,6 +9,41 @@ def avatar_upload_to(instance, filename):
 
 
 class UserProfile(models.Model):
+    USER_TYPES = (
+        ('PA', u'Родитель'),
+        ('CH', u'Ребенок или подросток'),
+        ('CO', u'Организация')
+    )
     user = models.OneToOneField(User, unique=True)
     avatar = models.ImageField(upload_to=avatar_upload_to, default='miss.png')
-    info = models.TextField()
+    subscribed = models.BooleanField(default=True)
+    user_type = models.CharField(max_length=2, choices=USER_TYPES, default='PA')
+    info = models.OneToOneField('UserInfo')
+
+
+class UserInfo(models.Model):
+    name = models.CharField(max_length=128, blank=True)
+    title = models.CharField(max_length=128, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    is_payable = models.BooleanField(default=False)
+    is_photo = models.BooleanField(default=False)
+    is_notify = models.BooleanField(default=False)
+    activity = models.ManyToManyField('search.CourseType', blank=True)
+
+
+class Child(models.Model):
+    name = models.CharField(max_length=128)
+    birth_year = models.PositiveSmallIntegerField(default=0)
+    metro = models.CharField(max_length=128, blank=True)
+    phone_number = models.CharField(max_length = 20, blank=True)
+    email = models.EmailField(blank=True)
+    good_at = models.CharField(max_length=128, blank=True)
+    prev_activities = models.ManyToManyField('search.CourseType', blank=True)
+    parent = models.ForeignKey(UserProfile)
+    attend_to = models.ManyToManyField('search.Course', related_name='child_course', through='Payment')
+
+
+class Payment(models.Model):
+    child = models.ForeignKey(Child)
+    course = models.ForeignKey('search.Course')
+    isPayed = models.BooleanField(default=False)
