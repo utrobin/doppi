@@ -10,7 +10,7 @@ import os
 # Create your models here.
 
 def picture_upload_to(instance, filename):
-    return os.path.join('', instance.author.username + os.path.splitext(filename)[1])
+    return os.path.join('', instance.author.user.username + os.path.splitext(filename)[1])
 
 
 # Курс

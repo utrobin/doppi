@@ -32,7 +32,7 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ['title', 'description', 'pic']
+        fields = ['title', 'description', 'pic'     ]
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': u'Название',}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': u'Описание',}),
@@ -63,7 +63,7 @@ class CourseInfoForm(forms.ModelForm):
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
-            'activity': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+            'activity': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
         }

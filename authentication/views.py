@@ -5,9 +5,9 @@ from django.contrib import auth
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.forms.models import model_to_dict
-from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, ProfileEditForm, ParentForm, CompanyForm
-from authentication.models import UserInfo
-from authentication.models import UserProfile
+from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, ProfileEditForm, ParentForm, CompanyForm, \
+    ChildForm
+from authentication.models import UserInfo, UserProfile, Child
 
 
 def signin(request):
@@ -86,8 +86,33 @@ def profile_edit(request):
 
     return render(request, 'profile_edit.html', {
         'form': form,
-        'form_info' : form_info,
+        'form_info': form_info,
         'form_profile': form_profile,
         'u': request.user,
         'title': 'Именить профиль'
     })
+
+
+def add_child(request):
+    if request.method == 'POST':
+        form = ChildForm(request.POST)
+        if form.is_valid():
+            child = form.save(commit=False)
+            child.parent = UserProfile.objects.get(user=request.user)
+            child.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ChildForm()
+    return render(request, 'add_child.html', {'form': form})
+
+
+def edit_child(request, child_id):
+    child = Child.objects.get(id=child_id)
+    if request.method == 'POST':
+        form = ChildForm(request.POST, instance=child)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ChildForm(instance=child)
+    return render(request, 'edit_child.html', {'form': form, 'child': child})

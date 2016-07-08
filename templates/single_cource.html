@@ -1,5 +1,9 @@
 <div class="col-xs-4 course">
     <h3><a href="{% url 'single_course' course.id %}">{{ course.title }}</a></h3>
+    {% if course.author.user == user %}
+        <a href="{% url 'edit_course' course.id %}">Изменить</a>
+        <a href="{% url 'delete_course' course.id %}">Удалить</a>
+    {% endif %}
     <dd>Добавлено {{ course.author.user.username }} в {{ course.added_at }}</dd>
     <img src="{{ course.pic.url }}" width="276"><br>
     {% if course.description != '' %}<p>{{ course.description }}</p>{% endif %}

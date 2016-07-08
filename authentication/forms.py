@@ -5,7 +5,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from authentication.models import UserProfile, UserInfo, Child
 from django.contrib.auth.models import User
-from django.forms.widgets import CheckboxInput, RadioSelect, TextInput, PasswordInput, CheckboxSelectMultiple
+from django.forms.widgets import CheckboxInput, RadioSelect, TextInput, PasswordInput, CheckboxSelectMultiple, \
+    NumberInput, EmailInput
 
 
 class LoginForm(forms.ModelForm):
@@ -68,7 +69,7 @@ class UserProfileSignupForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ( 'user_type', 'avatar', 'subscribed',)
+        fields = ('user_type', 'avatar', 'subscribed',)
         widgets = {
             'subscribed': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
             'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
@@ -154,4 +155,28 @@ class CompanyForm(forms.ModelForm):
             'is_photo': 'Готовы ли вы выкладывать фото с преведенных мероприятий?',
             'is_notify': 'Готовы ли вы оповещать родителей об успехах их детей?',
             'activity': 'Сфера услуг:',
+        }
+
+
+class ChildForm(forms.ModelForm):
+    class Meta:
+        model = Child
+        fields = ['name', 'birth_year', 'metro', 'phone_number', 'email', 'good_at', 'prev_activities', ]
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя'}),
+            'birth_year': NumberInput(attrs={'class': 'form-control'}),
+            'metro': TextInput(attrs={'class': 'form-control', 'placeholder': 'Метро'}),
+            'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
+            'email': EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}),
+            'good_at': TextInput(attrs={'class': 'form-control', 'placeholder': 'Качества'}),
+            'prev_activities': CheckboxSelectMultiple(attrs={'class': ['form-control', 'checkbox-inline']})
+        }
+        labels = {
+            'name':'Имя',
+            'birth_year':'Год рождения',
+            'metro':'Ближайшее метро',
+            'phone_number':'Номер телефона',
+            'email':'Адрес email',
+            'good_at':'Хорошие качества',
+            'prev_activities':'Раньше занимались:',
         }

@@ -56,6 +56,8 @@ def add_course(request):
 @login_required(login_url='/authentication/signin/')
 def edit_course(request, course_id):
     course = Course.objects.get(id=course_id)
+    if request.user != course.author.user:
+        return render(request, 'searchbar.html')
     if request.method == 'POST':
         form = CourseForm(request.POST, request.FILES, instance=course)
         form_info = CourseInfoForm(request.POST, instance=course.info)
@@ -67,6 +69,16 @@ def edit_course(request, course_id):
         form = CourseForm(instance=course)
         form_info = CourseInfoForm(instance=course.info)
     return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
+
+
+
+#csrf attack
+@login_required(login_url='/authentication/signin/')
+def delete_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.user == course.author.user:
+        course.delete()
+    return render(request, 'searchbar.html')
 
 
 def get_comments(request):

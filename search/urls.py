@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^course/(?P<course_id>\d+)$', views.single_course, name='single_course'),
     url(r'^add$', views.add_course, name='add_course'),
     url(r'^edit/(?P<course_id>\d+)$', views.edit_course, name='edit_course'),
+    url(r'^delete/(?P<course_id>\d+)$', views.delete_course, name='delete_course'),
+
     url(r'^pinki', views.pinki, name='pinki'),
 
     url(r'^api/get/comments$', views.get_comments, name='get_comment'),
