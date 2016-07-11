@@ -32,7 +32,7 @@ class CourseInfo(models.Model):
     time_from = models.PositiveSmallIntegerField(default=0)  # Время от
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
     activity = models.ManyToManyField('CourseType', blank=True)  # Вид курса
-    location = models.CharField(max_length=50, blank=True)  # Местоположение
+    location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     price = models.PositiveIntegerField(default=0)  # Цена
     frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
 
@@ -55,3 +55,10 @@ class Like(models.Model):
     user = models.ForeignKey(UserProfile)
     course = models.ForeignKey(Course)
     is_liked = models.BooleanField(default=False)
+
+
+class Metro(models.Model):
+    title = models.TextField(max_length=128)
+
+    def __str__(self):
+        return self.title
