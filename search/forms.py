@@ -54,9 +54,6 @@ class CourseForm(forms.ModelForm):
 
 
 class CourseInfoForm(forms.ModelForm):
-    # location = forms.CharField(widget=TextInput(attrs={'class': 'form-control', 'placeholder': u'Адрес',}),
-    #                            label=u'Местоположение', required=False)
-
     class Meta:
         model = CourseInfo
         fields = ['age_from', 'age_to', 'activity', 'location',
@@ -65,14 +62,13 @@ class CourseInfoForm(forms.ModelForm):
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
             'activity': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
-            'location': Select(attrs={'class': 'form-control'}),
+            'location': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
         }
         labels = {
             'age_from': u'Минимальный возраст',
             'age_to': u'Максимальный возраст',
-            'location': u'Ближайшая станция метро',
             'activity': u'Тематика',
             'price': u'Цена',
             'frequency': u'Количество занятий в неделю',
