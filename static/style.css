@@ -70,10 +70,10 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
     background-color: #fff;
     margin-bottom: 20px;
 }
-.course:nth-child(3n+2){
+.course:nth-child(3n+1){
     margin-right: 2%;
 }
-.course:nth-child(3n+3){
+.course:nth-child(3n+2){
     margin-right: 2%;
 }
 .course h3{

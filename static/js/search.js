@@ -64,7 +64,7 @@ var selectOption = React.createClass({
 var Courses = React.createClass({
     render: function() {
         return (
-            <div className="course">
+            <div className="course col-xs-4">
                 <img className="course-image" src={this.props.image} width="60px" height="60px" />
                 <div className="course-info">
 
@@ -254,7 +254,7 @@ var CoursesList = React.createClass({
     render: function() {
         return (
             <div className="courses">
-                <input type="text" className="search-field" onChange={this.handleInput} ref="pinki"/>
+                <label>Поиск</label><input type="text" className="search-field" onChange={this.handleInput} ref="pinki"/>
 
                 <div>
                     {
@@ -269,11 +269,11 @@ var CoursesList = React.createClass({
                     }
                 </div>
 
-                <input type="text" className="searchPriceLower" onChange={this.handleNumber} ref="price-lower"/>
-                <input type="text" className="searchPriceHigh" onChange={this.handleNumber} ref="price-high"/>
+                <label>цена от</label><input type="text" className="searchPriceLower" onChange={this.handleNumber} ref="price-lower"/>
+                <label>цена до</label><input type="text" className="searchPriceHigh" onChange={this.handleNumber} ref="price-high"/>
                 <br />
-                <input type="text" className="ageLower" onChange={this.handleNumber} ref="price-lower"/>
-                <input type="text" className="ageHigh" onChange={this.handleNumber} ref="price-high"/>
+                <label>возраст от</label><input type="text" className="ageLower" onChange={this.handleNumber} ref="price-lower"/>
+                <label>возраст до</label><input type="text" className="ageHigh" onChange={this.handleNumber} ref="price-high"/>
 
                 <div className="courses-list">
                     {
