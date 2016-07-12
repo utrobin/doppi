@@ -64,10 +64,10 @@ var selectOption = React.createClass({
 var Courses = React.createClass({
     render: function() {
         return (
-            <div className="course col-xs-4">
-                <img className="course-image" src={this.props.image} width="60px" height="60px" />
-                <div className="course-info">
+            <div className="course">
 
+                <div className="course-info">
+                    <img className="course-image" src={this.props.image} width="60px" height="60px" />
                     <div className="course-name">автор курса {this.props.author}</div>
                     <a href={'/course/'+this.props.id}><div className="course-title">название {this.props.title} </div></a>
                     <div className="course-descreption">описание {this.props.description} </div>
@@ -164,6 +164,15 @@ var CoursesList = React.createClass({
         this.setState({
             querySet: searchQuery
         }, this.handleSearch);
+    },
+
+
+    sortPrice: function (comparator) {
+        var temp = this.state.data;
+        temp.sort(comparator);
+        this.setState({
+            data: temp
+        });
     },
 
     handleNumber: function (event) {
@@ -275,25 +284,39 @@ var CoursesList = React.createClass({
                 <label>возраст от</label><input type="text" className="ageLower" onChange={this.handleNumber} ref="price-lower"/>
                 <label>возраст до</label><input type="text" className="ageHigh" onChange={this.handleNumber} ref="price-high"/>
 
+                <br />
+                
+                <div className="sort-price">
+                    <a id="priceAsc" onClick={this.sortPrice.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
+                        Сортировка по цене возрастанию
+                    </a>
+        
+                    <a id="priceDesk" onClick={this.sortPrice.bind(this, function(a, b) {return (a.price <= b.price)? 1 : -1})} style={{display: 'none'}}>
+                        Сортировка по цене убыванию
+                    </a>
+                </div>
+
                 <div className="courses-list">
                     {
                         this.state.displayedCourses.map(function(el) {
-                            return <Courses
-                                key={el.id}
-                                id={el.id}
-                                author={el.author}
-                                image={el.pic}
-                                title={el.title}
-                                description={el.description}
-                                age_from={el.age_from}
-                                age_to={el.age_to}
-                                time_from={el.time_from}
-                                time_to={el.time_to}
-                                activity={el.activity}
-                                location={el.location}
-                                price={el.price}
-                                frequency={el.frequency}
-                            />;
+                            return(
+                                    <Courses
+                                        key={el.id}
+                                        id={el.id}
+                                        author={el.author}
+                                        image={el.pic}
+                                        title={el.title}
+                                        description={el.description}
+                                        age_from={el.age_from}
+                                        age_to={el.age_to}
+                                        time_from={el.time_from}
+                                        time_to={el.time_to}
+                                        activity={el.activity}
+                                        location={el.location}
+                                        price={el.price}
+                                        frequency={el.frequency}
+                                    />
+                            )
                         })
                     }
                 </div>
@@ -306,3 +329,17 @@ ReactDOM.render(
     <CoursesList get_url="/api/get/courses" get_url_activity="/api/get/activity" />,
     document.getElementById("content")
 );
+
+
+var priceAsc = document.getElementById('priceAsc');
+var priceDesk = document.getElementById('priceDesk');
+
+priceAsc.onclick = function(){
+    priceDesk.style.display = 'block';
+    priceAsc.style.display = 'none';
+};
+priceDesk.onclick = function(){
+    priceDesk.style.display = 'none';
+    priceAsc.style.display = 'block';
+};
+

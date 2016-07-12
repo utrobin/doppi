@@ -65,6 +65,8 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
 }
 .course{
     width: 32%;
+    display: inline-flex;
+    flex-direction: row;
     border: 2px solid #000;
     border-radius: 5px;
     background-color: #fff;
@@ -84,6 +86,10 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
     border: 1px solid #b6b6b6;
     border-radius: 3px;
     margin: 10px 0;
+    display: block;
+}
+.course-info{
+    display: block;
 }
 .course dd{
     font-size: 10px;
@@ -104,4 +110,10 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
     float: right;
     margin-right: 12px;
     margin-top: 10px;
+}
+.sort-price a{
+    cursor: pointer;
+}
+.course:nth-child(3n+3){
+
 }
