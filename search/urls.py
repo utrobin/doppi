@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^api/get/comments$', views.get_comments, name='get_comment'),
     url(r'^api/post/comment$', views.post_comment, name='post_comment'),
     url(r'^api/delete/comment$', views.delete_comment, name='delete_comment'),
+
+    url(r'^api/get/courses$', views.get_courses, name='get_courses'),
+    url(r'^api/get/activity$', views.get_activity, name='get_activity'),
 ]
