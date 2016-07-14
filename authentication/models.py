@@ -40,11 +40,11 @@ class Child(models.Model):
     email = models.EmailField(blank=True)
     good_at = models.CharField(max_length=128, blank=True)
     prev_activities = models.ManyToManyField('search.CourseType', blank=True)
-    parent = models.ForeignKey(UserProfile)
+    parent = models.ForeignKey(UserProfile, null=True, default=None)
     attend_to = models.ManyToManyField('search.Course', related_name='child_course', through='Payment')
 
 
 class Payment(models.Model):
-    child = models.ForeignKey(Child)
-    course = models.ForeignKey('search.Course')
+    child = models.ForeignKey(Child, null=True, default=None)
+    course = models.ForeignKey('search.Course', null=True, default=None)
     isPayed = models.BooleanField(default=False)

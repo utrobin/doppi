@@ -26,15 +26,16 @@ def hello(request):
 
 def get_courses(request):
     data = []
-    for course in Course.objects.all():
+    # options = json.loads(request.GET['options'])
+    for course in Course.objects.all()[:20]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'description': course.description, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': [str(a) for a in course.info.activity.all()],
                      'location': [str(a) for a in course.info.location.all()],
+                     'coordinate': course.info.coordinate,
                      'price': course.info.price, 'frequency': course.info.frequency})
-
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -91,8 +92,7 @@ def edit_course(request, course_id):
     return render(request, 'edit_course.html', {'form': form, 'forminfo': form_info, 'course': course})
 
 
-
-#csrf attack
+# csrf attack
 @login_required(login_url='/authentication/signin/')
 def delete_course(request, course_id):
     course = Course.objects.get(id=course_id)
