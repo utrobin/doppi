@@ -6,6 +6,8 @@ from search.models import *
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.db.models import Q
+
 import json
 import pusher
 
@@ -24,10 +26,36 @@ def hello(request):
     return render(request, 'hello.html')
 
 
+def mk_int(s, tabur):
+    s = s.strip()
+    if tabur:
+        return int(s) if s else 1000000
+    else:
+        return int(s) if s else 0
+
+
+def mk_checkboxes(list):
+    if len(list) != 0:
+        return list
+    else:
+        for k in CourseType.objects.all():
+            list.append(k.title)
+        return list
+
+
 def get_courses(request):
     data = []
-    # options = json.loads(request.GET['options'])
-    for course in Course.objects.all()[:20]:
+    options = json.loads(request.GET['options'])
+    page = int(request.GET['page'])
+    for course in Course.objects.filter(
+                    Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
+            Q(info__price__gte=mk_int(options['priceFrom'], False)),
+            Q(info__price__lte=mk_int(options['priceTo'], True)),
+            Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
+            Q(info__age_to__lte=mk_int(options['ageTo'], True)),
+                    Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+
+    )[page * 20:(page + 1) * 20]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'description': course.description, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
@@ -36,6 +64,8 @@ def get_courses(request):
                      'location': [str(a) for a in course.info.location.all()],
                      'coordinate': course.info.coordinate,
                      'price': course.info.price, 'frequency': course.info.frequency})
+    print(len(data))
+    print(data)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 

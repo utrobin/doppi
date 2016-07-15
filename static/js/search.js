@@ -1,6 +1,11 @@
 /**
  * Created by egorutrobin and pavelgolubev on 12.07.16.
  */
+
+
+var currentAjax = $.ajax();
+
+
 var CheckOption = React.createClass({
     getInitialState: function () {
         return {checked: false};
@@ -71,12 +76,16 @@ var CoursesOptions = React.createClass({
         }
     },
 
+    componentDidMount: function () {
+        this.props.applySearch(this.state.options);
+    },
+
     handleSearchQuery: function (event) {
         var tmp = this.state.options;
         tmp.searchQuery = event.target.value.toLowerCase().trim();
         this.setState({
             options: tmp
-        }, this.doSearch);
+        }, this.props.applySearch(this.state.options));
     },
 
     handleCheckbox: function (isCheck, value) {
@@ -85,14 +94,13 @@ var CoursesOptions = React.createClass({
             tmp.checkboxes.push(value);
             this.setState({
                 options: tmp
-            }, this.doSearch);
-
+            }, this.props.applySearch(this.state.options));
         }
         else {
             tmp.checkboxes.splice(this.state.options.checkboxes.indexOf(value), 1);
             this.setState({
                 options: tmp
-            }, this.doSearch)
+            }, this.props.applySearch(this.state.options))
         }
     },
 
@@ -119,11 +127,7 @@ var CoursesOptions = React.createClass({
 
         this.setState({
             options: tmp
-        }, this.doSearch);
-    },
-
-    doSearch: function () {
-        this.props.applySearch(this.state.options);
+        }, this.props.applySearch(this.state.options));
     },
 
     render: function () {
@@ -153,26 +157,51 @@ var CoursesOptions = React.createClass({
 var CoursesList = React.createClass({
     getInitialState: function () {
         return {
-            data: [],
             coursesActivity: [],
             displayedCourses: [],
-            isLoading: false
+            isLoading: false,
+            page: 0,
+            currentOptions: {}
         };
     },
 
     getCourses: function (options) {
-        this.setState({displayedCourses: [], isLoading: true});
-        $.ajax({
+        this.setState({displayedCourses: [], isLoading: true, currentOptions: options, page: 0});
+        currentAjax.abort();
+        currentAjax = $.ajax({
             url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {options: options},
+            data: {page: 0, options: JSON.stringify(options)},
             success: function (data) {
                 this.setState({
                     displayedCourses: data,
                     isLoading: false
                 });
+                console.log(this.state.displayedCourses)
             }.bind(this),
-            error: function (xrh, status, error) {
-                console.error(this.props.get_url, status, err.toString());
+            error: function (xrh, error) {
+                if (error!=='abort')
+                    console.error(this.props.get_url, status, error.toString());
+            }.bind(this)
+        });
+    },
+
+    loadMoreCourses: function () {
+        this.setState({isLoading: true});
+        currentAjax.abort();
+        currentAjax = $.ajax({
+            url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
+            data: {page: this.state.page+1, options: JSON.stringify(this.state.currentOptions)},
+            success: function (data) {
+                var tmp = this.state.displayedCourses.concat(data);
+                this.setState({
+                    displayedCourses: tmp,
+                    isLoading: false,
+                    page: this.state.page+1
+                });
+            }.bind(this),
+            error: function (xrh, error) {
+                if (error!=='abort')
+                    console.error(this.props.get_url, status, error.toString());
             }.bind(this)
         });
     },
@@ -191,7 +220,6 @@ var CoursesList = React.createClass({
 
     componentDidMount: function () {
         this.getActivity();
-        this.getCourses();
     },
 
     sortCourses: function (comparator) {
@@ -200,35 +228,10 @@ var CoursesList = React.createClass({
         });
     },
 
-    handleSearch: function (options) {
-        this.getCourses(options);
-        // var displayedCourses = this.state.data.filter(function (el) {
-        //     var searchValue1 = el.title.toLowerCase();
-        //     var searchValue2 = el.description.toLowerCase();
-        //     var searchValue3 = el.activity;
-        //     var c = this.check(searchValue3, options.checkboxes);
-        //     var searchValue4 = el.location;
-        //     var searchValue5 = el.price;
-        //     var searchValue6 = el.age_from;
-        //     var searchValue7 = el.age_to;
-        //
-        //     return (searchValue1.indexOf(options.searchQuery) && searchValue2.indexOf(options.searchQuery)) !== -1
-        //         && (options.checkboxes.length == 0 || c == true)
-        //         && (searchValue5 >= +options.priceFrom)
-        //         && (searchValue5 <= +options.priceTo || options.priceTo == '')
-        //         && (searchValue6 >= +options.ageFrom)
-        //         && (searchValue7 <= +options.ageTo || options.ageTo == '');
-        // }, this);
-        //
-        // this.setState({
-        //     displayedCourses: displayedCourses
-        // });
-    },
-
     render: function () {
         return (
             <div className="courses">
-                <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.handleSearch}/>
+                <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.getCourses}/>
                 <div className="sort-price">
                     <a id="priceAsc"
                        onClick={this.sortCourses.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
@@ -266,7 +269,7 @@ var CoursesList = React.createClass({
                     }
                 </div>
                 <div className={this.state.isLoading? '': 'none'}><img src="/static/loading.gif"/></div>
-                <button onClick={this.getCourses}>Загрузить еще</button>
+                <button onClick={this.loadMoreCourses}>Загрузить еще</button>
             </div>
         );
     }
