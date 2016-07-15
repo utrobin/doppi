@@ -25,6 +25,8 @@ pusher_client = pusher.Pusher(
 def hello(request):
     return render(request, 'hello.html')
 
+def data(request):
+    return render(request, 'data.json')
 
 def mk_int(s, tabur):
     s = s.strip()

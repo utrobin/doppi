@@ -17,4 +17,6 @@ urlpatterns = [
 
     url(r'^api/get/courses$', views.get_courses, name='get_courses'),
     url(r'^api/get/activity$', views.get_activity, name='get_activity'),
+
+    url(r'^data$', views.data, name='data'),
 ]
