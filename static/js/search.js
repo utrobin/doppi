@@ -268,8 +268,27 @@ var CoursesList = React.createClass({
                         })
                     }
                 </div>
-                <div className={this.state.isLoading? '': 'none'}><img src="/static/loading.gif"/></div>
-                <button onClick={this.loadMoreCourses}>Загрузить еще</button>
+                <div className="loading">
+                    <div className={this.state.isLoading? '': 'none'}>
+                        <div className="cssload-fond">
+                            <div className="cssload-container-general">
+                                <div className="cssload-internal">
+                                    <div className="cssload-ballcolor cssload-ball_1"></div>
+                                </div>
+                                <div className="cssload-internal">
+                                    <div className="cssload-ballcolor cssload-ball_2"></div>
+                                </div>
+                                <div className="cssload-internal">
+                                    <div className="cssload-ballcolor cssload-ball_3"></div>
+                                </div>
+                                <div className="cssload-internal">
+                                    <div className="cssload-ballcolor cssload-ball_4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button className={this.state.isLoading? 'none' : ''} onClick={this.loadMoreCourses}>Загрузить еще</button>
+                </div>
             </div>
         );
     }

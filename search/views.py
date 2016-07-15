@@ -55,7 +55,7 @@ def get_courses(request):
             Q(info__age_to__lte=mk_int(options['ageTo'], True)),
                     Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
 
-    )[page * 20:(page + 1) * 20]:
+    )[page * 18:(page + 1) * 18]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'description': course.description, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
