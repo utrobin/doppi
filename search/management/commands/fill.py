@@ -14,13 +14,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # generating questions
-        for i in range(0, 100):
+        for i in range(0, 10000):
             user = User.objects.get(id=1)
             profile = UserProfile.objects.get(user=user)
             q = Course(
                 author=profile,
-                title=fake.text(),
-                description=fake.street_address(),
+                title=fake.street_address(),
+                description=fake.text(),
             )
 
             info = CourseInfo(
@@ -30,6 +30,7 @@ class Command(BaseCommand):
                 time_to = random.randint(12, 24),
                 price = random.randint(0, 10000),
                 frequency = random.randint(1, 14),
+                coordinate = [56.010428,37.847155]
             )
             info.save()
 
