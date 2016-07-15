@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"features": [
+{"type": "Feature", "id": 0, "geometry": {"type": "Point", "coordinates": [52.196207,-8.399446]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/108'>апапоаирор</a>", "clusterCaption": "апапоаирор", "hintContent": "апапоаирор"}},
+{"type": "Feature", "id": 1, "geometry": {"type": "Point", "coordinates": [52.196207,-8.399446]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/116'>ап</a>", "clusterCaption": "ап", "hintContent": "ап"}},
+{"type": "Feature", "id": 2, "geometry": {"type": "Point", "coordinates": [52.196207,-8.399446]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/117'>Пошумим бля</a>", "clusterCaption": "Пошумим бля", "hintContent": "Пошумим бля"}},
+{"type": "Feature", "id": 3, "geometry": {"type": "Point", "coordinates": [52.196207,-8.399446]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/118'>Пошумим бля</a>", "clusterCaption": "Пошумим бля", "hintContent": "Пошумим бля"}},
+{"type": "Feature", "id": 4, "geometry": {"type": "Point", "coordinates": [52.196207,-8.399446]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/119'>пап</a>", "clusterCaption": "пап", "hintContent": "пап"}},
+{"type": "Feature", "id": 5, "geometry": {"type": "Point", "coordinates": [56.010428,37.847155]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/120'>Пошумим бля</a>", "clusterCaption": "Пошумим бля", "hintContent": "Пошумим бля"}},
+{"type": "Feature", "id": 6, "geometry": {"type": "Point", "coordinates": [55.75396,37.620393]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/122'>gfgf</a>", "clusterCaption": "gfgf", "hintContent": "gfgf"}},
+{"type": "Feature", "id": 7, "geometry": {"type": "Point", "coordinates": [51.537052,46.03652]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/123'>хех</a>", "clusterCaption": "хех", "hintContent": "хех"}},
+{"type": "Feature", "id": 8, "geometry": {"type": "Point", "coordinates": [60.70483,28.772634]}, "properties": {"balloonContent": "<a href='http://doppi.info/course/124'>Blabla</a>", "clusterCaption": "Blabla", "hintContent": "Blabla"}}
+ ]
+}

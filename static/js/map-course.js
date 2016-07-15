@@ -11,9 +11,8 @@ function init() {
     myMap = new ymaps.Map('map', {
         center: coordinate,
         zoom: 13,
-        controls: []
+        controls: ['smallMapDefaultSet']
     });
-    
 
     myMap.geoObjects
         .add(new ymaps.Placemark(coordinate, {

@@ -125,3 +125,7 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
     height: 500px;
     float: right;
 }
+.search-map{
+    width: 500px;
+    height: 500px;
+}
