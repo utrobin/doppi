@@ -117,3 +117,11 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
 .course:nth-child(3n+3){
 
 }
+.kost{
+    display: block;
+}
+.course-map{
+    width: 500px;
+    height: 500px;
+    float: right;
+}

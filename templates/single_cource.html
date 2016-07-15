@@ -1,4 +1,4 @@
-<div class="col-xs-4 course">
+<div class="col-xs-4 course kost">
     <h3><a href="{% url 'single_course' course.id %}">{{ course.title }}</a></h3>
     {% if course.author.user == user %}
         <a href="{% url 'edit_course' course.id %}">Изменить</a>
@@ -16,3 +16,9 @@
     <label>Цена:</label><span>{{ course.info.price }} р.</span><br>
     <label>Частота:</label><span>{{ course.info.frequency }} раз в неделю</span>
 </div>
+<input name="coordinate" type="hidden" value="{{ course.info.coordinate }}">
+{% if  course.info.coordinate %}
+    <div id="map" class="course-map"></div>
+{% else %}
+
+{% endif %}

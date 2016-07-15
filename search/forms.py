@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.forms import NumberInput, CheckboxSelectMultiple, TextInput, Textarea, HiddenInput
+
 from search.models import CourseInfo, Course, Comment
-from django.forms.widgets import CheckboxSelectMultiple, Textarea, TextInput, NumberInput, CheckboxInput, RadioSelect, \
-    Select
 from django.contrib.auth.models import User
 
 
@@ -54,10 +54,11 @@ class CourseForm(forms.ModelForm):
 
 
 class CourseInfoForm(forms.ModelForm):
+
     class Meta:
         model = CourseInfo
         fields = ['age_from', 'age_to', 'activity', 'location',
-                                                    'price', 'frequency']
+                                                    'price', 'frequency', 'coordinate']
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
@@ -65,6 +66,7 @@ class CourseInfoForm(forms.ModelForm):
             'location': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
+            'coordinate': HiddenInput()
         }
         labels = {
             'age_from': u'Минимальный возраст',
@@ -72,4 +74,7 @@ class CourseInfoForm(forms.ModelForm):
             'activity': u'Тематика',
             'price': u'Цена',
             'frequency': u'Количество занятий в неделю',
+            'coordinate': ''
         }
+
+
