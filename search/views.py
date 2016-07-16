@@ -26,8 +26,10 @@ pusher_client = pusher.Pusher(
 def hello(request):
     return render(request, 'hello.html')
 
+
 def data(request):
     return render(request, 'data.json')
+
 
 def mk_int(s, tabur):
     s = s.strip()
@@ -56,7 +58,7 @@ def get_courses(request):
             Q(info__price__lte=mk_int(options['priceTo'], True)),
             Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
             Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-                    Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+            Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
 
     )[page * 21:(page + 1) * 21]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
@@ -89,10 +91,18 @@ def getTabur(request):
 
 def get_activity(request):
     data = []
-    for course in CourseType.objects.all():
-        data.append({'id': course.id, 'title': course.title})
+    for cluster in CourseCluster.objects.all():
+        data.append({'id': cluster.id, 'title': cluster.title,
+                     'content': [{'id': course.id, 'title': course.title} for course in
+                                 CourseType.objects.filter(cluster=cluster)]})
+    # for course in CourseType.objects.all():
+    #     data.append({'id': course.id, 'title': course.title})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def tree(request):
+    return render(request, 'tree.html')
 
 
 def searchbar(request):

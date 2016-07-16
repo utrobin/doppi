@@ -31,7 +31,7 @@ class CourseInfo(models.Model):
     age_to = models.PositiveSmallIntegerField(default=18)  # Возраст до
     time_from = models.PositiveSmallIntegerField(default=0)  # Время от
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
-    activity = models.ManyToManyField('CourseCluster', blank=True)  # Вид курса
+    activity = models.ManyToManyField('CourseType', blank=True)  # Вид курса
     location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     coordinate_x = models.FloatField(blank=True)
     coordinate_y = models.FloatField(blank=True)

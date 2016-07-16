@@ -62,6 +62,76 @@ var Courses = React.createClass({
     }
 });
 
+var Leaf = React.createClass({
+    handleClick: function (event) {
+        this.props.handleClick([this.props.title]);
+    },
+    render: function () {
+        return (
+            <li onClick={this.handleClick}><p>{this.props.title}</p></li>
+        )
+    }
+});
+
+
+var Branch = React.createClass({
+    handleClick: function (event) {
+        this.props.handleClick(this.props.leaves.map(function (el) {
+            return el.title;
+        }));
+    },
+
+    render: function () {
+        return (
+            <ul><h1 onClick={this.handleClick}>{this.props.branch}</h1>{
+                this.props.leaves.map(function (el) {
+                    return (
+                        <Leaf key={el.id} title={el.title} handleClick={this.props.handleClick}/>
+                    )
+                }, this)
+            }
+            </ul>
+        )
+    }
+});
+
+var Tree = React.createClass({
+    getInitialState: function () {
+        return {
+            tree: []
+        }
+    },
+
+    handleTree: function (leaves) {
+        console.log(leaves);
+        this.props.handleSearch(leaves);
+    },
+
+    componentWillMount: function () {
+        $.ajax({
+            url: this.props.get_url_activity, type: 'GET', dataType: 'json', cache: false,
+            success: function (data) {
+                this.setState({tree: data});
+            }.bind(this),
+            error: function (xrh, status, error) {
+                console.error(this.props.get_url_activity, status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    render: function () {
+        return (
+            <ul>{
+                this.state.tree.map(function (el) {
+                    return (
+                        <Branch key={el.id} leaves={el.content} branch={el.title} handleClick={this.handleTree}/>
+                    )
+                }, this)
+            }</ul>
+        )
+    }
+});
+
 var CoursesOptions = React.createClass({
     getInitialState: function () {
         return {
@@ -88,20 +158,12 @@ var CoursesOptions = React.createClass({
         }, this.props.applySearch(this.state.options));
     },
 
-    handleCheckbox: function (isCheck, value) {
+    handleCheckbox: function (values) {
         var tmp = this.state.options;
-        if (isCheck) {
-            tmp.checkboxes.push(value);
-            this.setState({
-                options: tmp
-            }, this.props.applySearch(this.state.options));
-        }
-        else {
-            tmp.checkboxes.splice(this.state.options.checkboxes.indexOf(value), 1);
-            this.setState({
-                options: tmp
-            }, this.props.applySearch(this.state.options))
-        }
+        tmp.checkboxes = values;
+        this.setState({
+            options: tmp
+        }, this.props.applySearch(this.state.options));
     },
 
     handleNumberInput: function (event) {
@@ -133,16 +195,7 @@ var CoursesOptions = React.createClass({
     render: function () {
         return (<div>
             <label>Поиск</label><input type="text" className="search-field" onChange={this.handleSearchQuery}/>
-            <div>{
-                this.props.courseActivities.map(function (option) {
-                    return <CheckOption
-                        key={option.id}
-                        value={option.title}
-                        label={option.title}
-                        setCheckbox={this.handleCheckbox}
-                    />
-                }, this)
-            }</div>
+            <Tree get_url_activity="/api/get/activity" handleSearch={this.handleCheckbox}/>
             <label>цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
             <label>цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
             <br />
@@ -179,7 +232,7 @@ var CoursesList = React.createClass({
                 });
             }.bind(this),
             error: function (xrh, error) {
-                if (error!=='abort')
+                if (error !== 'abort')
                     console.error(this.props.get_url, status, error.toString());
             }.bind(this)
         });
@@ -196,30 +249,14 @@ var CoursesList = React.createClass({
                 this.setState({
                     displayedCourses: tmp,
                     isLoading: false,
-                    page: this.state.page+1
+                    page: this.state.page + 1
                 });
             }.bind(this),
             error: function (xrh, error) {
-                if (error!=='abort')
+                if (error !== 'abort')
                     console.error(this.props.get_url, status, error.toString());
             }.bind(this)
         });
-    },
-
-    getActivity: function () {
-        $.ajax({
-            url: this.props.get_url_activity, type: 'GET', dataType: 'json', cache: false,
-            success: function (data) {
-                this.setState({coursesActivity: data});
-            }.bind(this),
-            error: function (xrh, status, error) {
-                console.error(this.props.get_url_activity, status, err.toString());
-            }.bind(this)
-        });
-    },
-
-    componentDidMount: function () {
-        this.getActivity();
     },
 
     sortCourses: function (comparator) {
@@ -276,7 +313,7 @@ var CoursesList = React.createClass({
 });
 
 ReactDOM.render(
-    <CoursesList get_url="/api/get/courses" get_url_activity="/api/get/activity"/>,
+    <CoursesList get_url="/api/get/courses"/>,
     document.getElementById("content")
 );
 
