@@ -174,9 +174,9 @@ var CoursesList = React.createClass({
             success: function (data) {
                 this.setState({
                     displayedCourses: data,
-                    isLoading: false
+                    isLoading: false,
+                    page: 1
                 });
-                console.log(this.state.displayedCourses)
             }.bind(this),
             error: function (xrh, error) {
                 if (error!=='abort')
@@ -190,7 +190,7 @@ var CoursesList = React.createClass({
         currentAjax.abort();
         currentAjax = $.ajax({
             url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {page: this.state.page+1, options: JSON.stringify(this.state.currentOptions)},
+            data: {page: this.state.page, options: JSON.stringify(this.state.currentOptions)},
             success: function (data) {
                 var tmp = this.state.displayedCourses.concat(data);
                 this.setState({
@@ -268,27 +268,8 @@ var CoursesList = React.createClass({
                         })
                     }
                 </div>
-                <div className="loading">
-                    <div className={this.state.isLoading? '': 'none'}>
-                        <div className="cssload-fond">
-                            <div className="cssload-container-general">
-                                <div className="cssload-internal">
-                                    <div className="cssload-ballcolor cssload-ball_1"></div>
-                                </div>
-                                <div className="cssload-internal">
-                                    <div className="cssload-ballcolor cssload-ball_2"></div>
-                                </div>
-                                <div className="cssload-internal">
-                                    <div className="cssload-ballcolor cssload-ball_3"></div>
-                                </div>
-                                <div className="cssload-internal">
-                                    <div className="cssload-ballcolor cssload-ball_4"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button className={this.state.isLoading? 'none' : ''} onClick={this.loadMoreCourses}>Загрузить еще</button>
-                </div>
+                <div className={this.state.isLoading? '': 'none'}><img src="/static/loading.gif"/></div>
+                <button onClick={this.loadMoreCourses}>Загрузить еще</button>
             </div>
         );
     }
