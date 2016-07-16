@@ -28,7 +28,7 @@ def hello(request):
 
 
 def data(request):
-    return render(request, 'data.json')
+    return render(request, '../static/data.json')
 
 
 def mk_int(s, tabur):
@@ -76,15 +76,21 @@ def get_courses(request):
 def getTabur(request):
     coordinates = json.loads(request.GET['coordinates'])
     data = {}
-    data['type'] = 'FeatureCollection'
     data['features'] = []
+    data['type'] = 'FeatureCollection'
     i = 0
-    for course in Course.objects.filter():
+    for course in Course.objects.filter(
+            Q(info__coordinate_x__gte = coordinates[0][0]),
+            Q(info__coordinate_x__lte = coordinates[1][0]),
+            Q(info__coordinate_y__gte = coordinates[0][1]),
+            Q(info__coordinate_y__lte= coordinates[1][1]),
+    ):
         data['features'].append({'type': 'Feature', 'id': i, 'geometry':
-            {'type': 'Point'},
+            {'type': 'Point', 'coordinates': [course.info.coordinate_x,course.info.coordinate_y]},
                                  'properties': {'balloonContent': "<a href='http://doppi.info/course/" + str(
                                      course.id) + "'>" + course.title + "</a>", 'clusterCaption': course.title,
                                                 'hintContent': course.title}})
+        i += 1
 
     return HttpResponse(json.dumps(data), content_type="application/json")
 

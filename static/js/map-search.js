@@ -2,7 +2,7 @@
  * Created by egorutrobin on 15.07.16.
  */
 ymaps.ready(init);
-var myMap
+var myMap;
 
 function init () {
     myMap = new ymaps.Map('map', {
@@ -10,7 +10,7 @@ function init () {
             zoom: 10
         }, {
             searchControlProvider: 'yandex#search'
-        }),
+        });
         objectManager = new ymaps.ObjectManager({
             // Чтобы метки начали кластеризоваться, выставляем опцию.
             clusterize: true,
@@ -25,7 +25,14 @@ function init () {
     myMap.geoObjects.add(objectManager);
 
     myMap.events.add('boundschange', function () {
-        alert('О, событие!');
+        $.ajax
+        ({
+            url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+            data: {coordinates: JSON.stringify(myMap.getBounds())}
+        }).done(function(data) {
+                objectManager.add(data);
+                console.log(data);
+                });
     });
 
     console.log(myMap.getBounds());
@@ -36,6 +43,7 @@ function init () {
         url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
         data: {coordinates: JSON.stringify(myMap.getBounds())}
     }).done(function(data) {
+        console.log(data);
         objectManager.add(data);
     });
 
