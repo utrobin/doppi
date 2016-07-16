@@ -75,7 +75,7 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
 .course:nth-child(3n+1){
     margin-right: 2%;
 }
-.course:nth-child(3n+2){
+.course:nth-child(3n+3){
     margin-right: 2%;
 }
 .course h3{
@@ -126,8 +126,10 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
     float: right;
 }
 .search-map{
-    width: 800px;
+    width: 695px;
     height: 500px;
+    margin-bottom: 50px;
+    display: none;
 }
 .cssload-fond{
 	position:relative;
@@ -262,4 +264,32 @@ a.file-input-wrapper.btn.btn-default.ask-signup-avatar-input{
 }
 .cssload-container-general{
     margin: auto;
+}
+.loading{
+    margin-bottom: 200px;
+    display: block;
+}
+.tree-menu ul{
+    margin: 0;
+    padding: 0;
+}
+.tree-menu p{
+    margin: 0;
+    padding: 0;
+}
+.tree-menu p:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1b6d85;
+}
+.tree-menu h4:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1b6d85;
+}
+#click-map{
+    display: block;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }

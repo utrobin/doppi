@@ -83,13 +83,14 @@ var Branch = React.createClass({
 
     render: function () {
         return (
-            <ul><h1 onClick={this.handleClick}>{this.props.branch}</h1>{
-                this.props.leaves.map(function (el) {
-                    return (
-                        <Leaf key={el.id} title={el.title} handleClick={this.props.handleClick}/>
-                    )
-                }, this)
-            }
+            <ul>
+                <h4 onClick={this.handleClick}>{this.props.branch}</h4>{
+                    this.props.leaves.map(function (el) {
+                        return (
+                            <Leaf key={el.id} title={el.title} handleClick={this.props.handleClick}/>
+                        )
+                    }, this)
+                }
             </ul>
         )
     }
@@ -193,15 +194,21 @@ var CoursesOptions = React.createClass({
     },
 
     render: function () {
-        return (<div>
-            <label>Поиск</label><input type="text" className="search-field" onChange={this.handleSearchQuery}/>
-            <Tree get_url_activity="/api/get/activity" handleSearch={this.handleCheckbox}/>
-            <label>цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
-            <label>цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
-            <br />
-            <label>возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
-            <label>возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
-            <br />
+        return (
+        <div>
+            <div>
+                <label>Поиск</label><input type="text" className="search-field" onChange={this.handleSearchQuery}/>
+                <br />
+                <label>цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
+                <label>цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
+                <br />
+                <label>возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
+                <label>возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
+                <br />
+            </div>
+            <div className="col-xs-3 tree-menu">
+                <Tree get_url_activity="/api/get/activity" handleSearch={this.handleCheckbox}/>
+            </div>
         </div>)
     }
 
@@ -268,7 +275,6 @@ var CoursesList = React.createClass({
     render: function () {
         return (
             <div className="courses">
-                <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.getCourses}/>
                 <div className="sort-price">
                     <a id="priceAsc"
                        onClick={this.sortCourses.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
@@ -281,32 +287,51 @@ var CoursesList = React.createClass({
                         Сортировка по цене убыванию
                     </a>
                 </div>
-                <div className="courses-list">
-                    {
-                        this.state.displayedCourses.map(function (el) {
-                            return (
-                                <Courses
-                                    key={el.id}
-                                    id={el.id}
-                                    author={el.author}
-                                    image={el.pic}
-                                    title={el.title}
-                                    description={el.description}
-                                    age_from={el.age_from}
-                                    age_to={el.age_to}
-                                    time_from={el.time_from}
-                                    time_to={el.time_to}
-                                    activity={el.activity}
-                                    location={el.location}
-                                    price={el.price}
-                                    frequency={el.frequency}
-                                />
-                            )
-                        })
-                    }
+                <div className="row">
+
+                    <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.getCourses}/>
+
+                    <div className="courses-list col-xs-9">
+                        <input id="click-map" value="Показать карту" type="button"/>
+                        <div id="map" className="search-map"></div>
+                        {
+                            this.state.displayedCourses.map(function (el) {
+                                return (
+                                    <Courses
+                                        key={el.id}
+                                        id={el.id}
+                                        author={el.author}
+                                        image={el.pic}
+                                        title={el.title}
+                                        description={el.description}
+                                        age_from={el.age_from}
+                                        age_to={el.age_to}
+                                        time_from={el.time_from}
+                                        time_to={el.time_to}
+                                        activity={el.activity}
+                                        location={el.location}
+                                        price={el.price}
+                                        frequency={el.frequency}
+                                    />
+                                )
+                            })
+                        }
+
+                        <div className="loading">
+                            <div className={this.state.isLoading? '': 'none'}>
+                                <div align="center" className="cssload-fond">
+                                    <div className="cssload-container-general">
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_1"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_2"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_3"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_4"> </div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button className={this.state.isLoading? 'none': ''} onClick={this.loadMoreCourses}>Загрузить еще</button>
+                        </div>
+                    </div>
                 </div>
-                <div className={this.state.isLoading? '': 'none'}><img src="/static/loading.gif"/></div>
-                <button onClick={this.loadMoreCourses}>Загрузить еще</button>
             </div>
         );
     }
@@ -320,6 +345,8 @@ ReactDOM.render(
 
 var priceAsc = document.getElementById('priceAsc');
 var priceDesk = document.getElementById('priceDesk');
+var clickMap = document.getElementById('click-map');
+var Map = document.getElementById('map');
 
 priceAsc.onclick = function () {
     priceDesk.style.display = 'block';
@@ -329,4 +356,15 @@ priceDesk.onclick = function () {
     priceDesk.style.display = 'none';
     priceAsc.style.display = 'block';
 };
-
+clickMap.onclick = function () {
+    if(Map.style.display == 'none')
+    {
+        clickMap.value = 'Скрыть карту';
+        Map.style.display = 'block';
+    }
+    else
+    {
+        clickMap.value = 'Показать карту';
+        Map.style.display = 'none';
+    }
+};
