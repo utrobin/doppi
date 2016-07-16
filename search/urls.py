@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^api/get/activity$', views.get_activity, name='get_activity'),
 
     url(r'^data$', views.data, name='data'),
+
+    url(r'^coordinates$', views.getTabur, name='coordinates'),
+
 ]

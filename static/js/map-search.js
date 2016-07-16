@@ -2,9 +2,10 @@
  * Created by egorutrobin on 15.07.16.
  */
 ymaps.ready(init);
+var myMap
 
 function init () {
-    var myMap = new ymaps.Map('map', {
+    myMap = new ymaps.Map('map', {
             center: [55.76, 37.64],
             zoom: 10
         }, {
@@ -23,10 +24,20 @@ function init () {
     objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
     myMap.geoObjects.add(objectManager);
 
+    myMap.events.add('boundschange', function () {
+        alert('О, событие!');
+    });
+
+    console.log(myMap.getBounds());
+
+
+
     $.ajax({
-        url: "/data"
+        url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+        data: {coordinates: JSON.stringify(myMap.getBounds())}
     }).done(function(data) {
         objectManager.add(data);
     });
 
 }
+

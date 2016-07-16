@@ -7,6 +7,7 @@ from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.db.models import Q
+import random
 
 import json
 import pusher
@@ -68,6 +69,22 @@ def get_courses(request):
                      'price': course.info.price, 'frequency': course.info.frequency})
     print(len(data))
     print(data)
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def getTabur(request):
+    coordinates = json.loads(request.GET['coordinates'])
+    data = {}
+    data['type'] = 'FeatureCollection'
+    data['features'] = []
+    i = 0
+    for course in Course.objects.filter(headline__startswith='What'):
+        data['features'].append({'type': 'Feature', 'id': i, 'geometry':
+            {'type': 'Point', 'coordinates': [float(a) for a in course.info.coordinate.split(',')]},
+                                 'properties': {'balloonContent': "<a href='http://doppi.info/course/" + str(
+                                     course.id) + "'>" + course.title + "</a>", 'clusterCaption': course.title,
+                                                'hintContent': course.title}})
+
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
