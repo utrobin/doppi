@@ -31,7 +31,7 @@ class CourseInfo(models.Model):
     age_to = models.PositiveSmallIntegerField(default=18)  # Возраст до
     time_from = models.PositiveSmallIntegerField(default=0)  # Время от
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
-    activity = models.ManyToManyField('CourseType', blank=True)  # Вид курса
+    activity = models.ManyToManyField('CourseCluster', blank=True)  # Вид курса
     location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     coordinate = models.CharField(max_length=128, blank=True)
     price = models.PositiveIntegerField(default=0)  # Цена
@@ -45,7 +45,7 @@ class Comment(models.Model):
     added_at = models.DateTimeField(default=timezone.now)
 
 
-class CourseType(models.Model):
+class CourseCluster(models.Model):
     title = models.TextField(max_length=128)
 
     def __str__(self):
@@ -60,6 +60,13 @@ class Like(models.Model):
 
 class Metro(models.Model):
     title = models.TextField(max_length=128)
+
+    def __str__(self):
+        return self.title
+
+class CourseType(models.Model):
+    title = models.TextField(max_length=128)
+    cluster = models.ForeignKey(CourseCluster, blank=True)
 
     def __str__(self):
         return self.title
