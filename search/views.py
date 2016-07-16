@@ -65,7 +65,6 @@ def get_courses(request):
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': [str(a) for a in course.info.activity.all()],
                      'location': [str(a) for a in course.info.location.all()],
-                     'coordinate': course.info.coordinate,
                      'price': course.info.price, 'frequency': course.info.frequency})
     print(len(data))
     print(data)
@@ -78,9 +77,9 @@ def getTabur(request):
     data['type'] = 'FeatureCollection'
     data['features'] = []
     i = 0
-    for course in Course.objects.filter(headline__startswith='What'):
+    for course in Course.objects.filter():
         data['features'].append({'type': 'Feature', 'id': i, 'geometry':
-            {'type': 'Point', 'coordinates': [float(a) for a in course.info.coordinate.split(',')]},
+            {'type': 'Point'},
                                  'properties': {'balloonContent': "<a href='http://doppi.info/course/" + str(
                                      course.id) + "'>" + course.title + "</a>", 'clusterCaption': course.title,
                                                 'hintContent': course.title}})
