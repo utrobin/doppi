@@ -36,7 +36,7 @@ class LoginForm(forms.ModelForm):
 
 
 class SignupForm(UserCreationForm):
-    username = forms.HiddenInput()
+    username = forms.CharField(required=False, label='', widget=HiddenInput())
     email = forms.EmailField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваша почта',}),
         max_length=254, label=u'Адрес email',
@@ -173,11 +173,11 @@ class ChildForm(forms.ModelForm):
             'prev_activities': CheckboxSelectMultiple(attrs={'class': ['form-control', 'checkbox-inline']})
         }
         labels = {
-            'name':'Имя',
-            'birth_year':'Год рождения',
-            'metro':'Ближайшее метро',
-            'phone_number':'Номер телефона',
-            'email':'Адрес email',
-            'good_at':'Хорошие качества',
-            'prev_activities':'Раньше занимались:',
+            'name': 'Имя',
+            'birth_year': 'Год рождения',
+            'metro': 'Ближайшее метро',
+            'phone_number': 'Номер телефона',
+            'email': 'Адрес email',
+            'good_at': 'Хорошие качества',
+            'prev_activities': 'Раньше занимались:',
         }
