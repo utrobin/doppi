@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from authentication.models import UserProfile, UserInfo, Child
 from django.contrib.auth.models import User
 from django.forms.widgets import CheckboxInput, RadioSelect, TextInput, PasswordInput, CheckboxSelectMultiple, \
-    NumberInput, EmailInput
+    NumberInput, EmailInput, HiddenInput
 
 
 class LoginForm(forms.ModelForm):
@@ -36,6 +36,7 @@ class LoginForm(forms.ModelForm):
 
 
 class SignupForm(UserCreationForm):
+    username = forms.HiddenInput()
     email = forms.EmailField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваша почта',}),
         max_length=254, label=u'Адрес email',
@@ -57,7 +58,7 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('username', 'email',)
 
 
 class UserProfileSignupForm(forms.ModelForm):
