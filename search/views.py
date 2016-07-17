@@ -85,7 +85,7 @@ def getTabur(request):
             Q(info__coordinate_y__gte = coordinates[0][1]),
             Q(info__coordinate_y__lte= coordinates[1][1]),
     ):
-        data['features'].append({'type': 'Feature', 'id': i, 'geometry':
+        data['features'].append({'type': 'Feature', 'id': course.id, 'pk': course.id, 'geometry':
             {'type': 'Point', 'coordinates': [course.info.coordinate_x,course.info.coordinate_y]},
                                  'properties': {'balloonContent': "<a href='http://doppi.info/course/" + str(
                                      course.id) + "'>" + course.title + "</a>", 'clusterCaption': course.title,

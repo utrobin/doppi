@@ -24,28 +24,29 @@ function init () {
     objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
     myMap.geoObjects.add(objectManager);
 
+    var tabur = [];
+
     myMap.events.add('boundschange', function () {
         $.ajax
         ({
             url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
             data: {coordinates: JSON.stringify(myMap.getBounds())}
         }).done(function(data) {
-                objectManager.add(data);
-                console.log(data);
+                    objectManager.add(data);
+                    console.log(data);
                 });
     });
 
-    console.log(myMap.getBounds());
-
-
-
-    $.ajax({
+     $.ajax({
         url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
         data: {coordinates: JSON.stringify(myMap.getBounds())}
     }).done(function(data) {
         console.log(data);
+         tabur.push(data);
         objectManager.add(data);
+
     });
 
+    console.log(myMap.getBounds());
 }
 
