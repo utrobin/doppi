@@ -1,8 +1,14 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
 {% block content %}
+    <script src="/static/js/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/react.css">
     <script src="//api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"></script>
     <script src="/static/js/map-search.js" type="text/javascript"></script>
+    <div class="breadcrumb">
+        <a href="{% url 'main' %}">Главная</a>
+        <span>/</span>
+        <b>Поиск курсов</b>
+    </div>
     <div id='content'></div>
     <script type="text/babel" src="/static/js/search.js"></script>
 {% endblock %}

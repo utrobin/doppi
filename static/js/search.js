@@ -2,45 +2,65 @@
  * Created by egorutrobin and pavelgolubev on 12.07.16.
  */
 
+ymaps.ready(init);
+var myMap;
+var objectManager;
+var tabur = [];
+var ave = {};
+
+function init () {
+    myMap = new ymaps.Map('map', {
+            center: [55.76, 37.64],
+            zoom: 10
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+        objectManager = new ymaps.ObjectManager({
+            // Чтобы метки начали кластеризоваться, выставляем опцию.
+            clusterize: true,
+            // ObjectManager принимает те же опции, что и кластеризатор.
+            gridSize: 32
+        });
+
+    // Чтобы задать опции одиночным объектам и кластерам,
+    // обратимся к дочерним коллекциям ObjectManager.
+    objectManager.objects.options.set('preset', 'islands#greenDotIcon');
+    objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
+    myMap.geoObjects.add(objectManager);
+
+    myMap.events.add('boundschange', function () {
+        $.ajax
+        ({
+            url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+            data: {coordinates: JSON.stringify(myMap.getBounds())}
+        }).done(function(data) {
+                    objectManager.add(data);
+                    console.log(data);
+                });
+    });
+
+    $.ajax({
+        url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+        data: {coordinates: JSON.stringify(myMap.getBounds())}
+    }).done(function(data) {
+        console.log(data);
+         tabur.push(data);
+        objectManager.add(data);
+
+    });
+    console.log(myMap.getBounds());
+}
+
+
 
 var currentAjax = $.ajax();
 
 
-var CheckOption = React.createClass({
-    getInitialState: function () {
-        return {checked: false};
-    },
-
-    handleClick: function (event) {
-        this.setState(
-            {
-                checked: !this.state.checked
-            }
-        );
-        var isCheck = !this.state.checked;
-        var value = this.props.value;
-
-        this.props.setCheckbox(isCheck, value);
-    },
-
-    render: function () {
-        return (
-            <div>
-                <label>
-                    <input type="checkbox" value={this.props.value} checked={this.state.checked}
-                           onChange={this.handleClick}/>
-                    {this.props.label}
-                </label>
-            </div>
-        );
-    }
-});
 
 var Courses = React.createClass({
     render: function () {
         return (
             <div className="course">
-
                 <div className="course-info">
                     <img className="course-image" src={this.props.image} width="60px" height="60px"/>
                     <div className="course-name">автор курса {this.props.author}</div>
@@ -63,19 +83,58 @@ var Courses = React.createClass({
 });
 
 var Leaf = React.createClass({
-    handleClick: function (event) {
-        this.props.handleClick([this.props.title]);
+    getInitialState: function () {
+        return {
+            activeValue: false
+        }
     },
+
+    handleClick: function (event) {
+        objectManager.removeAll();
+
+        $.ajax({
+        url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+        data: {coordinates: JSON.stringify(myMap.getBounds())}
+    }).done(function(data) {
+        console.log(data);
+         tabur.push(data);
+        objectManager.add(data);
+
+    });
+
+        this.setState({
+            activeValue: !this.state.activeValue
+        }, console.log(this.state.activeValue));
+
+        this.props.handleClick(this.props.title, this.state.activeValue);
+    },
+
     render: function () {
         return (
-            <li onClick={this.handleClick}><p>{this.props.title}</p></li>
+            <li onClick={this.handleClick} className={this.state.activeValue? 'active': ''}><a>{this.props.title}</a></li>
         )
     }
 });
 
 
 var Branch = React.createClass({
+
+    getInitialState: function () {
+        return {
+            isDisplayed: false,
+            activeValueLeaf: false
+        }
+    },
+
+    activeLeaf: function (title, activeValue) {
+        this.forceUpdate();
+        this.props.handleClick([title]);
+    },
+
     handleClick: function (event) {
+        this.setState({
+            isDisplayed: !this.state.isDisplayed
+        });
         this.props.handleClick(this.props.leaves.map(function (el) {
             return el.title;
         }));
@@ -83,15 +142,19 @@ var Branch = React.createClass({
 
     render: function () {
         return (
-            <ul>
-                <h4 onClick={this.handleClick}>{this.props.branch}</h4>{
-                    this.props.leaves.map(function (el) {
-                        return (
-                            <Leaf key={el.id} title={el.title} handleClick={this.props.handleClick}/>
-                        )
-                    }, this)
-                }
-            </ul>
+
+                <li>
+                    <a className="parent-menu" onClick={this.handleClick}>{this.props.branch}</a>
+                    <ul style={this.state.isDisplayed ? {display:'block'}:{display:'none'}}>
+                        {
+                            this.props.leaves.map(function (el) {
+                                return (
+                                    <Leaf key={el.id} title={el.title} handleClick={this.activeLeaf}/>
+                                )
+                            }, this)
+                        }
+                    </ul>
+                </li>
         )
     }
 });
@@ -104,7 +167,6 @@ var Tree = React.createClass({
     },
 
     handleTree: function (leaves) {
-        console.log(leaves);
         this.props.handleSearch(leaves);
     },
 
@@ -196,7 +258,11 @@ var CoursesOptions = React.createClass({
     render: function () {
         return (
         <div>
-            <div>
+            <div className="tree-menu">
+                <span>Категории</span>
+                <Tree get_url_activity="/api/get/activity" handleSearch={this.handleCheckbox}/>
+            </div>
+            <div className="filters">
                 <label>Поиск</label><input type="text" className="search-field" onChange={this.handleSearchQuery}/>
                 <br />
                 <label>цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
@@ -205,9 +271,6 @@ var CoursesOptions = React.createClass({
                 <label>возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
                 <label>возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
                 <br />
-            </div>
-            <div className="col-xs-3 tree-menu">
-                <Tree get_url_activity="/api/get/activity" handleSearch={this.handleCheckbox}/>
             </div>
         </div>)
     }
@@ -225,7 +288,19 @@ var CoursesList = React.createClass({
         };
     },
 
+    refreshMap: function () {
+        $.ajax
+        ({
+            url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+            data: {coordinates: JSON.stringify(myMap.getBounds())}
+        }).done(function(data) {
+                    objectManager.add(data);
+                    console.log(data);
+        });
+    },
+
     getCourses: function (options) {
+        ave = options;
         this.setState({displayedCourses: [], isLoading: true, currentOptions: options, page: 0});
         currentAjax.abort();
         currentAjax = $.ajax({
@@ -243,6 +318,10 @@ var CoursesList = React.createClass({
                     console.error(this.props.get_url, status, error.toString());
             }.bind(this)
         });
+    },
+
+    componentWillMount: function () {
+
     },
 
     loadMoreCourses: function () {
@@ -274,26 +353,28 @@ var CoursesList = React.createClass({
 
     render: function () {
         return (
-            <div className="courses">
-                <div className="sort-price">
-                    <a id="priceAsc"
-                       onClick={this.sortCourses.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
-                        Сортировка по цене возрастанию
-                    </a>
-
-                    <a id="priceDesk"
-                       onClick={this.sortCourses.bind(this, function(a, b) {return (a.price <= b.price)? 1 : -1})}
-                       style={{display: 'none'}}>
-                        Сортировка по цене убыванию
-                    </a>
-                </div>
+            <div>
                 <div className="row">
-
                     <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.getCourses}/>
+                    <div className="sort-price">
+                        <a id="priceAsc"
+                           onClick={this.sortCourses.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
+                            Сортировка по цене возрастанию
+                        </a>
 
-                    <div className="courses-list col-xs-9">
-                        <input id="click-map" value="Показать карту" type="button"/>
-                        <div id="map" className="search-map"></div>
+                        <a id="priceDesk"
+                           onClick={this.sortCourses.bind(this, function(a, b) {return (a.price <= b.price)? 1 : -1})}
+                           style={{display: 'none'}}>
+                            Сортировка по цене убыванию
+                        </a>
+                    </div>
+
+                    <div className="courses">
+                        <div className="wrapper-map">
+                            <input id="click-map" value="Поиск по карте" type="button"/>
+                            <div id="map" className="search-map" style={{display: 'none'}}></div>
+                        </div>
+
                         {
                             this.state.displayedCourses.map(function (el) {
                                 return (
@@ -319,7 +400,7 @@ var CoursesList = React.createClass({
 
                         <div className="loading">
                             <div className={this.state.isLoading? '': 'none'}>
-                                <div align="center" className="cssload-fond">
+                                <div className="cssload-fond">
                                     <div className="cssload-container-general">
                                             <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_1"> </div></div>
                                             <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_2"> </div></div>
@@ -346,7 +427,6 @@ ReactDOM.render(
 var priceAsc = document.getElementById('priceAsc');
 var priceDesk = document.getElementById('priceDesk');
 var clickMap = document.getElementById('click-map');
-var Map = document.getElementById('map');
 
 priceAsc.onclick = function () {
     priceDesk.style.display = 'block';
@@ -357,14 +437,15 @@ priceDesk.onclick = function () {
     priceAsc.style.display = 'block';
 };
 clickMap.onclick = function () {
-    if(Map.style.display == 'none')
+    if(document.getElementById('map').style.display == 'none')
     {
         clickMap.value = 'Скрыть карту';
-        Map.style.display = 'block';
+        document.getElementById('map').style.display = 'block';
     }
     else
     {
-        clickMap.value = 'Показать карту';
-        Map.style.display = 'none';
+        clickMap.value = 'Поиск по карте';
+        document.getElementById('map').style.display = 'none';
     }
 };
+
