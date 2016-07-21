@@ -265,6 +265,7 @@ var CoursesList = React.createClass({
             coursesActivity: [],
             displayedCourses: [],
             isLoading: false,
+            isLoadingMap: false,
             page: 0,
             currentOptions: {}
         };
@@ -273,6 +274,9 @@ var CoursesList = React.createClass({
     refreshMap: function () {
         if(!!objectManager)
         {
+            this.setState({
+                isLoadingMap: true
+            });
             objectManager.removeAll();
             $.ajax
                 ({
@@ -280,7 +284,10 @@ var CoursesList = React.createClass({
                     data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(ave)}
                 }).done(function(data) {
                             objectManager.add(data);
-                        });
+                            this.setState({
+                                isLoadingMap: false
+                            });
+                        }.bind(this));
         }
     },
 
@@ -359,6 +366,7 @@ var CoursesList = React.createClass({
                     <div className="courses">
                         <div className="wrapper-map">
                             <input id="click-map" value="Поиск по карте" type="button"/>
+                            <h1 className={this.state.isLoadingMap? '': 'none'}> Загрузка идет</h1>
                             <div id="map" className="search-map" style={{display: 'none'}}></div>
                         </div>
 
