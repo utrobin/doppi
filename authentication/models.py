@@ -48,3 +48,6 @@ class Payment(models.Model):
     child = models.ForeignKey(Child, null=True, default=None)
     course = models.ForeignKey('search.Course', null=True, default=None)
     isPayed = models.BooleanField(default=False)
+
+
+

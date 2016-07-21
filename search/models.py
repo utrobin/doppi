@@ -37,6 +37,8 @@ class CourseInfo(models.Model):
     coordinate_y = models.FloatField(blank=True)
     price = models.PositiveIntegerField(default=0)  # Цена
     frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
+    level = models.ForeignKey('Level', null=True, default=None)
+    skill = models.ManyToManyField('Skill', blank=True)
 
 
 class Comment(models.Model):
@@ -65,9 +67,25 @@ class Metro(models.Model):
     def __str__(self):
         return self.title
 
+
 class CourseType(models.Model):
     title = models.TextField(max_length=128)
     cluster = models.ForeignKey(CourseCluster, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Level(models.Model):
+    value = models.IntegerField()
+    title = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.title
+
+
+class Skill(models.Model):
+    title = models.CharField(max_length=128)
 
     def __str__(self):
         return self.title

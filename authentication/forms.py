@@ -73,7 +73,7 @@ class UserProfileSignupForm(forms.ModelForm):
         fields = ('user_type', 'avatar', 'subscribed',)
         widgets = {
             'subscribed': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
-            'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+                    'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
         }
         labels = {
             'subscribed': 'Получать уведомления на электронную почту',
