@@ -5,7 +5,6 @@
 ymaps.ready(init);
 var myMap;
 var objectManager;
-var tabur = [];
 var ave = {};
 
 function init () {
@@ -32,22 +31,18 @@ function init () {
         $.ajax
         ({
             url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
-            data: {coordinates: JSON.stringify(myMap.getBounds())}
+            data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(ave)}
         }).done(function(data) {
                     objectManager.add(data);
-                    console.log(data);
                 });
     });
 
     $.ajax({
         url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
-        data: {coordinates: JSON.stringify(myMap.getBounds())}
+        data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(ave)}
     }).done(function(data) {
-        console.log(data);
-         tabur.push(data);
-        objectManager.add(data);
-
-    });
+            objectManager.add(data);
+        });
     console.log(myMap.getBounds());
 }
 
@@ -90,18 +85,6 @@ var Leaf = React.createClass({
     },
 
     handleClick: function (event) {
-        objectManager.removeAll();
-
-        $.ajax({
-        url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
-        data: {coordinates: JSON.stringify(myMap.getBounds())}
-    }).done(function(data) {
-        console.log(data);
-         tabur.push(data);
-        objectManager.add(data);
-
-    });
-
         this.setState({
             activeValue: !this.state.activeValue
         }, console.log(this.state.activeValue));
@@ -127,7 +110,6 @@ var Branch = React.createClass({
     },
 
     activeLeaf: function (title, activeValue) {
-        this.forceUpdate();
         this.props.handleClick([title]);
     },
 
@@ -289,18 +271,22 @@ var CoursesList = React.createClass({
     },
 
     refreshMap: function () {
-        $.ajax
-        ({
-            url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
-            data: {coordinates: JSON.stringify(myMap.getBounds())}
-        }).done(function(data) {
-                    objectManager.add(data);
-                    console.log(data);
-        });
+        if(!!objectManager)
+        {
+            objectManager.removeAll();
+            $.ajax
+                ({
+                    url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
+                    data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(ave)}
+                }).done(function(data) {
+                            objectManager.add(data);
+                        });
+        }
     },
 
     getCourses: function (options) {
         ave = options;
+        this.refreshMap();
         this.setState({displayedCourses: [], isLoading: true, currentOptions: options, page: 0});
         currentAjax.abort();
         currentAjax = $.ajax({
@@ -325,6 +311,7 @@ var CoursesList = React.createClass({
     },
 
     loadMoreCourses: function () {
+        console.log(objectManager);
         this.setState({isLoading: true});
         currentAjax.abort();
         currentAjax = $.ajax({

@@ -53,12 +53,12 @@ def get_courses(request):
     options = json.loads(request.GET['options'])
     page = int(request.GET['page'])
     for course in Course.objects.filter(
-                    Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
-            Q(info__price__gte=mk_int(options['priceFrom'], False)),
-            Q(info__price__lte=mk_int(options['priceTo'], True)),
-            Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
-            Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-            Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+        Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
+        Q(info__price__gte=mk_int(options['priceFrom'], False)),
+        Q(info__price__lte=mk_int(options['priceTo'], True)),
+        Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
+        Q(info__age_to__lte=mk_int(options['ageTo'], True)),
+        Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
 
     )[page * 21:(page + 1) * 21]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
@@ -75,6 +75,7 @@ def get_courses(request):
 
 def getTabur(request):
     coordinates = json.loads(request.GET['coordinates'])
+    options = json.loads(request.GET['options'])
     data = {}
     data['features'] = []
     data['type'] = 'FeatureCollection'
@@ -83,7 +84,14 @@ def getTabur(request):
             Q(info__coordinate_x__gte = coordinates[0][0]),
             Q(info__coordinate_x__lte = coordinates[1][0]),
             Q(info__coordinate_y__gte = coordinates[0][1]),
-            Q(info__coordinate_y__lte= coordinates[1][1]),
+            Q(info__coordinate_y__lte = coordinates[1][1]),
+
+            Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
+            Q(info__price__gte=mk_int(options['priceFrom'], False)),
+            Q(info__price__lte=mk_int(options['priceTo'], True)),
+            Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
+            Q(info__age_to__lte=mk_int(options['ageTo'], True)),
+            Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
     ):
         data['features'].append({'type': 'Feature', 'id': course.id, 'pk': course.id, 'geometry':
             {'type': 'Point', 'coordinates': [course.info.coordinate_x,course.info.coordinate_y]},
