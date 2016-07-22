@@ -1,5 +1,5 @@
 /**
- * ReactDOM v15.2.1
+ * ReactDOMServer v15.2.1
  *
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -34,9 +34,9 @@
       // see https://github.com/facebook/react/issues/3037
       g = this;
     }
-    g.ReactDOM = f(g.React);
+    g.ReactDOMServer = f(g.React);
   }
 
 })(function(React) {
-  return React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  return React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 });

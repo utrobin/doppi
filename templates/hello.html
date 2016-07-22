@@ -1,46 +1,6 @@
 {% extends "newbase.html" %}
 
 {% block content %}
-    <h1>Привет, я Доппи</h1>
-    <script src="/static/js/jquery.min.js"></script>
-    <div class="tree-menu">
-        <span>ffg</span>
-        <ul>
-            <li><a href="#" title="Меню 1">Меню 1</a>
-                <ul>
-            	   <li><a href="#" title="Элемент 1.1">Элемент 1.1</a></li>
-            	   <li><a href="#" title="Элемент 1.2">Элемент 1.2</a></li>
-            	   <li><a href="#" title="Элемент 1.3">Элемент 1.3</a></li>
-                </ul>
-            </li>
-            <li><a href="#" title="Меню 2">Меню 2</a>
-                <ul>
-            	   <li><a href="#" title="Элемент 2.1">Элемент 2.1</a></li>
-            	   <li><a href="#" title="Элемент 2.2">Элемент 2.2</a></li>
-            	   <li><a href="#" title="Элемент 2.3">Элемент 2.3</a></li>
-                </ul>
-            </li>
-            <li><a href="#" title="Меню 3">Меню 3</a>
-                <ul>
-            	   <li><a href="#" title="Элемент 3.1">Элемент 3.1</a></li>
-            	   <li><a href="#" title="Элемент 3.2">Элемент 3.2</a></li>
-            	   <li><a href="#" title="Элемент 3.3">Элемент 3.3</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-<script>
-    $(document).ready(function(){
-    $('.tree-menu ul li').click(
-        function() {
-            $(this).addClass("active");
-            $(this).find('ul').slideDown();
-        },
-        function() {
-            $(this).removeClass("active");
-            $(this).find('ul').slideUp('fast');
-        }
-    );
-});
-</script>
+    <div id="root"></div>
+ <script src="/static/js/rofl.js"></script>
 {% endblock %}

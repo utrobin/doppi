@@ -1,7 +1,6 @@
 /**
  * Created by egorutrobin and pavelgolubev on 12.07.16.
  */
-
 ymaps.ready(init);
 var myMap;
 var objectManager;
@@ -56,21 +55,27 @@ var Courses = React.createClass({
     render: function () {
         return (
             <div className="course">
-                <div className="course-info">
-                    <img className="course-image" src={this.props.image} width="60px" height="60px"/>
-                    <div className="course-name">автор курса {this.props.author}</div>
-                    <a href={'/course/'+this.props.id}>
-                        <div className="course-title">название {this.props.title} </div>
-                    </a>
-                    <div className="course-descreption">описание {this.props.description} </div>
-                    <div className="course-age_from">возраст от {this.props.age_from} </div>
-                    <div className="course-age_to">возратс до {this.props.age_to} </div>
-                    <div className="course-time_from">время от {this.props.time_from} </div>
-                    <div className="course-time_to">время до {this.props.time_to} </div>
-                    <div className="course-activity">какая категория {this.props.activity} </div>
-                    <div className="course-price">цена {this.props.price} </div>
-                    <div className="course-frequency">количество занятий в неделю {this.props.frequency} </div>
-                    <div className="course-location">какое метро {this.props.location}</div>
+                <div className="course-wrapper">
+                    <img className="course-image" src={this.props.image} width="250px"/>
+                    <div className="Golubev"></div>
+                    <div className="course-wrapper-title">
+                        <div className="course-name">{this.props.author}</div>
+                        <a href={'/course/'+this.props.id}>
+                            <div className="course-title">{this.props.title}</div>
+                        </a>
+                    </div>
+                    
+                    <div className="course-info">
+                        <div className="course-description">{this.props.description}</div>
+                        <div className="course-activity">
+                            <b>Категория:</b>
+                            <span>{this.props.activity}</span>
+                        </div>
+                        <div className="course-price">
+                            <b>Стоимость:</b>
+                            <span>{this.props.price} руб.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -366,7 +371,6 @@ var CoursesList = React.createClass({
                     <div className="courses">
                         <div className="wrapper-map">
                             <input id="click-map" value="Поиск по карте" type="button"/>
-                            <h1 className={this.state.isLoadingMap? '': 'none'}> Загрузка идет</h1>
                             <div id="map" className="search-map" style={{display: 'none'}}></div>
                         </div>
 
@@ -414,7 +418,7 @@ var CoursesList = React.createClass({
 });
 
 ReactDOM.render(
-    <CoursesList get_url="/api/get/courses"/>,
+        <CoursesList get_url="/api/get/courses"/>,
     document.getElementById("content")
 );
 

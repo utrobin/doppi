@@ -1,6 +1,7 @@
 body{
     font-family: 'Open Sans', sans-serif;
     color: #777;
+    background: #f6f6f6;
 }
 div{
     display: block;
@@ -145,14 +146,19 @@ h1{
     float: left;
 }
 .course{
-    width: 248px;
+    color: #fff;
+    width: 250px;
     display: inline-flex;
     flex-direction: row;
-    border: 1px solid #000;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #fff;
     margin-left: 25px;
     margin-top: 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all .2s ease-in-out;
+}
+.course:hover{
+    transform: scale(1.05);
 }
 .tree-menu span{
     font-weight: 600;
@@ -359,4 +365,65 @@ h1{
 }
 .tree-menu .active a{
     color: #000;
+}
+.course img{
+    border-radius: 5px 5px 0 0;
+    position: absolute;
+    height: 187px;
+    width: 250px;
+}
+.course-info{
+    z-index: 10;
+}
+.Golubev{
+    background-color: rgba(37, 43, 48, 0.65);
+    height: 187px;
+    width: 250px;
+    z-index: 9;
+    position: absolute;
+    border-radius: 5px 5px 0 0;
+}
+.course-wrapper-title{
+    height: 165px;
+    border-radius: 5px 5px 0 0;
+    z-index: 11;
+    position: relative;
+    color: #fff;
+    padding: 25px 15px 0 15px;
+}
+.course-wrapper{
+    position: relative;
+}
+.course-name{
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.course-title{
+    color: #fff;
+    display: inline;
+    font-size: 18px;
+}
+.course-title:hover{
+    border-bottom: 1px solid #fff;
+}
+.course-info{
+    color: #879198;
+}
+.course-description{
+    border-bottom: 1px solid rgb(225, 228, 224);
+    padding: 15px;
+    font-size: 14px;
+}
+.course-activity span, .course-price span{
+    display: block;
+    text-align: right;
+}
+.course-activity b, .course-price b{
+    float: left;
+}
+.course-activity, .course-price{
+    border-bottom: 1px solid rgb(225, 228, 224);
+    padding: 15px;
+    font-size: 14px;
 }
