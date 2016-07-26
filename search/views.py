@@ -127,7 +127,7 @@ def single_course(request, course_id):
     count = Course.objects.all().count()
     slice = random.random() * (count - 3)
     recommend_courses = Course.objects.all()[slice: slice + 3]
-
+    cluster = Course.objects.c
     course = Course.objects.get(id=course_id)
     return render(request, 'course_page.html',
                   {
