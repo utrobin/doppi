@@ -13,10 +13,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        for course in CourseInfo.objects.all()[:100]:
-            course.title = fake.text(max_nb_chars=128)
-            course.introtext = fake.text(max_nb_chars=256)
-            course.description = fake.text(max_nb_chars=16384)
+        for course in Course.objects.all():
+         #   course.title = fake.text(max_nb_chars=128)
+         #   course.introtext = fake.text(max_nb_chars=256)
+            course.description = fake.paragraphs(nb=8)
             course.save()
 
         #    for course in CourseInfo.objects.all():

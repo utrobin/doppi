@@ -52,34 +52,6 @@ a{
     float: right;
     width: 300px;
 }
-.btn{
-    display: block;
-    border: 1px solid;
-    padding: 5px 10px;
-    margin-left: 5px;
-    margin-top: 10px;
-    float: right;
-    border-radius: 5px;
-    font-size: 16px;
-}
-.signin{
-    background-color: #fff;
-
-}
-.signup{
-    background-color: #1cc97d;
-    border-color: #135240;
-    color: #fff;
-}
-.signup:hover{
-    background-color: #07996c;
-    border-color: #115249;
-    cursor: pointer;
-}
-.signin:hover{
-    background-color: #aeaeae;
-    cursor: pointer;
-}
 h1{
     margin-top: 20px;
     margin-bottom: 10px;
@@ -590,4 +562,35 @@ button:hover, input[type="button"]:hover{
 }
 .soc-span{
     margin-right: 15px;
+}
+.btn{
+    display: block;
+    border: 1px solid;
+    padding: 5px 10px;
+    margin-left: 5px;
+    margin-top: 10px;
+    float: right;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.signin{
+    background-color: #fff;
+    color: #000;
+}
+.signin:hover{
+    opacity: 1;
+}
+.signup{
+    background-color: #1cc97d;
+    border-color: #135240;
+    color: #fff;
+}
+.signup:hover{
+    background-color: #07996c;
+    border-color: #115249;
+    cursor: pointer;
+}
+.signin:hover{
+    background-color: #aeaeae;
+    cursor: pointer;
 }

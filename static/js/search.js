@@ -239,7 +239,7 @@ var Courses = React.createClass({
                     </div>
 
                     <div className="course-info">
-                        <div className="course-description">{this.props.description}</div>
+                        <div className="course-description">{this.props.introtext}</div>
                         <div className="course-activity">
                             <b>Категория:</b>
                             <span>{this.props.activity}</span>
@@ -584,7 +584,7 @@ var CoursesList = React.createClass({
                                         author={el.author}
                                         image={el.pic}
                                         title={el.title}
-                                        description={el.description}
+                                        introtext={el.introtext}
                                         age_from={el.age_from}
                                         age_to={el.age_to}
                                         time_from={el.time_from}
