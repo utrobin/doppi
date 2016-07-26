@@ -1,0 +1,64 @@
+<div class="wrapper-course">
+    <div class="organization">
+        <img src="{{ course.author.user.userprofile.avatar.url  }}" width="100">
+        <span>{{ course.author.user }}</span>
+    </div>
+    <h1>{{ course.title }}</h1>
+    {% if course.author.user == user %}
+        <div class="options">
+            <a href="{% url 'edit_course' course.id %}">Изменить</a>
+            <a href="{% url 'delete_course' course.id %}">Удалить</a>
+        </div>
+    {% endif %}
+
+    <dd>Добавлено в {{ course.added_at }}</dd>
+    <div class="introtext">
+        <p>В парке «Сокольники» открылась школа уницикла — катания на одноколесном велосипеде. Это оригинальное, безопасное развлечение для взрослых и детей от 7 лет, позволяющее держать все мышцы тела в тонусе.</p>
+    </div>
+    <div class="photo">
+        <img src="{{ course.pic.url }}" width="700">
+    </div>
+    <div class="description">
+        {% autoescape off %}
+            {{ course.description }}
+        {% endautoescape %}
+    </div>
+    <table>
+        <tr>
+            <th>Категория:</th>
+            <th>
+                {% for type in course.info.activity.all %}
+                   {{ type.title }}
+                {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th>Возраст:</th>
+            <th>{{ course.info.age_from }} - {{ course.info.age_to }} лет</th>
+        </tr>
+        <tr>
+            <th>Количество занятий в неделю:</th>
+            <th>{{ course.info.frequency }} руб.</th>
+        </tr>
+        <tr>
+            <th>Цена:</th>
+            <th>{{ course.info.price }} руб.</th>
+        </tr>
+    </table>
+
+    <input name="coordinate_x" type="hidden" value="{{ course.info.coordinate_x }}">
+    <input name="coordinate_y" type="hidden" value="{{ course.info.coordinate_y }}">
+
+    <h2>Наше местоположение:</h2>
+    {% if  course.info.coordinate_x and course.info.coordinate_y %}
+        <div id="map" class="course-map"></div>
+    {% else %}
+
+    {% endif %}
+    <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+    <div class="social">
+        <span class="soc-span">Поделиться:</span>
+        <div class="ya-share2" data-services="vkontakte,moimir,odnoklassniki,facebook,twitter"></div>
+    </div>
+</div>

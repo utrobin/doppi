@@ -16,7 +16,7 @@ def picture_upload_to(instance, filename):
 # Курс
 class Course(models.Model):
     title = models.CharField(max_length=128)  # Название
-    description = models.TextField(max_length=1024, blank=True)  # Описание
+    description = models.TextField(max_length=16384, blank=True)  # Описание
     author = models.ForeignKey(UserProfile, default=1)  # Автор
     pic = models.ImageField(upload_to=picture_upload_to, default='miss.png')  # Картинка
     added_at = models.DateTimeField(default=timezone.now)  # Дата добавления

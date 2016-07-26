@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^delete/(?P<course_id>\d+)$', views.delete_course, name='delete_course'),
 
     url(r'^pinki', views.pinki, name='pinki'),
-    url(r'^tree', views.tree, name='tree'),
 
     url(r'^api/get/comments$', views.get_comments, name='get_comment'),
     url(r'^api/post/comment$', views.post_comment, name='post_comment'),
@@ -21,6 +20,6 @@ urlpatterns = [
 
     url(r'^data$', views.data, name='data'),
 
-    url(r'^coordinates$', views.getTabur, name='coordinates'),
+    url(r'^coordinates$', views.get_courses_map, name='coordinates'),
 
 ]

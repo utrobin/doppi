@@ -10,7 +10,7 @@
 
 
 
-
+    <script src="/static/js/jquery.min.js"></script>
 
     <script src="/static/js/react-with-addons.js"></script>
     <script src="/static/js/react-dom.js"></script>
@@ -39,12 +39,14 @@
 
         <ul class="navbar-right">
             {% if  user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" >{{ user.username }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url 'edit' %}">Изменить профиль</a></li>
-                        <li><a href="{% url 'logout' %}">Выйти</a></li>
-                    </ul>
+                <li class="dropdown" id="dropdown">
+                    <a>{{ user.username }} <b class="caret"></b></a>
+                    <div class="drop">
+                        <ul class="dropdown-menu" id="dropdown-menu">
+                            <li><a href="{% url 'edit' %}">Изменить профиль</a></li>
+                            <li><a href="{% url 'logout' %}">Выйти</a></li>
+                        </ul>
+                    </div>
                 </li>
             {% else %}
                 <a href="{% url 'signup' %}">
@@ -62,7 +64,9 @@
     {% block content %}{% endblock %}
 </div>
 <script src="/static/js/pusher.min.js"></script>
-    <script src="/static/js/js.cookie.js"></script>
+<script src="/static/js/js.cookie.js"></script>
+
+
 
 
 </body>

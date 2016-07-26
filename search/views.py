@@ -47,20 +47,25 @@ def mk_checkboxes(list):
             list.append(k.title)
         return list
 
+def mk_sort(sort):
+    if sort == 'ASC':
+        return '-info__price'
+    else:
+        return 'info__price'
+
 
 def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])
     page = int(request.GET['page'])
     for course in Course.objects.filter(
-        Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
+        Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
         Q(info__price__gte=mk_int(options['priceFrom'], False)),
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True)),
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
-
-    )[page * 21:(page + 1) * 21]:
+    )[page * 3:(page + 1) * 3]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'description': course.description, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
@@ -68,14 +73,14 @@ def get_courses(request):
                      'activity': [str(a) for a in course.info.activity.all()],
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
-    print(len(data))
-    print(data)
+
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
-def getTabur(request):
+def get_courses_map(request):
     coordinates = json.loads(request.GET['coordinates'])
     options = json.loads(request.GET['options'])
+    print(options)
     data = {}
     data['features'] = []
     data['type'] = 'FeatureCollection'
@@ -86,14 +91,14 @@ def getTabur(request):
             Q(info__coordinate_y__gte = coordinates[0][1]),
             Q(info__coordinate_y__lte = coordinates[1][1]),
 
-            Q(description__icontains=(options['searchQuery'])) | Q(title__icontains=options['searchQuery']),
+            Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
             Q(info__price__gte=mk_int(options['priceFrom'], False)),
             Q(info__price__lte=mk_int(options['priceTo'], True)),
             Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
             Q(info__age_to__lte=mk_int(options['ageTo'], True)),
             Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
     ):
-        data['features'].append({'type': 'Feature', 'id': course.id, 'pk': course.id, 'geometry':
+        data['features'].append({'type': 'Feature', 'id': course.id, 'geometry':
             {'type': 'Point', 'coordinates': [course.info.coordinate_x,course.info.coordinate_y]},
                                  'properties': {'balloonContent': "<a href='http://doppi.info/course/" + str(
                                      course.id) + "'>" + course.title + "</a>", 'clusterCaption': course.title,
@@ -109,14 +114,8 @@ def get_activity(request):
         data.append({'id': cluster.id, 'title': cluster.title,
                      'content': [{'id': course.id, 'title': course.title} for course in
                                  CourseType.objects.filter(cluster=cluster)]})
-    # for course in CourseType.objects.all():
-    #     data.append({'id': course.id, 'title': course.title})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
-
-
-def tree(request):
-    return render(request, 'tree.html')
 
 
 def searchbar(request):
@@ -124,8 +123,17 @@ def searchbar(request):
 
 
 def single_course(request, course_id):
+
+    count = Course.objects.all().count()
+    slice = random.random() * (count - 3)
+    recommend_courses = Course.objects.all()[slice: slice + 3]
+
     course = Course.objects.get(id=course_id)
-    return render(request, 'course_page.html', {'course': course})
+    return render(request, 'course_page.html',
+                  {
+                      'course': course,
+                      'recommend_courses': recommend_courses
+                  })
 
 
 @login_required(login_url='/authentication/signin/')

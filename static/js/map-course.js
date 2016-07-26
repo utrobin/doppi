@@ -5,12 +5,14 @@ var myMap;
 ymaps.ready(init);
 
 function init() {
-    var coordinate = document.getElementsByName('coordinate')[0].value.split(',');
-    console.log(coordinate);
+    var coordinate_x = document.getElementsByName('coordinate_x')[0].value;
+    var coordinate_y = document.getElementsByName('coordinate_y')[0].value;
+    var coordinate = [coordinate_x, coordinate_y];
+    console.log([coordinate_x, coordinate_y]);
 
     myMap = new ymaps.Map('map', {
         center: coordinate,
-        zoom: 13,
+        zoom: 14,
         controls: ['smallMapDefaultSet']
     });
 

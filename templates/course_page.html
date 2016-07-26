@@ -1,20 +1,28 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
 {% block content %}
-    <link rel="stylesheet" href="/static/css/react.css">
     <script type="text/babel" src="/static/js/comments.js"></script>
+
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="/static/js/map-course.js" type="text/javascript"></script>
 
-    <div class="container">
-        <div class="row">
-            {% include 'single_cource.html' %}
-            <div class="col-xs-8">
-                <div class="row">
-                    <div id="course_id" hidden>{{ course.id }}</div>
-                    <div id="name" hidden>{{ user.username }}</div>
-                    <div id="root"></div>
-                </div>
-            </div>
+    <div class="breadcrumb">
+        <a href="{% url 'main' %}">Главная</a>
+        <span>/</span>
+        <a href="{% url 'main' %}">Поиск курсов</a>
+        <span>/</span>
+        <b>{{ course.title }}</b>
+    </div>
+
+    <div class="page-course">
+        {% include 'singleCourse/single_course.html' %}
+        <div class="comments">
+            <div id="course_id" hidden>{{ course.id }}</div>
+            <div id="name" hidden>{{ user.username }}</div>
+            <div id="root"></div>
         </div>
+    </div>
+
+    <div class="recommend_courses">
+        {% include 'singleCourse/recommend_courses.html' %}
     </div>
 {% endblock %}

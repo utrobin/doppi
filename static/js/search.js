@@ -6,6 +6,179 @@ var myMap;
 var objectManager;
 var ave = {};
 
+const CHEKBOXES = 'CHEKBOXES'
+const AGE_FROM = 'AGE_FROM'
+const AGE_TO = 'AGE_TO'
+const PRICE_FROM = 'PRICE_FROM'
+const PRICE_TO = 'PRICE_TO'
+const SEARCH_QUERY = 'SEARCH_QUERY'
+const SORT_PRICE = 'SORT_PRICE'
+const GET_COURSES = 'GET_COURSES'
+const ADD_COURSES = 'ADD_COURSES'
+const ADD_TODO = 'ADD_TODO'
+const TOGGLE_TODO = 'TOGGLE_TODO'
+const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+
+/*
+ * другие константы
+ */
+
+const VisibilityFilters = {
+  SHOW_ALL: 'SHOW_ALL',
+  SHOW_COMPLETED: 'SHOW_COMPLETED',
+  SHOW_ACTIVE: 'SHOW_ACTIVE'
+}
+
+/*
+ * генераторы действий
+ */
+function checkboxes(value) {
+  return { type: CHEKBOXES, value}
+}
+
+function ageFrom(value) {
+  return { type: AGE_FROM, value }
+}
+
+function ageTo(value) {
+  return { type: AGE_TO, value }
+}
+
+function searchQuery(value) {
+  return { type: SEARCH_QUERY, value }
+}
+
+function priceFrom(value) {
+  return { type: PRICE_FROM, value }
+}
+
+function priceTo(value) {
+  return { type: PRICE_TO, value }
+}
+
+function sortPrice() {
+  return { type: SORT_PRICE }
+}
+
+function getCourses(courses) {
+  return { type: GET_COURSES, courses }
+}
+
+function addCourses(courses) {
+  return { type: ADD_COURSES, courses }
+}
+
+function get_url(state, action) {
+    return "/api/get/courses"
+
+}
+
+function options(state, action) {
+  if (typeof state === 'undefined') {
+
+    return  {
+                query: "",
+                checkboxes: [],
+                priceFrom: "",
+                priceTo: "",
+                ageFrom: "",
+                ageTo: ""
+            }
+  }
+  switch (action.type) {
+    case CHEKBOXES:
+    {
+        if (action.value == undefined)
+            return state;
+
+        console.log(state, action, 'checbfojbnj')
+        var {checkboxes, ...resState0} = state;
+        var omg = Object.assign({}, resState0, {checkboxes: action.value})
+        console.log(omg, 'kkkпапапапап');
+
+        return omg;
+    }
+    case SEARCH_QUERY:
+    {
+        var {query, ...resState} = state;
+        return Object.assign({}, resState, {query: action.value});
+    }
+    case PRICE_FROM:
+    {
+        var {priceFrom, ...resState1} = state;
+        return Object.assign({}, resState1, {priceFrom: action.value});
+    }
+    case PRICE_TO:
+    {
+        var {priseTo, ...resState2} = state;
+        return Object.assign({}, resState2, {priceTo: action.value});
+    }
+    case AGE_FROM:
+    {
+        var {ageFrom, ...resState3} = state;
+        return Object.assign({}, resState3, {ageFrom: action.value});
+    }
+    case AGE_TO:
+    {
+        var {ageTo, ...resState4} = state;
+        return Object.assign({}, resState4, {ageTo: action.value});
+    }
+    default:
+      return state
+  }
+}
+
+function sort(state, action) {
+  if (typeof state === 'undefined') {
+    return 'ASC'
+  }
+  switch (action.type) {
+    case SORT_PRICE:
+    {
+        if (state == 'ASC')
+        {
+            return 'DESC'
+        }
+        else
+        {
+            return 'ASC'
+        }
+    }
+
+    default:
+      return state
+  }
+}
+
+function courses(state, action) {
+  if (typeof state === 'undefined') {
+    return []
+  }
+  switch (action.type) {
+    case GET_COURSES:
+      return action.courses
+
+    case ADD_COURSES:
+        return [
+          ...state,
+          ...action.courses
+        ]
+
+    default:
+      return state
+  }
+}
+
+
+const todoApp = Redux.combineReducers({
+    get_url,
+    options,
+    sort,
+    courses,
+})
+
+let store = Redux.createStore(todoApp)
+
 function init () {
     myMap = new ymaps.Map('map', {
             center: [55.76, 37.64],
@@ -64,7 +237,7 @@ var Courses = React.createClass({
                             <div className="course-title">{this.props.title}</div>
                         </a>
                     </div>
-                    
+
                     <div className="course-info">
                         <div className="course-description">{this.props.description}</div>
                         <div className="course-activity">
@@ -92,8 +265,7 @@ var Leaf = React.createClass({
     handleClick: function (event) {
         this.setState({
             activeValue: !this.state.activeValue
-        }, console.log(this.state.activeValue));
-
+        });
         this.props.handleClick(this.props.title, this.state.activeValue);
     },
 
@@ -114,7 +286,7 @@ var Branch = React.createClass({
         }
     },
 
-    activeLeaf: function (title, activeValue) {
+    activeLeaf: function (title) {
         this.props.handleClick([title]);
     },
 
@@ -186,60 +358,48 @@ var CoursesOptions = React.createClass({
     getInitialState: function () {
         return {
             options: {
-                searchQuery: "",
                 checkboxes: [],
                 priceFrom: "",
                 priceTo: "",
                 ageFrom: "",
-                ageTo: ""
+                ageTo: "",
             }
         }
     },
 
     componentDidMount: function () {
-        this.props.applySearch(this.state.options);
+        this.props.applySearch();
     },
 
     handleSearchQuery: function (event) {
-        var tmp = this.state.options;
-        tmp.searchQuery = event.target.value.toLowerCase().trim();
-        this.setState({
-            options: tmp
-        }, this.props.applySearch(this.state.options));
+        this.props.dispatch(searchQuery(event.target.value.toLowerCase().trim()));
+        this.props.Search()
     },
 
     handleCheckbox: function (values) {
-        var tmp = this.state.options;
-        tmp.checkboxes = values;
-        this.setState({
-            options: tmp
-        }, this.props.applySearch(this.state.options));
+        this.props.applySearch(values);
     },
 
     handleNumberInput: function (event) {
         var inputValue = event.target.value.toLowerCase().trim();
-        var tmp = this.state.options;
 
         switch (event.target.name) {
             case 'priceFrom':
-                tmp.priceFrom = inputValue;
+                this.props.dispatch(priceFrom(inputValue));
                 break;
             case 'priceTo':
-                tmp.priceTo = inputValue;
+                this.props.dispatch(priceTo(inputValue));
                 break;
             case 'ageFrom':
-                tmp.ageFrom = inputValue;
+                this.props.dispatch(ageFrom(inputValue));
                 break;
             case 'ageTo':
-                tmp.ageTo = inputValue;
+                this.props.dispatch(ageTo(inputValue));
                 break;
             default:
                 console.log("Number input switch error")
         }
-
-        this.setState({
-            options: tmp
-        }, this.props.applySearch(this.state.options));
+        this.props.Search()
     },
 
     render: function () {
@@ -267,13 +427,38 @@ var CoursesOptions = React.createClass({
 var CoursesList = React.createClass({
     getInitialState: function () {
         return {
-            coursesActivity: [],
-            displayedCourses: [],
             isLoading: false,
             isLoadingMap: false,
             page: 0,
-            currentOptions: {}
         };
+    },
+
+    tabur: function (parametr) {
+       return new Promise((resolve, reject) => {
+
+                this.props.dispatch(checkboxes(parametr));
+
+            });
+    },
+
+    omg: function (values) {
+
+        if(values == undefined)
+        {
+            var t = this
+            this.props.dispatch(checkboxes([]))
+            setTimeout(t.getCourses, 50)
+
+        }
+        else {
+            console.log(values);
+            var that = this;
+            this.props.dispatch(checkboxes(values));
+            setTimeout(function () {
+                that.getCourses()
+            }, 50);
+        }
+
     },
 
     refreshMap: function () {
@@ -286,7 +471,7 @@ var CoursesList = React.createClass({
             $.ajax
                 ({
                     url: "/coordinates", type: 'GET', dataType: 'json', cache: false,
-                    data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(ave)}
+                    data: {coordinates: JSON.stringify(myMap.getBounds()), options: JSON.stringify(this.props.user.options)}
                 }).done(function(data) {
                             objectManager.add(data);
                             this.setState({
@@ -296,43 +481,54 @@ var CoursesList = React.createClass({
         }
     },
 
-    getCourses: function (options) {
-        ave = options;
+    getCourses: function () {
+        console.log(this.props.user, 1)
+        this.props.dispatch(getCourses([]));
+        ave = this.props.user.options;
         this.refreshMap();
-        this.setState({displayedCourses: [], isLoading: true, currentOptions: options, page: 0});
+
+        this.setState({isLoading: true, page: 0});
         currentAjax.abort();
+        console.log(this.props.user, 2)
         currentAjax = $.ajax({
-            url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {page: 0, options: JSON.stringify(options)},
+            url: this.props.user.get_url, type: 'GET', dataType: 'json', cache: false,
+            data: {
+                page: 0,
+                options: JSON.stringify(this.props.user.options),
+                sort: this.props.user.sort
+            },
             success: function (data) {
+                console.log(data, 'gfgfg')
+
+                console.log(this.props.user, 3)
+                this.props.dispatch(getCourses(data));
+                console.log(this.props.user, 4)
+
                 this.setState({
-                    displayedCourses: data,
                     isLoading: false,
                     page: 1
                 });
+                console.log(this.props.user, 5)
             }.bind(this),
             error: function (xrh, error) {
                 if (error !== 'abort')
                     console.error(this.props.get_url, status, error.toString());
             }.bind(this)
         });
-    },
-
-    componentWillMount: function () {
 
     },
 
     loadMoreCourses: function () {
-        console.log(objectManager);
         this.setState({isLoading: true});
+        console.log(this.props.user.options)
         currentAjax.abort();
         currentAjax = $.ajax({
-            url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {page: this.state.page, options: JSON.stringify(this.state.currentOptions)},
+            url: this.props.user.get_url, type: 'GET', dataType: 'json', cache: false,
+            data: {page: this.state.page, options: JSON.stringify(this.props.user.options), sort: this.props.user.sort},
             success: function (data) {
-                var tmp = this.state.displayedCourses.concat(data);
+                console.log(data)
+                this.props.dispatch(addCourses(data));
                 this.setState({
-                    displayedCourses: tmp,
                     isLoading: false,
                     page: this.state.page + 1
                 });
@@ -345,16 +541,21 @@ var CoursesList = React.createClass({
     },
 
     sortCourses: function (comparator) {
-        this.setState({
-            displayedCourse: this.state.displayedCourses.sort(comparator)
-        });
+        console.log(this.props.user)
+
     },
 
     render: function () {
         return (
             <div>
                 <div className="row">
-                    <CoursesOptions courseActivities={this.state.coursesActivity} applySearch={this.getCourses}/>
+                    <CoursesOptions
+                        courseActivities={this.state.coursesActivity}
+                        applySearch={this.omg}
+                        Search={this.getCourses}
+                        dispatch={this.props.dispatch}
+                    />
+
                     <div className="sort-price">
                         <a id="priceAsc"
                            onClick={this.sortCourses.bind(this, function(a, b) {return (a.price >= b.price)? 1 : -1})}>
@@ -375,7 +576,7 @@ var CoursesList = React.createClass({
                         </div>
 
                         {
-                            this.state.displayedCourses.map(function (el) {
+                            this.props.user.courses.map(function (el) {
                                 return (
                                     <Courses
                                         key={el.id}
@@ -401,10 +602,10 @@ var CoursesList = React.createClass({
                             <div className={this.state.isLoading? '': 'none'}>
                                 <div className="cssload-fond">
                                     <div className="cssload-container-general">
-                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_1"> </div></div>
-                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_2"> </div></div>
-                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_3"> </div></div>
-                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_4"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_1"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_2"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_3"> </div></div>
+                                            <div className="cssload-internal"><div className="cssload-ballcolor cssload-ball_4"> </div></div>
                                     </div>
                                 </div>
                             </div>
@@ -417,8 +618,17 @@ var CoursesList = React.createClass({
     }
 });
 
+function mapStateToProps (state) {
+    return {user: state}
+}
+
+var ConnectedCoursesList = ReactRedux.connect(mapStateToProps)(CoursesList)
+//var ConnectedCoursesOptions = ReactRedux.connect(mapStateToProps)(CoursesOptions)
+
 ReactDOM.render(
-        <CoursesList get_url="/api/get/courses"/>,
+    <ReactRedux.Provider store={store}>
+        <ConnectedCoursesList />
+    </ReactRedux.Provider>,
     document.getElementById("content")
 );
 
@@ -447,4 +657,3 @@ clickMap.onclick = function () {
         document.getElementById('map').style.display = 'none';
     }
 };
-
