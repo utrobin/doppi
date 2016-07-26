@@ -415,7 +415,8 @@ button:hover, input[type="button"]:hover{
 .course-title{
     color: #fff;
     display: inline;
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 20px;
 }
 .course-title:hover{
     border-bottom: 1px solid #fff;

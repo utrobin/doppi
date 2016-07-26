@@ -16,7 +16,7 @@ class Command(BaseCommand):
         for course in Course.objects.all():
          #   course.title = fake.text(max_nb_chars=128)
          #   course.introtext = fake.text(max_nb_chars=256)
-            course.description = fake.paragraphs(nb=8)
+            course.description = fake.text(max_nb_chars=16384)
             course.save()
 
         #    for course in CourseInfo.objects.all():
