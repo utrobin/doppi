@@ -10,6 +10,9 @@ a{
     text-decoration: none;
     color: #fff;
 }
+input{
+    -webkit-appearance: none;
+}
 .nav{
     background: rgb(72, 0, 72);
     border-bottom: 1px solid rgb(49, 0, 49);
@@ -201,12 +204,15 @@ h1{
     font-size: 13px;
     line-height: 18px;
     color: #aaa;
+    -webkit-text-size-adjust: 100%;
 }
 .breadcrumb span{
     margin: 0 15px;
+    -webkit-text-size-adjust: 100%;
 }
 .breadcrumb a{
     color: #000;
+    -webkit-text-size-adjust: 100%;
 }
 .breadcrumb a:hover{
     text-decoration: underline;
