@@ -13,12 +13,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        for course in Course.objects.all():
-         #   course.title = fake.text(max_nb_chars=128)
-         #   course.introtext = fake.text(max_nb_chars=256)
-            course.description = fake.text(max_nb_chars=16384)
-            course.save()
-
+        for c in CourseInfo.objects.all():
+            c.activity = CourseType.objects.get(id = random.randint(1, 27))
+            c.save()
         #    for course in CourseInfo.objects.all():
         #    course.coordinate = '5' + str(random.randint(4, 6)) + '.' + str(random.randint(0, 900000)) + ',3' + str(random.randint(6, 8)) + '.' + str(random.randint(0, 900000))
         #    course.save()
