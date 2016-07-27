@@ -9,26 +9,22 @@ var Comment = React.createClass({
     render: function () {
         var owner = (username == this.props.author);
         return (
-            <div className="row">
-                <div className="col-xs-2">
-                    <div className="thumbnail">
-                        <img className="img-responsive user-photo"
-                             src={this.props.pic}/>
-                    </div>
+            <div className="comment">
+                <div className="thumbnail">
+                    <img className="img-responsive user-photo" src={this.props.pic} width="50"/>
                 </div>
 
-                <div className="col-xs-10">
-                    <div className="panel panel-default">
-                        <div className="panel-heading">
-                            <strong>{this.props.author}</strong> <span
-                            className="text-muted">прокомментировал {this.props.added_at}<a
-                            onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>Удалить</a></span>
-                        </div>
-                        <div className="panel-body">
-                            <p>{this.props.children}</p>
-                        </div>
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <strong>{this.props.author} </strong>
+                        <dd className="data">прокомментировал {this.props.added_at}</dd>
+                        <a onClick={this.props.onRemove} href="#" className={owner ? '' : 'none'}>   Удалить</a>
+                    </div>
+                    <div className="panel-body">
+                        <p>{this.props.children}</p>
                     </div>
                 </div>
+                <div className="clear"></div>
             </div>
         );
     }
@@ -61,9 +57,6 @@ var CommentForm = React.createClass({
     getInitialState: function () {
         return {text: ''};
     },
-    componentDidMount: function () {
-        this.refs.commentInput.focus();
-    },
     handleTextChange: function (e) {
         this.setState({text: e.target.value});
     },
@@ -74,14 +67,14 @@ var CommentForm = React.createClass({
             return;
         this.props.onCommentSumbit({text: text});
         this.setState({text: ''});
-        this.refs.commentInput.focus();
     },
     render: function () {
         return (
             <form className={(username.length == 0) ? 'none' : ''} onSubmit={this.handleSubmit}>
-                <input type="text" value={this.state.text} placeholder="Enter you comment"
+                <textarea type="textarea" value={this.state.text} placeholder="Enter you comment"
                        onChange={this.handleTextChange} ref="commentInput"/>
-                <input type="submit" value="Post"/>
+                <input type="submit" value="Отправить"/>
+                <div className="clear"></div>
             </form>
         );
     }

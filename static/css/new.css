@@ -1,7 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+}
 body{
     font-family: 'Open Sans', sans-serif;
     color: #777;
     background: #edeef0;
+}
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+.content {
+    padding-bottom: 90px;
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-top: 40px;
+    height: 40px;
+    background-color: rgba(89, 0, 89, 0.3);
+    text-align: center;
+    background: #c5c5c5;
+}
+footer span{
+    line-height: 40px;
+    font-size: 18px;
+    color: rgb(72, 0, 72);
+    font-weight: 600;
+}
+.clear{
+    clear: both;
 }
 div{
     display: block;
@@ -143,6 +178,7 @@ h1{
     line-height: 35px;
     font-size: 16px;
     color: rgb(49, 0, 49);
+    display: block
 }
 .filters{
     display: block;
@@ -225,13 +261,15 @@ h1{
 .wrapper-map{
     margin-left: 25px;
 }
-button, input[type="button"]{
+button, input[type="button"], input[type="submit"]{
     background: rgb(72, 0, 72);
     color: #ffffff;
     border: none;
     padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
 }
-button:hover, input[type="button"]:hover{
+button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     opacity: 0.8;
 }
 #click-map, .loading button{
@@ -242,7 +280,7 @@ button:hover, input[type="button"]:hover{
     cursor: pointer;
 }
 .loading{
-    margin: 25px 0 200px 25px;
+    margin: 25px 0 0 25px;
 }
 .cssload-fond{
 	position:relative;
@@ -457,13 +495,10 @@ button:hover, input[type="button"]:hover{
     float: right;
     width: 250px;
     margin-left: 15px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
 }
 .page-course{
     float: left;
-    width: 705px;
+    width: 735px;
 }
 .wrapper-course{
     padding: 15px;
@@ -600,4 +635,152 @@ button:hover, input[type="button"]:hover{
 .signin:hover{
     background-color: #aeaeae;
     cursor: pointer;
+}
+.hidden{
+    display: none;
+}
+.comments-empty{
+    padding: 15px;
+    border: 1px solid rgb(72, 0, 72);
+    border-radius: 5px;
+    background-color:rgba(89, 0, 89, 0.3);
+    margin-top: 15px;
+    color: #000;
+}
+.comments-empty a{
+    color: #fff;
+}
+.comments{
+    padding: 15px;
+    margin-top: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+.comments .thumbnail img{
+    float: left;
+    display: block;
+    padding: 0 15px 15px 0;
+}
+.comment{
+    margin-bottom: 15px;
+}
+.comment .panel-heading strong{
+    color: rgb(72, 0, 72);
+    font-size: 16px;
+    display: inline;
+}
+.comment dd{
+    color: #aaa;
+    font-size: 14px;
+    display: inline;
+}
+.comment p{
+    color: #000;
+    font-size: 16px;
+    line-height: 18px;
+    margin-top: 10px;
+    word-break: break-all;
+}
+.comments textarea{
+    width: 100%;
+    padding: 15px;
+    min-height: 100px;
+    max-width: 705px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 3px;
+    border-color: rgb(72, 0, 72);
+}
+.comments input[type="submit"]{
+    display: block;
+    text-align: right;
+    float: right;
+    margin-top: 10px;
+    font-size: 16px;
+}
+#utr{
+    position: fixed;
+    color: #000;
+}
+.recommend_courses .course{
+    margin: 0;
+}
+.recommend_courses .rec{
+    font-size: 15px;
+    display: block;
+    color: #000;
+    background-color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+.Rcourse img{
+    position: absolute;
+    height: 187px;
+    width: 250px;
+    border-radius: 5px;
+}
+.Rcourse-info{
+    z-index: 10;
+}
+.RGolubev{
+    background-color: rgba(37, 43, 48, 0.65);
+    height: 187px;
+    width: 250px;
+    z-index: 9;
+    position: absolute;
+    border-radius: 5px;
+}
+.Rcourse-wrapper-title{
+    height: 187px;
+    box-sizing: border-box;
+    border-radius: 5px 5px 0 0;
+    z-index: 11;
+    position: relative;
+    color: #fff;
+    padding: 15px 15px 0 15px;
+}
+.Rcourse-wrapper{
+    position: relative;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    border-radius: 5px;
+}
+.Rcourse-name{
+    display: block;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.Rcourse-title{
+    color: #fff;
+    display: inline;
+    font-size: 15px;
+    line-height: 20px;
+}
+.Rcourse-title:hover{
+    border-bottom: 1px solid #fff;
+}
+.Rcourse-info{
+    color: #879198;
+}
+.Rcourse-wrapper-title span{
+    display: block;
+    color: #fff;
+}
+.Rcourse .age{
+    float: right;
+    border: 1px solid #fff;
+    height: 25px;
+    min-width: 25px;
+    font-size: 16px;
+    border-radius: 17px;
+    text-align: center;
+    line-height: 25px;
+    margin-top: -5px;
+    padding: 3px;
+    margin-right: -5px;
 }

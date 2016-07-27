@@ -3,7 +3,7 @@
         <img src="{{ course.author.user.userprofile.avatar.url  }}" width="100">
         <span>{{ course.author.user }}</span>
     </div>
-    <h1>{{ course.title }}</h1>
+    <h1 id="title">{{ course.title }}</h1>
     {% if course.author.user == user %}
         <div class="options">
             <a href="{% url 'edit_course' course.id %}">Изменить</a>
@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <th>Количество занятий в неделю:</th>
-            <th>{{ course.info.frequency }} руб.</th>
+            <th>{{ course.info.frequency }}</th>
         </tr>
         <tr>
             <th>Цена:</th>
