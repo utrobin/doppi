@@ -64,13 +64,13 @@ def get_courses(request):
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-        Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+
     )[page * 9:(page + 1) * 9]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
-                     'activity': [str(a) for a in course.info.activity.all()],
+                     'activity': course.info.activity,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
 
@@ -130,7 +130,7 @@ def get_recommend_courses(request):
                      'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
-                     'activity': [str(a) for a in course.info.activity.all()],
+                     'activity': course.info.activity,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
 

@@ -11,11 +11,9 @@ class SearchBarForm(forms.ModelForm):
 
     class Meta:
         model = CourseInfo
-        fields = ['age_from', 'age_to', 'activity',
+        fields = ['age_from', 'age_to',
                   'price', 'frequency']
-        widgets = {
-            'activity': CheckboxSelectMultiple(),
-        }
+
 
 
 class CommentForm(forms.ModelForm):
@@ -62,7 +60,7 @@ class CourseInfoForm(forms.ModelForm):
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
-            'activity': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
+            'activity': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
             'location': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
