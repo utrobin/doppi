@@ -65,9 +65,9 @@ def get_courses(request):
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True)),
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
-    )[page * 3:(page + 1) * 3]:
+    )[page * 9:(page + 1) * 9]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
-                     'description': course.description, 'pic': course.pic.url,
+                     'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': [str(a) for a in course.info.activity.all()],
@@ -122,6 +122,21 @@ def searchbar(request):
     return render(request, 'pinki_drag.html')
 
 
+def get_recommend_courses(request):
+    data = []
+    page = int(request.GET['page'])
+    for course in Course.objects.all()[page * 3:(page + 1) * 3]:
+        data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
+                     'introtext': course.introtext, 'pic': course.pic.url,
+                     'age_from': course.info.age_from, 'age_to': course.info.age_to,
+                     'time_from': course.info.time_from, 'time_to': course.info.time_to,
+                     'activity': [str(a) for a in course.info.activity.all()],
+                     'location': [str(a) for a in course.info.location.all()],
+                     'price': course.info.price, 'frequency': course.info.frequency})
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
 def single_course(request, course_id):
 
     count = Course.objects.all().count()
@@ -129,11 +144,7 @@ def single_course(request, course_id):
     recommend_courses = Course.objects.all()[slice: slice + 3]
 
     course = Course.objects.get(id=course_id)
-    return render(request, 'course_page.html',
-                  {
-                      'course': course,
-                      'recommend_courses': recommend_courses
-                  })
+    return render(request, 'course_page.html', {'course': course})
 
 
 @login_required(login_url='/authentication/signin/')

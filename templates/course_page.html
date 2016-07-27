@@ -1,9 +1,12 @@
 {% extends "newbase.html" %}
 {% block content %}
-    <script type="text/babel" src="/static/js/comments.js"></script>
 
+    {% if  user.is_authenticated %}
+        <script type="text/babel" src="/static/js/single_course/comments.js"></script>
+    {% endif %}
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    <script src="/static/js/map-course.js" type="text/javascript"></script>
+    <script src="/static/js/single_course/map-course.js" type="text/javascript"></script>
+    <script src="/static/js/single_course/recommend_course.js" type="text/babel"></script>
 
     <div class="breadcrumb">
         <a href="{% url 'main' %}">Главная</a>
@@ -13,16 +16,42 @@
         <b>{{ course.title }}</b>
     </div>
 
-    <div class="page-course">
-        {% include 'singleCourse/single_course.html' %}
-        <div class="comments">
-            <div id="course_id" hidden>{{ course.id }}</div>
-            <div id="name" hidden>{{ user.username }}</div>
-            <div id="root"></div>
-        </div>
+    <div class="page-course" id="page-course">
+        {% include 'single_course/single_course.html' %}
+
+
+
+        {% if  user.is_authenticated %}
+            <div class="comments">
+                <div id="course_id" class="hidden">{{ course.id }}</div>
+                <div id="name" class="hidden">{{ user.username }}</div>
+                <div id="root"></div>
+            </div>
+        {% else %}
+            <div class="comments-empty">
+                <a href={% url 'signin' %}>Войдите</a> или <a href={% url 'signup' %}>зарегистрируйтесь</a>, чтобы оставить ваш комментарий.
+            </div>
+        {% endif %}
     </div>
 
     <div class="recommend_courses">
-        {% include 'singleCourse/recommend_courses.html' %}
+        <span class="rec">Рекомендованные вам курсы</span>
+        <div id="recommend_courses"></div>
     </div>
+    <div id="utr">
+
+    </div>
+    <script>
+    var scrolled;
+    window.onscroll = function() {
+      scrolled = window.pageYOffset || document.documentElement.scrollTop;
+      document.getElementById('utr').innerHTML = scrolled + 'px';
+    }
+    console.log(scrolled);
+
+    var browserWindow = $(window);
+
+    var height = browserWindow.height();
+    console.log(height);
+    </script>
 {% endblock %}

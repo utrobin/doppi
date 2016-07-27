@@ -1,10 +1,13 @@
 /**
  * Created by egorutrobin on 15.07.16.
  */
+
+
 var myMap;
 ymaps.ready(init);
 
 function init() {
+    var title = document.getElementById('title').innerHTML;
     var coordinate_x = document.getElementsByName('coordinate_x')[0].value;
     var coordinate_y = document.getElementsByName('coordinate_y')[0].value;
     var coordinate = [coordinate_x, coordinate_y];
@@ -18,9 +21,9 @@ function init() {
 
     myMap.geoObjects
         .add(new ymaps.Placemark(coordinate, {
-            balloonContent: 'цвет <strong>влюбленной жабы</strong>'
+            balloonContent: title
         }, {
             preset: 'islands#circleIcon',
-            iconColor: '#3caa3c'
+            iconColor: 'rgb(72, 0, 72)'
         }));
 }

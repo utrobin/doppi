@@ -3,7 +3,7 @@
         <img src="{{ course.author.user.userprofile.avatar.url  }}" width="100">
         <span>{{ course.author.user }}</span>
     </div>
-    <h1>{{ course.title }}</h1>
+    <h1 id="title">{{ course.title }}</h1>
     {% if course.author.user == user %}
         <div class="options">
             <a href="{% url 'edit_course' course.id %}">Изменить</a>
@@ -13,7 +13,7 @@
 
     <dd>Добавлено в {{ course.added_at }}</dd>
     <div class="introtext">
-        <p>В парке «Сокольники» открылась школа уницикла — катания на одноколесном велосипеде. Это оригинальное, безопасное развлечение для взрослых и детей от 7 лет, позволяющее держать все мышцы тела в тонусе.</p>
+         <p>{{ course.introtext }}</p>
     </div>
     <div class="photo">
         <img src="{{ course.pic.url }}" width="700">
@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <th>Количество занятий в неделю:</th>
-            <th>{{ course.info.frequency }} руб.</th>
+            <th>{{ course.info.frequency }}</th>
         </tr>
         <tr>
             <th>Цена:</th>
