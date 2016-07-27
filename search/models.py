@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
 from authentication.models import UserProfile
 from django.utils import timezone
@@ -18,6 +17,7 @@ class Course(models.Model):
     title = models.CharField(max_length=128)  # Название
     introtext = models.TextField(max_length=256, blank=True)
     description = models.TextField(max_length=16384, blank=True)  # Описание
+    introtext = models.TextField(max_length=256, blank=True)
     author = models.ForeignKey(UserProfile, default=1)  # Автор
     pic = models.ImageField(upload_to=picture_upload_to, default='miss.png')  # Картинка
     added_at = models.DateTimeField(default=timezone.now)  # Дата добавления
@@ -32,7 +32,7 @@ class CourseInfo(models.Model):
     age_to = models.PositiveSmallIntegerField(default=18)  # Возраст до
     time_from = models.PositiveSmallIntegerField(default=0)  # Время от
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
-    activity = models.ManyToManyField('CourseType', blank=True)  # Вид курса
+    activity = models.ForeignKey('CourseType',null=True , default=None)  # Вид курса
     location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     coordinate_x = models.FloatField(blank=True)
     coordinate_y = models.FloatField(blank=True)
