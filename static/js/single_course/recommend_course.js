@@ -56,11 +56,11 @@ var CoursesList = React.createClass({
             if (scrolled + height >= temp && temp < hCourse - 202*begin )
             {
                 var mount = Math.floor((scrolled + height - temp) / 202);
-                if (mount < 4) {
-                    temp = temp + 202*3;
-                    this.loadMoreCourses(3);
+                if (mount <= begin) {
+                    temp = temp + 202*(begin+1);
+                    this.loadMoreCourses(begin+1);
                 }
-                if (mount > 3) {
+                if (mount > begin) {
                     temp = temp + 202 * mount;
                     this.loadMoreCourses(mount);
                 }

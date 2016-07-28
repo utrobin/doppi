@@ -800,6 +800,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     border-width: 0 20px 30px 20px;
     height: 0;
     width: 0;
+    cursor: pointer;
 }
 
 #updown.down{
@@ -808,4 +809,5 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     border-width: 30px 20px 0 20px;
     height: 0;
     width: 0;
+    cursor: pointer;
 }
