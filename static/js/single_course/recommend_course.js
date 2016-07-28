@@ -35,13 +35,18 @@ var CoursesList = React.createClass({
     },
 
     componentDidMount: function () {
-        this.getCourses(3);
+
         var browserWindow = $(window);
         var height = browserWindow.height();
 
+        var begin = Math.floor((height - 150)/202);
+        this.getCourses(begin);
+        var temp = 202*begin;
+
         var hCourse = $('#page-course').css('height');
         hCourse = +hCourse.slice(0, hCourse.length - 2);
-        var temp = 665;
+
+
 
         window.onscroll = function() {
             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
@@ -49,13 +54,13 @@ var CoursesList = React.createClass({
             {
                 scrolled = 1
             }
-
-            if (scrolled + height >= temp && temp < hCourse - 606 )
+            console.log(begin)
+            if (scrolled + height >= temp && temp < hCourse - 202*begin )
             {
                 var mount = Math.floor((scrolled + height - temp) / 202);
                 if (mount < 4) {
                     mount = 3;
-                    temp = temp + 606;
+                    temp = temp + 202*begin;
                     this.loadMoreCourses(mount);
                 }
                 if (mount > 3) {

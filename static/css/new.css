@@ -242,6 +242,9 @@ h1{
     color: #aaa;
     -webkit-text-size-adjust: 100%;
 }
+.comments-empty a, .comments-empty{
+    -webkit-text-size-adjust: 100%;
+}
 .breadcrumb span{
     margin: 0 15px;
     -webkit-text-size-adjust: 100%;
