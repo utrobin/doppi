@@ -88,7 +88,7 @@ input{
 }
 .navbar-right{
     float: right;
-    width: 300px;
+    width: 200px;
 }
 h1{
     margin-top: 20px;
@@ -810,4 +810,13 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     height: 0;
     width: 0;
     cursor: pointer;
+}
+.fish{
+    padding: 15px;
+    border: 1px solid rgb(72, 0, 72);
+    border-radius: 5px;
+    background-color: rgba(89, 0, 89, 0.3);
+    margin-top: 35px;
+    color: #000;
+    font-size: 24px;
 }

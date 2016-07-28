@@ -27,6 +27,10 @@ def hello(request):
     return render(request, 'hello.html')
 
 
+def fish(request):
+    return render(request, 'fish.html')
+
+
 def data(request):
     return render(request, '../static/data.json')
 
