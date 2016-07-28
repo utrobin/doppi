@@ -63,14 +63,12 @@ def get_courses(request):
         Q(info__price__gte=mk_int(options['priceFrom'], False)),
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
-        Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-       Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+        Q(info__age_to__lte=mk_int(options['ageTo'], True))
     )[page * 9:(page + 1) * 9]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
-                     'activity': course.info.activity,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
 
@@ -95,8 +93,7 @@ def get_courses_map(request):
             Q(info__price__gte=mk_int(options['priceFrom'], False)),
             Q(info__price__lte=mk_int(options['priceTo'], True)),
             Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
-            Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-            Q(info__activity__title__in=mk_checkboxes(options['checkboxes']))
+            Q(info__age_to__lte=mk_int(options['ageTo'], True))
     ):
         data['features'].append({'type': 'Feature', 'id': course.id, 'geometry':
             {'type': 'Point', 'coordinates': [course.info.coordinate_x,course.info.coordinate_y]},
@@ -125,12 +122,12 @@ def searchbar(request):
 def get_recommend_courses(request):
     data = []
     page = int(request.GET['page'])
-    for course in Course.objects.all()[page * 3:(page + 1) * 3]:
+    mount = int(request.GET['mount'])
+    for course in Course.objects.all()[page * 3:page * 3 + mount]:
         data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
                      'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
-                     'activity': course.info.activity,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
 

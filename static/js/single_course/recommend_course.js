@@ -35,31 +35,71 @@ var CoursesList = React.createClass({
     },
 
     componentDidMount: function () {
-        this.getCourses();
+        this.getCourses(3);
         var browserWindow = $(window);
         var height = browserWindow.height();
+
         var hCourse = $('#page-course').css('height');
-        var hBody = $('.content').css('height');
-        hCourse = +hCourse.slice(0, hCourse.length - 2) + 117;
-        console.log(hCourse);
+        hCourse = +hCourse.slice(0, hCourse.length - 2);
+        var temp = 665;
 
         window.onscroll = function() {
-          var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-            console.log(hCourse)
-          if ((scrolled + height > 783 || height - 783 > 0) && scrolled + height < hCourse && scrolled + height < hBody)
-              this.loadMoreCourses();
+            var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            if(scrolled == undefined)
+            {
+                scrolled = 1
+            }
+
+            if (scrolled + height >= temp && temp < hCourse - 606 )
+            {
+                var mount = Math.floor((scrolled + height - temp) / 202);
+                if (mount < 4) {
+                    mount = 3;
+                    temp = temp + 606;
+                    this.loadMoreCourses(mount);
+                }
+                if (mount > 3) {
+                    temp = temp + 202 * mount;
+                    this.loadMoreCourses(mount);
+                }
+            }
+
+
+
+                    var pageY = window.pageYOffset || document.documentElement.scrollTop;
+              var innerHeight = document.documentElement.clientHeight;
+
+              switch (updownElem.className) {
+                case '':
+                  if (pageY > innerHeight) {
+                    updownElem.className = 'up';
+                  }
+                  break;
+
+                case 'up':
+                  if (pageY < innerHeight) {
+                    updownElem.className = '';
+                  }
+                  break;
+
+                case 'down':
+                  if (pageY > innerHeight) {
+                    updownElem.className = 'up';
+                  }
+                  break;
+
+              }
         }.bind(this)
     },
 
 
-    getCourses: function () {
+    getCourses: function (mount) {
         this.setState({isLoading: true, page: 0});
         currentAjax.abort();
         currentAjax = $.ajax({
             url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {page: 0},
+            data: {page: 0, mount: mount},
             success: function (data) {
-                console.log(data, 'gfgfg')
 
                 this.setState({
                     isLoading: false,
@@ -75,18 +115,19 @@ var CoursesList = React.createClass({
 
     },
 
-    loadMoreCourses: function () {
+    loadMoreCourses: function (mount) {
         this.setState({isLoading: true});
         currentAjax.abort();
         currentAjax = $.ajax({
             url: this.props.get_url, type: 'GET', dataType: 'json', cache: false,
-            data: {page: this.state.page},
+            data: {page: this.state.page, mount: mount},
             success: function (data) {
                 var tmp = this.state.data.concat(data);
+                var p = Math.ceil(mount/3);
                 this.setState({
                     data: tmp,
                     isLoading: false,
-                    page: this.state.page + 1
+                    page: this.state.page + p
                 });
             }.bind(this),
             error: function (xrh, error) {
@@ -133,7 +174,6 @@ var CoursesList = React.createClass({
                                     </div>
                                 </div>
                             </div>
-                            <button className={this.state.isLoading? 'none': ''} onClick={this.loadMoreCourses}>Загрузить еще</button>
                         </div>
                     </div>
         );
@@ -144,5 +184,30 @@ ReactDOM.render(
     <CoursesList get_url="/api/get/recommendcourses" />,
     document.getElementById("recommend_courses")
 );
+
+
+
+var updownElem = document.getElementById('updown');
+
+    var pageYLabel = 0;
+
+    updownElem.onclick = function() {
+      var pageY = window.pageYOffset || document.documentElement.scrollTop;
+
+      switch (this.className) {
+        case 'up':
+          pageYLabel = pageY;
+          window.scrollTo(0, 0);
+          this.className = 'down';
+          break;
+
+        case 'down':
+          window.scrollTo(0, pageYLabel);
+          this.className = 'up';
+      }
+
+    }
+
+
 
 

@@ -784,6 +784,25 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     padding: 3px;
     margin-right: -5px;
 }
-.gfgf{
+#updown {
+    position: fixed;
+    margin-left: 1030px;
+    top: calc(100% - 100px);
+    cursor: pointer;
+}
 
+#updown.up{
+    border-color: transparent transparent rgb(72, 0, 72) transparent;
+    border-style: solid;
+    border-width: 0 20px 30px 20px;
+    height: 0;
+    width: 0;
+}
+
+#updown.down{
+  border-color: rgb(72, 0, 72) transparent transparent transparent;
+    border-style: solid;
+    border-width: 30px 20px 0 20px;
+    height: 0;
+    width: 0;
 }

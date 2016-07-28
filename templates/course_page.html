@@ -38,20 +38,7 @@
         <span class="rec">Рекомендованные вам курсы</span>
         <div id="recommend_courses"></div>
     </div>
-    <div id="utr">
 
-    </div>
-    <script>
-    var scrolled;
-    window.onscroll = function() {
-      scrolled = window.pageYOffset || document.documentElement.scrollTop;
-      document.getElementById('utr').innerHTML = scrolled + 'px';
-    }
-    console.log(scrolled);
+    <div id="updown"></div>
 
-    var browserWindow = $(window);
-
-    var height = browserWindow.height();
-    console.log(height);
-    </script>
 {% endblock %}
