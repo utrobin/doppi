@@ -51,16 +51,14 @@ var CoursesList = React.createClass({
         window.onscroll = function() {
             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
             if(scrolled == undefined)
-            {
-                scrolled = 1
-            }
-            console.log(begin)
+                scrolled = 1;
+
             if (scrolled + height >= temp && temp < hCourse - 202*begin )
             {
                 var mount = Math.floor((scrolled + height - temp) / 202);
                 if (mount < 4) {
                     mount = 3;
-                    temp = temp + 202*begin;
+                    temp = temp + 202*3;
                     this.loadMoreCourses(mount);
                 }
                 if (mount > 3) {
@@ -71,7 +69,7 @@ var CoursesList = React.createClass({
 
 
 
-                    var pageY = window.pageYOffset || document.documentElement.scrollTop;
+            var pageY = window.pageYOffset || document.documentElement.scrollTop;
               var innerHeight = document.documentElement.clientHeight;
 
               switch (updownElem.className) {
