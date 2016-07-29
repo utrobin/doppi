@@ -225,6 +225,28 @@ var currentAjax = $.ajax();
 
 
 var Courses = React.createClass({
+    getInitialState: function() {
+        return ({
+            liked: this.props.liked,
+            rating: this.props.rating
+        });
+    },
+    handleLike: function(event) {
+        this.setState({
+            liked: !this.state.liked
+        });
+        $.ajax({
+            url: "/like",
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            data: {course_id: this.props.id}
+        }).done(function(data) {
+            this.setState({
+                rating: this.state.liked ? this.state.rating + 1 : this.state.rating - 1
+            });
+        }.bind(this));
+    },
     render: function () {
         return (
             <div className="course">
@@ -235,8 +257,10 @@ var Courses = React.createClass({
                         <div className="course-name">{this.props.author}</div>
                         <a href={'/course/'+this.props.id}>
                             <div className="course-title">{this.props.title}</div>
-                        </a>
-                    </div>
+                                                   </a>
+                    <div className={this.state.liked ? "liked" : ""} onClick={this.handleLike}>Like</div>
+                    <div>{this.state.rating}</div>
+ </div>
 
                     <div className="course-info">
                         <div className="course-description">{this.props.introtext}</div>
@@ -593,6 +617,8 @@ var CoursesList = React.createClass({
                                         location={el.location}
                                         price={el.price}
                                         frequency={el.frequency}
+                                        rating={el.rating}
+                                        liked={el.liked}
                                     />
                                 )
                             })

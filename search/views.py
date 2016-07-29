@@ -69,14 +69,35 @@ def get_courses(request):
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
     )[page * 9:(page + 1) * 9]:
-        data.append({'id': course.id, 'author': course.author.user.username, 'title': course.title,
-                     'introtext': course.introtext, 'pic': course.pic.url,
-                     'age_from': course.info.age_from, 'age_to': course.info.age_to,
-                     'time_from': course.info.time_from, 'time_to': course.info.time_to,
+        data.append({'id': course.id,
+                     'author': course.author.user.username,
+                     'title': course.title,
+                     'introtext': course.introtext,
+                     'pic': course.pic.url,
+                     'age_from': course.info.age_from,
+                     'age_to': course.info.age_to,
+                     'time_from': course.info.time_from,
+                     'time_to': course.info.time_to,
                      'location': [str(a) for a in course.info.location.all()],
-                     'price': course.info.price, 'frequency': course.info.frequency})
+                     'price': course.info.price,
+                     'frequency': course.info.frequency,
+                     'rating': len(Like.objects.filter(course=course).filter(is_liked=True)),
+                     'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+@login_required()
+def do_like(request):
+    course_id = request.GET['course_id']
+    likes = Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course__id=course_id)
+    if len(likes) != 0:
+        likes[0].is_liked = not likes[0].is_liked
+        likes[0].save()
+    else:
+        l = Like(course = Course.objects.get(id=course_id), user = UserProfile.objects.get(user = request.user), is_liked=True)
+        l.save()
+    return HttpResponse(json.dumps({}), content_type="application/json")
 
 
 def get_courses_map(request):

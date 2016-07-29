@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^data$', views.data, name='data'),
 
     url(r'^coordinates$', views.get_courses_map, name='coordinates'),
-
+    url(r'^like', views.do_like, name='like'),
 ]
