@@ -84,6 +84,7 @@ def get_courses(request):
                      'frequency': course.info.frequency,
                      'rating': len(Like.objects.filter(course=course).filter(is_liked=True)),
                      'is_authenticated': True if request.user.is_authenticated() else False,
+                     'rating': course.rating,
                      'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -91,15 +92,21 @@ def get_courses(request):
 
 @login_required()
 def do_like(request):
-    course_id = request.GET['course_id']
-    likes = Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course__id=course_id)
+    course = Course.objects.get(id = request.GET['course_id'])
+    likes = Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course = course)
     if len(likes) != 0:
         likes[0].is_liked = not likes[0].is_liked
         likes[0].save()
+        course.rating = course.rating + 1  if likes[0].is_liked else course.rating - 1
+        course.save()
+
     else:
         l = Like(course = Course.objects.get(id=course_id), user = UserProfile.objects.get(user = request.user), is_liked=True)
         l.save()
-    return HttpResponse(json.dumps({}), content_type="application/json")
+        course.rating += 1
+        course.save()
+
+    return HttpResponse(json.dumps({'rating': course.rating}), content_type="application/json")
 
 
 def get_courses_map(request):

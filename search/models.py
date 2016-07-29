@@ -23,6 +23,7 @@ class Course(models.Model):
     views = models.PositiveSmallIntegerField(default=0)  # Просмотры
     likes = models.ManyToManyField(UserProfile, related_name='likes_userprofiles', through='Like')  # Лайки
     info = models.OneToOneField('CourseInfo')  # Связь с информацией
+    rating = models.PositiveIntegerField(default=0)
 
 
 # Информация о курсе
