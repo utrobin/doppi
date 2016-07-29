@@ -77,11 +77,13 @@ def get_courses(request):
                      'age_from': course.info.age_from,
                      'age_to': course.info.age_to,
                      'time_from': course.info.time_from,
+                     'activity': course.info.activity.title,
                      'time_to': course.info.time_to,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price,
                      'frequency': course.info.frequency,
                      'rating': len(Like.objects.filter(course=course).filter(is_liked=True)),
+                     'is_authenticated': True if request.user.is_authenticated() else False,
                      'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
 
     return HttpResponse(json.dumps(data), content_type="application/json")
@@ -153,6 +155,7 @@ def get_recommend_courses(request):
                      'introtext': course.introtext, 'pic': course.pic.url,
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
+                     'activity': course.info.activity.title,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price, 'frequency': course.info.frequency})
 

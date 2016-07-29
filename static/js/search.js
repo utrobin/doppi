@@ -248,6 +248,7 @@ var Courses = React.createClass({
         }.bind(this));
     },
     render: function () {
+        console.log(this.props.authenticated, "gfgfgf")
         return (
             <div className="course">
                 <div className="course-wrapper">
@@ -257,10 +258,14 @@ var Courses = React.createClass({
                         <div className="course-name">{this.props.author}</div>
                         <a href={'/course/'+this.props.id}>
                             <div className="course-title">{this.props.title}</div>
-                                                   </a>
-                    <div className={this.state.liked ? "liked" : ""} onClick={this.handleLike}>Like</div>
-                    <div>{this.state.rating}</div>
- </div>
+                        </a>
+                        <div className="rating">
+                            <div className="wrapper-like">
+                                <div className={this.state.liked ? "heart heart_red" : "heart"} onClick={this.props.authenticated ? this.handleLike : ''}></div>
+                            </div>
+                            <div>{this.state.rating}</div>
+                        </div>
+                    </div>
 
                     <div className="course-info">
                         <div className="course-description">{this.props.introtext}</div>
@@ -619,6 +624,7 @@ var CoursesList = React.createClass({
                                         frequency={el.frequency}
                                         rating={el.rating}
                                         liked={el.liked}
+                                        authenticated={el.is_authenticated}
                                     />
                                 )
                             })

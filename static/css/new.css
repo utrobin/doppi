@@ -242,7 +242,7 @@ h1{
     color: #aaa;
     -webkit-text-size-adjust: 100%;
 }
-.comments-empty a, .comments-empty{
+.comments-pxpty a, .comments-pxpty{
     -webkit-text-size-adjust: 100%;
 }
 .breadcrumb span{
@@ -642,7 +642,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .hidden{
     display: none;
 }
-.comments-empty{
+.comments-pxpty{
     padding: 15px;
     border: 1px solid rgb(72, 0, 72);
     border-radius: 5px;
@@ -650,7 +650,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     margin-top: 15px;
     color: #000;
 }
-.comments-empty a{
+.comments-pxpty a{
     color: #fff;
 }
 .comments{
@@ -773,6 +773,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .Rcourse-wrapper-title span{
     display: block;
     color: #fff;
+    margin-bottom: 10px;
 }
 .Rcourse .age{
     float: right;
@@ -819,4 +820,35 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     margin-top: 35px;
     color: #000;
     font-size: 24px;
+    text-align: center;
+}
+
+.heart{
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin: 6px;
+    background: #c7ced4;
+    border-radius: 50%;
+    box-shadow: 8px 0 0 0 #c7ced4;
+}
+.heart:before {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 1px;
+  top: 8px;
+  border: 8px solid #c7ced4;
+  border-bottom: 0;
+  border-color: #c7ced4 transparent;
+}
+.heart_red {
+    background-color: crimson;
+    box-shadow: 8px 0 0 0 crimson;
+}
+.heart_red:before{
+    border-color: crimson transparent;
+}
+.wrapper-like{
+    cursor: pointer;
 }

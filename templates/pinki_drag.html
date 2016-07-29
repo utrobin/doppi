@@ -9,6 +9,12 @@
         <span>/</span>
         <b>Поиск курсов</b>
     </div>
-    <div id='content'></div>
+
+    {% if  user.is_authenticated %}
+        <div id='content' class="content-like"></div>
+    {% else %}
+        <div id='content'></div>
+    {% endif %}
+
     <script type="text/babel" src="/static/js/search.js"></script>
 {% endblock %}
