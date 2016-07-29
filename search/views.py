@@ -101,12 +101,12 @@ def do_like(request):
         course.save()
 
     else:
-        l = Like(course = Course.objects.get(id=course_id), user = UserProfile.objects.get(user = request.user), is_liked=True)
+        l = Like(course = course, user = UserProfile.objects.get(user = request.user), is_liked=True)
         l.save()
         course.rating += 1
         course.save()
 
-    return HttpResponse(json.dumps({'rating': course.rating}), content_type="application/json")
+    return HttpResponse(json.dumps({}), content_type="application/json")
 
 
 def get_courses_map(request):

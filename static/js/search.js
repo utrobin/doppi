@@ -233,7 +233,8 @@ var Courses = React.createClass({
     },
     handleLike: function(event) {
         this.setState({
-            liked: !this.state.liked
+            liked: !this.state.liked,
+            rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
         });
         $.ajax({
             url: "/like",
@@ -242,9 +243,7 @@ var Courses = React.createClass({
             cache: false,
             data: {course_id: this.props.id}
         }).done(function(data) {
-            this.setState({
-                rating: this.state.liked ? this.state.rating + 1 : this.state.rating - 1
-            });
+            //
         }.bind(this));
     },
     render: function () {
