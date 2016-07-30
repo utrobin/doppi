@@ -36,7 +36,7 @@ var Like = React.createClass({
             rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
         });
         $.ajax({
-            url: "/rating",
+            url: "/like",
             type: 'GET',
             dataType: 'json',
             cache: false,
@@ -48,8 +48,8 @@ var Like = React.createClass({
     render: function () {
         return (
             <div className="rating">
-                <div className="wrapper-like">
-                    <div className={this.state.liked ? "heart heart_red" : "heart"} onClick={this.state.authenticated ? this.handleLike : ''}></div>
+                <div className="wrapper-like" onClick={this.state.authenticated ? this.handleLike : ''}>
+                    <div className={this.state.liked ? "heart heart_red" : "heart"} ></div>
                 </div>
                 <div className="rating-number">{this.state.rating}</div>
             </div>
