@@ -342,6 +342,7 @@ button, input[type="button"], input[type="submit"]{
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 5px;
+    font-family: "OpenSansRegular";
 }
 button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     opacity: 0.8;
