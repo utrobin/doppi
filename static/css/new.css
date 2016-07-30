@@ -78,7 +78,7 @@ body{
     min-height: 100%;
 }
 .content {
-    padding-bottom: 90px;
+    padding-bottom: 80px;
 }
 footer {
     position: absolute;
@@ -249,6 +249,7 @@ h1{
 .tree-menu{
     float: left;
     width: 175px;
+    height: 267px;
 }
 .courses{
     width: 825px;
@@ -548,6 +549,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     border-bottom: 1px solid rgb(225, 228, 224);
     padding: 15px;
     font-size: 14px;
+    line-height: 16px;
 }
 .course-activity span, .course-price span{
     display: block;
@@ -973,4 +975,13 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 }
 #like {
     float: left;
+}
+.sticky {
+  position: fixed;
+  z-index: 101;
+}
+.stop {
+    position: relative;
+    z-index: 101;
+    margin-bottom: 50px;
 }

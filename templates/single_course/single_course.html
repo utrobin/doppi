@@ -27,9 +27,7 @@
         <tr>
             <th>Категория:</th>
             <th>
-                {% for type in course.info.activity.all %}
-                   {{ type.title }}
-                {% endfor %}
+                {{ course.info.activity.title }}
             </th>
         </tr>
         <tr>

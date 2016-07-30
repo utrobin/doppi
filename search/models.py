@@ -34,11 +34,11 @@ class CourseInfo(models.Model):
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
     activity = models.ForeignKey('CourseType',null=True , default=None)  # Вид курса
     location = models.ManyToManyField('Metro', blank=True)  # Местоположение
-    coordinate_x = models.FloatField(blank=True)
-    coordinate_y = models.FloatField(blank=True)
+    coordinate_x = models.FloatField(blank=True, default=0)
+    coordinate_y = models.FloatField(blank=True, default=0)
     price = models.PositiveIntegerField(default=0)  # Цена
     frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
-    level = models.ForeignKey('Level', null=True, default=None)
+    level = models.ForeignKey('Level', null=True)
     skill = models.ManyToManyField('Skill', blank=True)
 
 

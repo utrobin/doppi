@@ -60,11 +60,11 @@ class CourseInfoForm(forms.ModelForm):
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
-            'activity': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+            'activity': TextInput(attrs={'class': ['form-control', 'radio-inline']}),
             'location': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
-            'level': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+            'level': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
             'skill': CheckboxSelectMultiple(attrs={'class': ['form-control', 'radio-inline']}),
         }
         labels = {
