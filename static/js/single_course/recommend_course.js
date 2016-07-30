@@ -5,6 +5,27 @@
 var currentAjax = $.ajax();
 
 var Courses = React.createClass({
+    getInitialState: function() {
+        return ({
+            liked: this.props.liked,
+            rating: this.props.rating
+        });
+    },
+    handleLike: function(event) {
+        this.setState({
+            liked: !this.state.liked,
+            rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
+        });
+        $.ajax({
+            url: "/like",
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            data: {course_id: this.props.id}
+        }).done(function(data) {
+            //
+        }.bind(this));
+    },
     render: function () {
         return (
             <div className="Rcourse">
@@ -12,12 +33,18 @@ var Courses = React.createClass({
                     <img className="Rcourse-image" src={this.props.image} width="250px"/>
                     <div className="RGolubev"></div>
                     <div className="Rcourse-wrapper-title">
-                        <div className="age">{this.props.age_from}+</div>
+                        <div className="rating">
+                            <div className="rating-number">{this.state.rating}</div>
+                            <div className="wrapper-like" onClick={this.props.authenticated ? this.handleLike : ''}>
+                                <div className={this.state.liked ? "heart heart_red" : "heart"}></div>
+                            </div>
+                        </div>
                         <div className="Rcourse-name">{this.props.author}</div>
-                        <span>{this.props.activity}</span>
                         <a href={'/course/'+this.props.id}>
                             <div className="Rcourse-title">{this.props.title}</div>
                         </a>
+                        <span>{this.props.activity}</span>
+                        <div className="age">{this.props.age_from}+</div>
                     </div>
                 </div>
             </div>
@@ -160,6 +187,9 @@ var CoursesList = React.createClass({
                                 location={el.location}
                                 price={el.price}
                                 frequency={el.frequency}
+                                rating={el.rating}
+                                liked={el.liked}
+                                authenticated={el.is_authenticated}
                             />
                         )
                     })
@@ -208,7 +238,7 @@ var updownElem = document.getElementById('updown');
           this.className = 'up';
       }
 
-    }
+    };
 
 
 

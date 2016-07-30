@@ -254,16 +254,17 @@ var Courses = React.createClass({
                     <img className="course-image" src={this.props.image} width="250px"/>
                     <div className="Golubev"></div>
                     <div className="course-wrapper-title">
+                        <div className="rating">
+                            <div className="rating-number">{this.state.rating}</div>
+                            <div className="wrapper-like">
+                                <div className={this.state.liked ? "heart heart_red" : "heart"} onClick={this.props.authenticated ? this.handleLike : ''}></div>
+                            </div>
+                        </div>
                         <div className="course-name">{this.props.author}</div>
                         <a href={'/course/'+this.props.id}>
                             <div className="course-title">{this.props.title}</div>
                         </a>
-                        <div className="rating">
-                            <div className="wrapper-like">
-                                <div className={this.state.liked ? "heart heart_red" : "heart"} onClick={this.props.authenticated ? this.handleLike : ''}></div>
-                            </div>
-                            <div>{this.state.rating}</div>
-                        </div>
+                        <div className="age">{this.props.age_from}+</div>
                     </div>
 
                     <div className="course-info">

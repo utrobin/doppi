@@ -82,7 +82,6 @@ def get_courses(request):
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price,
                      'frequency': course.info.frequency,
-                     'rating': len(Like.objects.filter(course=course).filter(is_liked=True)),
                      'is_authenticated': True if request.user.is_authenticated() else False,
                      'rating': course.rating,
                      'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
@@ -164,17 +163,24 @@ def get_recommend_courses(request):
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': course.info.activity.title,
                      'location': [str(a) for a in course.info.location.all()],
-                     'price': course.info.price, 'frequency': course.info.frequency})
+                     'price': course.info.price, 'frequency': course.info.frequency,
+                     'is_authenticated': True if request.user.is_authenticated() else False,
+                     'rating': course.rating,
+                     'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user=UserProfile.objects.get(user=request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
 
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+def get_raiting(request):
+    data = []
+    course = Course.objects.get(id = request.GET['course_id'])
+
+    data.append({'is_authenticated': True if request.user.is_authenticated() else False,
+                 'rating': course.rating,
+                 'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user=UserProfile.objects.get(user=request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
 def single_course(request, course_id):
-
-    count = Course.objects.all().count()
-    slice = random.random() * (count - 3)
-    recommend_courses = Course.objects.all()[slice: slice + 3]
-
     course = Course.objects.get(id=course_id)
     return render(request, 'course_page.html', {'course': course})
 

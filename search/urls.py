@@ -24,4 +24,5 @@ urlpatterns = [
 
     url(r'^coordinates$', views.get_courses_map, name='coordinates'),
     url(r'^like', views.do_like, name='like'),
+    url(r'^rating', views.get_raiting, name='rating'),
 ]

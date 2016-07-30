@@ -1,3 +1,65 @@
+/* Код для подключения шрифта в /css/stylename.css */
+/* font-family: "OpenSansRegular"; */
+@font-face {
+    font-family: "OpenSansRegular";
+    src: url("../fonts/OpenSansRegular/OpenSansRegular.eot");
+    src: url("../fonts/OpenSansRegular/OpenSansRegular.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansRegular/OpenSansRegular.woff") format("woff"),
+    url("../fonts/OpenSansRegular/OpenSansRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "OpenSansLight"; */
+@font-face {
+    font-family: "OpenSansLight";
+    src: url("../fonts/OpenSansLight/OpenSansLight.eot");
+    src: url("../fonts/OpenSansLight/OpenSansLight.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansLight/OpenSansLight.woff") format("woff"),
+    url("../fonts/OpenSansLight/OpenSansLight.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "OpenSansBold"; */
+@font-face {
+    font-family: "OpenSansBold";
+    src: url("../fonts/OpenSansBold/OpenSansBold.eot");
+    src: url("../fonts/OpenSansBold/OpenSansBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansBold/OpenSansBold.woff") format("woff"),
+    url("../fonts/OpenSansBold/OpenSansBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "OpenSansRegularItalic"; */
+@font-face {
+    font-family: "OpenSansRegularItalic";
+    src: url("../fonts/OpenSansRegularItalic/OpenSansRegularItalic.eot");
+    src: url("../fonts/OpenSansRegularItalic/OpenSansRegularItalic.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansRegularItalic/OpenSansRegularItalic.woff") format("woff"),
+    url("../fonts/OpenSansRegularItalic/OpenSansRegularItalic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "OpenSansSemiBold"; */
+@font-face {
+    font-family: "OpenSansSemiBold";
+    src: url("../fonts/OpenSansSemiBold/OpenSansSemiBold.eot");
+    src: url("../fonts/OpenSansSemiBold/OpenSansSemiBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansSemiBold/OpenSansSemiBold.woff") format("woff"),
+    url("../fonts/OpenSansSemiBold/OpenSansSemiBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "OpenSansSemiBoldItalic"; */
+@font-face {
+    font-family: "OpenSansSemiBoldItalic";
+    src: url("../fonts/OpenSansSemiBoldItalic/OpenSansSemiBoldItalic.eot");
+    src: url("../fonts/OpenSansSemiBoldItalic/OpenSansSemiBoldItalic.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/OpenSansSemiBoldItalic/OpenSansSemiBoldItalic.woff") format("woff"),
+    url("../fonts/OpenSansSemiBoldItalic/OpenSansSemiBoldItalic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +69,7 @@ body {
   height: 100%;
 }
 body{
-    font-family: 'Open Sans', sans-serif;
+    font-family: "OpenSansRegular";
     color: #777;
     background: #edeef0;
 }
@@ -33,7 +95,7 @@ footer span{
     line-height: 40px;
     font-size: 18px;
     color: rgb(72, 0, 72);
-    font-weight: 600;
+    font-family: "OpenSansSemiBold";
 }
 .clear{
     clear: both;
@@ -68,6 +130,7 @@ input{
 }
 .logo a{
     color: #fff;
+    font-family: "OpenSansRegularItalic";
 }
 .navbar-left{
     float: left;
@@ -80,7 +143,7 @@ input{
     line-height: 50px;
 }
 .navbar-left li a{
-    font-weight: 600;
+    font-family: "OpenSansSemiBold";
     display: block;
 }
 .navbar-left li:hover{
@@ -207,7 +270,7 @@ h1{
     transform: scale(1.05);
 }
 .tree-menu span{
-    font-weight: 600;
+    font-family: "OpenSansSemiBold";
     color: #222;
     margin: 15px 0;
     font-size: 13px;
@@ -241,6 +304,14 @@ h1{
     line-height: 18px;
     color: #aaa;
     -webkit-text-size-adjust: 100%;
+}
+.comments-empty{
+    padding: 15px;
+    border: 1px solid rgb(72, 0, 72);
+    border-radius: 5px;
+    background-color: rgba(89, 0, 89, 0.3);
+    margin-top: 15px;
+    color: #000;
 }
 .comments-pxpty a, .comments-pxpty{
     -webkit-text-size-adjust: 100%;
@@ -455,9 +526,10 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     position: relative;
 }
 .course-name{
+    display: block;
     color: #fff;
-    margin-bottom: 15px;
-    font-size: 14px;
+    font-size: 12px;
+    margin-bottom: 10px;
 }
 .course-title{
     color: #fff;
@@ -513,7 +585,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .page-course h1{
     color: #000;
     margin: 0;
-    font-weight: 600;
+    font-family: "OpenSansSemiBold";
     font-size: 26px;
     margin-bottom: 8px;
 }
@@ -580,7 +652,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     color: #777;
 }
 .page-course th:nth-child(2n) {
-    font-weight: 600;
+    font-family: "OpenSansSemiBold";
     color: #000;
 }
 .page-course .options a{
@@ -755,17 +827,18 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .Rcourse-name{
     display: block;
     color: #fff;
-    font-size: 16px;
+    font-size: 12px;
     margin-bottom: 10px;
 }
 .Rcourse-title{
     color: #fff;
-    display: inline;
+    display: block;
     font-size: 15px;
     line-height: 20px;
+    margin-bottom: 10px;
 }
 .Rcourse-title:hover{
-    border-bottom: 1px solid #fff;
+    text-decoration: underline;
 }
 .Rcourse-info{
     color: #879198;
@@ -773,10 +846,10 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .Rcourse-wrapper-title span{
     display: block;
     color: #fff;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 .Rcourse .age{
-    float: right;
     border: 1px solid #fff;
     height: 25px;
     min-width: 25px;
@@ -784,9 +857,16 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     border-radius: 17px;
     text-align: center;
     line-height: 25px;
-    margin-top: -5px;
     padding: 3px;
-    margin-right: -5px;
+    right: 8px;
+    position: absolute;
+    bottom: 8px;
+}
+.Rcourse-plug{
+    height: 25px;
+    width: 25px;
+    margin: 3px 0 0 3px;
+    float: right;
 }
 #updown {
     position: fixed;
@@ -851,4 +931,45 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 }
 .wrapper-like{
     cursor: pointer;
+    float: right;
+    width: 25px;
+    height: 25px;
+}
+.Rcourse .rating{
+    float: right;
+    margin: -9px -5px 0 0;
+    padding: 0 0 5px 5px
+}
+.rating-number{
+    display: block;
+    float: left;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.Rcourse-title-wrapper a{
+    font-size: 14px;
+}
+.course .rating{
+    float: right;
+    margin: -9px -5px 0 0;
+    padding: 0 0 5px 5px
+}
+.course .age{
+    border: 1px solid #fff;
+    height: 25px;
+    min-width: 25px;
+    font-size: 16px;
+    border-radius: 17px;
+    text-align: center;
+    line-height: 25px;
+    padding: 3px;
+    right: 8px;
+    position: absolute;
+    bottom: 8px;
+}
+#like .rating{
+    float: left;
+}
+#like {
+    float: left;
 }

@@ -49,15 +49,17 @@
     <input name="coordinate_x" type="hidden" value="{{ course.info.coordinate_x }}">
     <input name="coordinate_y" type="hidden" value="{{ course.info.coordinate_y }}">
 
-    <h2>Наше местоположение:</h2>
     {% if  course.info.coordinate_x and course.info.coordinate_y %}
+        <h2>Наше местоположение:</h2>
         <div id="map" class="course-map"></div>
     {% else %}
 
     {% endif %}
+    <div id="id" class="hidden">{{ course.id}}</div>
     <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
     <div class="social">
+        <div id="like"></div>
         <span class="soc-span">Поделиться:</span>
         <div class="ya-share2" data-services="vkontakte,moimir,odnoklassniki,facebook,twitter"></div>
     </div>
