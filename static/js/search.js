@@ -256,8 +256,8 @@ var Courses = React.createClass({
                     <div className="course-wrapper-title">
                         <div className="rating">
                             <div className="rating-number">{this.state.rating}</div>
-                            <div className="wrapper-like">
-                                <div className={this.state.liked ? "heart heart_red" : "heart"} onClick={this.props.authenticated ? this.handleLike : ''}></div>
+                            <div className="wrapper-like"  onClick={this.props.authenticated ? this.handleLike : ''}>
+                                <div className={this.state.liked ? "heart heart_red" : "heart"}></div>
                             </div>
                         </div>
                         <div className="course-name">{this.props.author}</div>
