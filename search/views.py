@@ -23,10 +23,6 @@ pusher_client = pusher.Pusher(
 )
 
 
-def hello(request):
-    return render(request, 'hello.html')
-
-
 def fish(request):
     return render(request, 'fish.html')
 
