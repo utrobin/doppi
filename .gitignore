@@ -47,3 +47,4 @@ fabric.properties
 *.pyc
 /node_modules/
 /webpack.config.js
+/assets/js/index.jsx
