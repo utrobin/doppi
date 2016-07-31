@@ -46,3 +46,4 @@ fabric.properties
 #
 *.pyc
 /node_modules/
+/webpack.config.js
