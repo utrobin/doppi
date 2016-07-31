@@ -58,9 +58,11 @@ def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])
     page = int(request.GET['page'])
+    print(options)
     for course in Course.objects.filter(
         Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
         Q(info__price__gte=mk_int(options['priceFrom'], False)),
+        Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
@@ -73,7 +75,7 @@ def get_courses(request):
                      'age_from': course.info.age_from,
                      'age_to': course.info.age_to,
                      'time_from': course.info.time_from,
-                     'activity': course.info.activity.title,
+                     'activity': course.info.activity.title if course.info.activity else 'fgfjhgifh',
                      'time_to': course.info.time_to,
                      'location': [str(a) for a in course.info.location.all()],
                      'price': course.info.price,

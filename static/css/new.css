@@ -523,6 +523,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     position: relative;
     color: #fff;
     padding: 25px 15px 0 15px;
+    min-width: 220px;
 }
 .course-wrapper{
     position: relative;

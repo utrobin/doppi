@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'search',
     'authentication',
+    'webpack_loader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -129,6 +130,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "assets")
 )
 
 AUTH_PROFILE_MODULE = 'authentication.UserProfile'
@@ -136,4 +138,9 @@ AUTH_PROFILE_MODULE = 'authentication.UserProfile'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
-
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}

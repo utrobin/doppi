@@ -45,3 +45,4 @@ fabric.properties
 
 #
 *.pyc
+/node_modules/
