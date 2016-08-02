@@ -393,26 +393,21 @@
 	var Leaf = _react2.default.createClass({
 	    displayName: 'Leaf',
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            activeValue: false
-	        };
-	    },
 
 	    handleClick: function handleClick(event) {
-	        this.setState({
-	            activeValue: !this.state.activeValue
-	        });
-	        this.props.handleClick(this.props.title, this.state.activeValue);
+	        var omg = event.target.name;
+
+	        this.props.activeValue(omg);
+	        this.props.handleClick(this.props.title);
 	    },
 
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'li',
-	            { onClick: this.handleClick, className: this.state.activeValue ? 'active' : '' },
+	            { onClick: this.handleClick, name: this.props.name, className: this.props.activeId == this.props.name ? 'active' : '' },
 	            _react2.default.createElement(
 	                'a',
-	                null,
+	                { name: this.props.name },
 	                this.props.title
 	            )
 	        );
@@ -425,13 +420,8 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            isDisplayed: false,
-	            activeValueLeaf: false
+	            isDisplayed: false
 	        };
-	    },
-
-	    activeLeaf: function activeLeaf(title) {
-	        this.props.handleClick([title]);
 	    },
 
 	    handleClick: function handleClick(event) {
@@ -441,6 +431,10 @@
 	        this.props.handleClick(this.props.leaves.map(function (el) {
 	            return el.title;
 	        }));
+	    },
+
+	    activeLeaf: function activeLeaf(title) {
+	        this.props.handleClick([title]);
 	    },
 
 	    render: function render() {
@@ -456,7 +450,7 @@
 	                'ul',
 	                { style: this.state.isDisplayed ? { display: 'block' } : { display: 'none' } },
 	                this.props.leaves.map(function (el) {
-	                    return _react2.default.createElement(Leaf, { key: el.id, title: el.title, handleClick: this.activeLeaf });
+	                    return _react2.default.createElement(Leaf, { key: el.id, name: el.id, title: el.title, handleClick: this.activeLeaf, activeValue: this.props.activeValue, activeId: this.props.activeId });
 	                }, this)
 	            )
 	        );
@@ -468,8 +462,15 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            tree: []
+	            tree: [],
+	            activeValue: -1
 	        };
+	    },
+
+	    activeValue: function activeValue(value) {
+	        this.setState({
+	            activeValue: value
+	        });
 	    },
 
 	    handleTree: function handleTree(leaves) {
@@ -493,7 +494,14 @@
 	            'ul',
 	            null,
 	            this.state.tree.map(function (el) {
-	                return _react2.default.createElement(Branch, { key: el.id, leaves: el.content, branch: el.title, handleClick: this.handleTree });
+	                return _react2.default.createElement(Branch, {
+	                    key: el.id,
+	                    leaves: el.content,
+	                    branch: el.title,
+	                    handleClick: this.handleTree,
+	                    activeValue: this.activeValue,
+	                    activeId: this.state.activeValue
+	                });
 	            }, this)
 	        );
 	    }
@@ -706,7 +714,9 @@
 	    },
 
 	    loadMoreCourses: function loadMoreCourses() {
-	        this.setState({ isLoading: true });
+	        this.setState({
+	            isLoading: true
+	        });
 
 	        currentAjax.abort();
 	        currentAjax = $.ajax({

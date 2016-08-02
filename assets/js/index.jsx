@@ -2,7 +2,6 @@
  * Created by egorutrobin and pavelgolubev on 12.07.16.
  */
 
-
 import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
@@ -266,22 +265,18 @@ var Courses = React.createClass({
 });
 
 var Leaf = React.createClass({
-    getInitialState: function () {
-        return {
-            activeValue: false
-        }
-    },
 
     handleClick: function (event) {
-        this.setState({
-            activeValue: !this.state.activeValue
-        });
-        this.props.handleClick(this.props.title, this.state.activeValue);
+        var omg = event.target.name;
+
+        this.props.activeValue(omg);
+        this.props.handleClick(this.props.title);
     },
 
     render: function () {
         return (
-            <li onClick={this.handleClick} className={this.state.activeValue ? 'active' : ''}><a>{this.props.title}</a>
+            <li onClick={this.handleClick} name={this.props.name}  className={this.props.activeId == this.props.name ? 'active' : ''}>
+                <a name={this.props.name}>{this.props.title}</a>
             </li>
         )
     }
@@ -293,12 +288,7 @@ var Branch = React.createClass({
     getInitialState: function () {
         return {
             isDisplayed: false,
-            activeValueLeaf: false
         }
-    },
-
-    activeLeaf: function (title) {
-        this.props.handleClick([title]);
     },
 
     handleClick: function (event) {
@@ -310,6 +300,10 @@ var Branch = React.createClass({
         }));
     },
 
+    activeLeaf: function (title) {
+        this.props.handleClick([title]);
+    },
+
     render: function () {
         return (
 
@@ -319,7 +313,7 @@ var Branch = React.createClass({
                     {
                         this.props.leaves.map(function (el) {
                             return (
-                                <Leaf key={el.id} title={el.title} handleClick={this.activeLeaf}/>
+                                <Leaf key={el.id} name={el.id} title={el.title} handleClick={this.activeLeaf} activeValue={this.props.activeValue} activeId={this.props.activeId}/>
                             )
                         }, this)
                     }
@@ -332,8 +326,15 @@ var Branch = React.createClass({
 var Tree = React.createClass({
     getInitialState: function () {
         return {
-            tree: []
+            tree: [],
+            activeValue: -1
         }
+    },
+
+    activeValue: function (value) {
+        this.setState({
+            activeValue: value
+        });
     },
 
     handleTree: function (leaves) {
@@ -357,7 +358,14 @@ var Tree = React.createClass({
             <ul>{
                 this.state.tree.map(function (el) {
                     return (
-                        <Branch key={el.id} leaves={el.content} branch={el.title} handleClick={this.handleTree}/>
+                        <Branch
+                            key={el.id}
+                            leaves={el.content}
+                            branch={el.title}
+                            handleClick={this.handleTree}
+                            activeValue={this.activeValue}
+                            activeId={this.state.activeValue}
+                        />
                     )
                 }, this)
             }</ul>
@@ -552,7 +560,9 @@ var CoursesList = React.createClass({
     },
 
     loadMoreCourses: function () {
-        this.setState({isLoading: true});
+        this.setState({
+            isLoading: true,
+        });
 
         currentAjax.abort();
         currentAjax = $.ajax({

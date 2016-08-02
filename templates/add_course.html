@@ -1,19 +1,16 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
+{% load render_bundle from webpack_loader %}
+
 
 {% block content %}
-
-<style>
-        #map {
-            width: 300px;
-            height: 300px;
-        }
-</style>
-
-    <div class="container">
-        <form class="form-signin" method="post" enctype="multipart/form-data" role="form" action="{% url 'add_course' %}">
-            <h2 class="form-signin-heading">Добавление курса</h2>
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="/static/js/map-add.js" type="text/javascript"></script>
+    {% include 'tinymce/tinymce.html' %}
+    <div class="add-course">
+        <h1>Добавление курса</h1>
+        <form class="form-add-course" method="post" enctype="multipart/form-data" role="form" action="{% url 'add_course' %}">
             {% csrf_token %}
-        
+
             {% for error in form.non_field_errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
@@ -27,22 +24,28 @@
                 </div>
             {% endfor %}
 
-            <p class="form-signin-heading">Следущие поля не явлются обязательными, но помогут найти Ваш курс</p>
-            <label>Выберите адрес на карте</label>
-            <div id="map"></div>
-            {% for error in forminfo.non_field_errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
-            {% for field in forminfo %}
-                <div class="{% if field.errors %}error{% endif %}">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
-                    {{ field }}
-                </div>
-            {% endfor %}
-            <button class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="cor()">Добавить</button>
+            <div id="menu" class="menu"></div>
+            {% render_bundle 'add_course' %}
+
+            <span>Найдите ваш адрес на карте</span>
+            <div id="map" class="map-add"></div>
+
+            <div class="add-course-second">
+                {% for error in forminfo.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+                {% for field in forminfo %}
+                    <div class="{% if field.errors %}error{% endif %}">
+                        {{ field.errors }}
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onmouseover="cor()">Добавить курс</button>
+            <div class="clear"></div>
         </form>
     </div>
 

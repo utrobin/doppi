@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^', include('search.urls')),
     url(r'^authentication/', include('authentication.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

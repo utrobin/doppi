@@ -1,0 +1,55 @@
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({
+        selector: "textarea#TinyMCE",
+        height: 300,
+        content_css : "/static/css/tinymce_content.css",
+        plugins: [
+            "advlist autolink autosave link lists charmap print preview anchor pagebreak spellchecker",
+            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+            "table contextmenu directionality template textcolor paste textcolor colorpicker textpattern"
+        ],
+
+        toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | formatselect bullist numlist | outdent indent link unlink table",
+
+        menubar: false,
+        toolbar_items_size: 'small',
+
+        style_formats: [{
+            title: 'Bold text',
+            inline: 'b'
+        }, {
+            title: 'Red text',
+            inline: 'span',
+            styles: {
+                color: '#ff0000'
+            }
+        }, {
+            title: 'Red header',
+            block: 'h1',
+            styles: {
+                color: '#ff0000'
+            }
+        }, {
+            title: 'Example 1',
+            inline: 'span',
+            classes: 'example1'
+        }, {
+            title: 'Example 2',
+            inline: 'span',
+            classes: 'example2'
+        }, {
+            title: 'Table styles'
+        }, {
+            title: 'Table row 1',
+            selector: 'tr',
+            classes: 'tablerow1'
+        }],
+
+        templates: [{
+            title: 'Test template 1',
+            content: 'Test 1'
+        }, {
+            title: 'Test template 2',
+            content: 'Test 2'
+        }],
+    });</script>

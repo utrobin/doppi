@@ -58,7 +58,6 @@ def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])
     page = int(request.GET['page'])
-    print(options)
     for course in Course.objects.filter(
         Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
         Q(info__price__gte=mk_int(options['priceFrom'], False)),
@@ -66,7 +65,7 @@ def get_courses(request):
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_from__gte=mk_int(options['ageFrom'], False)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
-    )[page * 9:(page + 1) * 9]:
+    ).order_by('-id').distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,

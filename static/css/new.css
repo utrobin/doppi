@@ -986,3 +986,119 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     z-index: 101;
     margin-bottom: 50px;
 }
+.add-course{
+    padding: 15px;
+    width: 705px;
+    margin: auto;
+    margin-top: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+.add-course h1{
+    color: #000;
+    margin: 0 0 25px 0;
+    font-size: 28px;
+    font-family: "OpenSansSemiBold";
+}
+.add-course .title{
+    width: 500px;
+    max-width: 470px;
+    padding: 15px;
+    height: 40px;
+    font-family: "OpenSansRegular";
+    font-size: 16px;
+    border: 1px solid rgb(49, 0, 49);
+    border-radius: 3px;
+}
+.add-course .introtext{
+    width: 500px;
+    max-width: 470px;
+    padding: 15px;
+    height: 80px;
+    font-family: "OpenSansRegular";
+    font-size: 16px;
+    border: 1px solid rgb(49, 0, 49);
+    border-radius: 3px;
+}
+.form-add-course div:nth-child(2) label, .form-add-course div:nth-child(3) label{
+    display: block;
+    float: left;
+    min-width: 200px;
+    color: rgb(49, 0, 49);
+}
+.form-add-course div:nth-child(2) textarea, .form-add-course div:nth-child(3) textarea {
+    margin-bottom: 15px;
+}
+.form-add-course div:nth-child(4) label{
+    display: block;
+    margin-bottom: 15px;
+    color: rgb(49, 0, 49);
+}
+#mceu_16{
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-bottom: 15px;
+}
+.form-add-course div:nth-child(5) label{
+    display: block;
+    float: left;
+    min-width: 200px;
+    color: rgb(49, 0, 49);
+}
+.form-add-course div:nth-child(5) input{
+    margin-bottom: 15px;
+}
+.add-course .menu a{
+    color: rgb(49, 0, 49);
+}
+.add-course .menu li{
+}
+.add-course .menu{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.add-course .menu li li{
+    display: block;
+}
+.add-course span{
+    font-size: 18px;
+    color: #000;
+    display: block;
+    font-family: "OpenSansRegular";
+}
+.add-course-second label{
+    display: block;
+    float: left;
+    min-width: 300px!important;
+    color: rgb(49, 0, 49);
+}
+.add-course-second input[type="checkbox"]{
+    -webkit-appearance: checkbox;
+}
+.add-course-second input{
+    display: block;
+    margin-bottom: 18px;
+    border: 1px solid;
+    box-shadow: none;
+    width: 70px;
+    padding: 5px;
+    font-size: 16px;
+}
+.map-add{
+    width: 705px;
+    height: 400px;
+    margin: 15px 0;
+}
+.form-add-course .menu li ul{
+    display: block;
+    margin-left: 15px;
+}
+.form-add-course li{
+    margin: 8px 0;
+    cursor: pointer;
+}
+.form-add-course .menu .active a{
+    color: crimson;
+    font-family: "OpenSansBold";
+}
