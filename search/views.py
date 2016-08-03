@@ -65,7 +65,7 @@ def get_courses(request):
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
-    ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
+    ).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
