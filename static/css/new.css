@@ -245,6 +245,7 @@ h1{
 }
 .filters{
     display: block;
+    margin-left: 199px;
 }
 .tree-menu{
     float: left;
@@ -1101,4 +1102,57 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .form-add-course .menu .active a{
     color: crimson;
     font-family: "OpenSansBold";
+}
+.search-filter input{
+    font-size: 16px;
+    border: 2px solid rgb(72, 0, 72);
+    padding: 5px 10px;
+    margin-left: 25px;
+    width: 620px;
+    border-radius: 3px;
+}
+.search-filter{
+    margin-bottom: 15px;
+}
+.filters label{
+    font-size: 16px;
+}
+.number-filter input{
+    font-size: 16px;
+    border: 2px solid rgb(72, 0, 72);
+    padding: 5px 10px;
+    width: 30px;
+    border-radius: 3px;
+}
+.number-filter{
+    margin-bottom: 15px;
+}
+.filter-price{
+    display: inline;
+}
+.filter-price label{
+    margin-right: 12px;
+}
+.filter-price input{
+    margin-right: 15px;
+}
+.filter-age{
+    margin-left: 116px;
+    display: inline;
+}
+.filter-age input{
+    margin-right: 15px;
+}
+.filter-age label{
+    margin-right: 12px;
+}
+.sort-price{
+    margin-bottom: 15px;
+    margin-left: 199px;
+}
+.sort-price a{
+    color: rgb(72, 0, 72);
+}
+#map a{
+    color: #2aabd2;
 }

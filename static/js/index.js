@@ -79,7 +79,7 @@
 	var PRICE_FROM = 'PRICE_FROM';
 	var PRICE_TO = 'PRICE_TO';
 	var SEARCH_QUERY = 'SEARCH_QUERY';
-	var SORT_PRICE = 'SORT_PRICE';
+	var SORT_VALUE = 'SORT_VALUE';
 	var GET_COURSES = 'GET_COURSES';
 	var ADD_COURSES = 'ADD_COURSES';
 
@@ -107,8 +107,8 @@
 	    return { type: PRICE_TO, value: value };
 	}
 
-	function sortPrice() {
-	    return { type: SORT_PRICE };
+	function sortValue(value) {
+	    return { type: SORT_VALUE, value: value };
 	}
 
 	function _getCourses(courses) {
@@ -132,7 +132,8 @@
 	            priceFrom: "",
 	            priceTo: "",
 	            ageFrom: "",
-	            ageTo: ""
+	            ageTo: "",
+	            sortValue: "-id"
 	        };
 	    }
 	    switch (action.type) {
@@ -155,6 +156,14 @@
 	                var resState = _objectWithoutProperties(state, ['query']);
 
 	                return Object.assign({}, resState, { query: action.value });
+	            }
+	        case SORT_VALUE:
+	            {
+	                var sortValue = state.sortValue;
+
+	                var resState5 = _objectWithoutProperties(state, ['sortValue']);
+
+	                return Object.assign({}, resState5, { sortValue: action.value });
 	            }
 	        case PRICE_FROM:
 	            {
@@ -193,25 +202,6 @@
 	    }
 	}
 
-	function sort(state, action) {
-	    if (typeof state === 'undefined') {
-	        return 'ASC';
-	    }
-	    switch (action.type) {
-	        case SORT_PRICE:
-	            {
-	                if (state == 'ASC') {
-	                    return 'DESC';
-	                } else {
-	                    return 'ASC';
-	                }
-	            }
-
-	        default:
-	            return state;
-	    }
-	}
-
 	function courses(state, action) {
 	    if (typeof state === 'undefined') {
 	        return [];
@@ -231,7 +221,6 @@
 	var todoApp = (0, _redux.combineReducers)({
 	    get_url: get_url,
 	    options: options,
-	    sort: sort,
 	    courses: courses
 	});
 
@@ -588,38 +577,51 @@
 	                'div',
 	                { className: 'filters' },
 	                _react2.default.createElement(
-	                    'label',
-	                    null,
-	                    'Поиск'
+	                    'div',
+	                    { className: 'search-filter' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Поиск'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text', placeholder: 'Начните вводить интересующий вас запрос', onChange: this.handleSearchQuery })
 	                ),
-	                _react2.default.createElement('input', { type: 'text', className: 'search-field', onChange: this.handleSearchQuery }),
-	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
-	                    'label',
-	                    null,
-	                    'цена от'
-	                ),
-	                _react2.default.createElement('input', { type: 'text', name: 'priceFrom', onChange: this.handleNumberInput }),
-	                _react2.default.createElement(
-	                    'label',
-	                    null,
-	                    'цена до'
-	                ),
-	                _react2.default.createElement('input', { type: 'text', name: 'priceTo', onChange: this.handleNumberInput }),
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement(
-	                    'label',
-	                    null,
-	                    'возраст от'
-	                ),
-	                _react2.default.createElement('input', { type: 'text', name: 'ageFrom', onChange: this.handleNumberInput }),
-	                _react2.default.createElement(
-	                    'label',
-	                    null,
-	                    'возраст до'
-	                ),
-	                _react2.default.createElement('input', { type: 'text', name: 'ageTo', onChange: this.handleNumberInput }),
-	                _react2.default.createElement('br', null)
+	                    'div',
+	                    { className: 'number-filter' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'filter-price' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Цена от'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', name: 'priceFrom', onChange: this.handleNumberInput }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Цена до'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', name: 'priceTo', onChange: this.handleNumberInput })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'filter-age' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Возраст от'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', name: 'ageFrom', onChange: this.handleNumberInput }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Возраст до'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', name: 'ageTo', onChange: this.handleNumberInput })
+	                    )
+	                )
 	            )
 	        );
 	    }
@@ -736,8 +738,13 @@
 	        });
 	    },
 
-	    sortCourses: function sortCourses(comparator) {
-	        console.log(this.props.user);
+	    sortCourses: function sortCourses(event) {
+	        var omg = event.target.name;
+	        console.log(omg);
+
+	        asyncDone(this.props.dispatch(sortValue(omg)), function (error, result) {
+	            this.getCourses();
+	        }.bind(this));
 	    },
 
 	    render: function render() {
@@ -758,20 +765,16 @@
 	                    { className: 'sort-price' },
 	                    _react2.default.createElement(
 	                        'a',
-	                        { id: 'priceAsc',
-	                            onClick: this.sortCourses.bind(this, function (a, b) {
-	                                return a.price >= b.price ? 1 : -1;
-	                            }) },
-	                        'Сортировка по цене возрастанию'
+	                        { id: 'priceAsc', name: '-rating',
+	                            onClick: this.sortCourses },
+	                        'Сортировка по рейтингу убыванию'
 	                    ),
 	                    _react2.default.createElement(
 	                        'a',
-	                        { id: 'priceDesk',
-	                            onClick: this.sortCourses.bind(this, function (a, b) {
-	                                return a.price <= b.price ? 1 : -1;
-	                            }),
+	                        { id: 'priceDesk', name: 'rating',
+	                            onClick: this.sortCourses,
 	                            style: { display: 'none' } },
-	                        'Сортировка по цене убыванию'
+	                        'Сортировка по рейтингу возрастанию'
 	                    )
 	                ),
 	                _react2.default.createElement(

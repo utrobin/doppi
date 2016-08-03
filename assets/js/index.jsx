@@ -20,7 +20,7 @@ const AGE_TO = 'AGE_TO'
 const PRICE_FROM = 'PRICE_FROM'
 const PRICE_TO = 'PRICE_TO'
 const SEARCH_QUERY = 'SEARCH_QUERY'
-const SORT_PRICE = 'SORT_PRICE'
+const SORT_VALUE = 'SORT_VALUE'
 const GET_COURSES = 'GET_COURSES'
 const ADD_COURSES = 'ADD_COURSES'
 
@@ -48,8 +48,8 @@ function priceTo(value) {
     return {type: PRICE_TO, value}
 }
 
-function sortPrice() {
-    return {type: SORT_PRICE}
+function sortValue(value) {
+    return {type: SORT_VALUE, value}
 }
 
 function getCourses(courses) {
@@ -74,7 +74,8 @@ function options(state, action) {
             priceFrom: "",
             priceTo: "",
             ageFrom: "",
-            ageTo: ""
+            ageTo: "",
+            sortValue: "-id"
         }
     }
     switch (action.type) {
@@ -93,6 +94,10 @@ function options(state, action) {
             var {query, ...resState} = state;
             return Object.assign({}, resState, {query: action.value});
         }
+        case SORT_VALUE: {
+            var {sortValue, ...resState5} = state;
+            return Object.assign({}, resState5, {sortValue: action.value});
+        }
         case PRICE_FROM: {
             var {priceFrom, ...resState1} = state;
             return Object.assign({}, resState1, {priceFrom: action.value});
@@ -109,25 +114,6 @@ function options(state, action) {
             var {ageTo, ...resState4} = state;
             return Object.assign({}, resState4, {ageTo: action.value});
         }
-        default:
-            return state
-    }
-}
-
-function sort(state, action) {
-    if (typeof state === 'undefined') {
-        return 'ASC'
-    }
-    switch (action.type) {
-        case SORT_PRICE: {
-            if (state == 'ASC') {
-                return 'DESC'
-            }
-            else {
-                return 'ASC'
-            }
-        }
-
         default:
             return state
     }
@@ -156,7 +142,6 @@ function courses(state, action) {
 const todoApp = combineReducers({
     get_url,
     options,
-    sort,
     courses,
 })
 
@@ -451,14 +436,22 @@ var CoursesOptions = React.createClass({
                     </div>
                 </div>
                 <div className="filters">
-                    <label>Поиск</label><input type="text" className="search-field" onChange={this.handleSearchQuery}/>
-                    <br />
-                    <label>цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
-                    <label>цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
-                    <br />
-                    <label>возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
-                    <label>возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
-                    <br />
+
+                    <div className="search-filter">
+                        <label>Поиск</label>
+                        <input type="text" placeholder="Начните вводить интересующий вас запрос" onChange={this.handleSearchQuery}/>
+                    </div>
+                    <div className="number-filter">
+                        <div className="filter-price">
+                            <label>Цена от</label><input type="text" name="priceFrom" onChange={this.handleNumberInput}/>
+                            <label>Цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
+                        </div>
+
+                        <div className="filter-age">
+                            <label>Возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
+                            <label>Возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
+                        </div>
+                    </div>
                 </div>
             </div>)
     }
@@ -583,9 +576,15 @@ var CoursesList = React.createClass({
         });
     },
 
-    sortCourses: function (comparator) {
-        console.log(this.props.user)
+    sortCourses: function (event) {
+        var omg = event.target.name;
+        console.log(omg)
 
+        asyncDone(
+            this.props.dispatch(sortValue(omg)),
+            function (error, result) {
+                this.getCourses();
+            }.bind(this));
     },
 
     render: function () {
@@ -600,19 +599,15 @@ var CoursesList = React.createClass({
                     />
 
                     <div className="sort-price">
-                        <a id="priceAsc"
-                           onClick={this.sortCourses.bind(this, function (a, b) {
-                               return (a.price >= b.price) ? 1 : -1
-                           })}>
-                            Сортировка по цене возрастанию
+                        <a id="priceAsc" name="-rating"
+                           onClick={this.sortCourses}>
+                            Сортировка по рейтингу убыванию
                         </a>
 
-                        <a id="priceDesk"
-                           onClick={this.sortCourses.bind(this, function (a, b) {
-                               return (a.price <= b.price) ? 1 : -1
-                           })}
+                        <a id="priceDesk" name="rating"
+                           onClick={this.sortCourses}
                            style={{display: 'none'}}>
-                            Сортировка по цене убыванию
+                            Сортировка по рейтингу возрастанию
                         </a>
                     </div>
 
