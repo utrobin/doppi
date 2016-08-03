@@ -1132,6 +1132,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 }
 .filter-price label{
     margin-right: 12px;
+    -webkit-text-size-adjust: 100%;
 }
 .filter-price input{
     margin-right: 15px;
@@ -1145,6 +1146,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 }
 .filter-age label{
     margin-right: 12px;
+    -webkit-text-size-adjust: 100%;
 }
 .sort-price{
     margin-bottom: 15px;
