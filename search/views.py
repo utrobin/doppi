@@ -121,6 +121,7 @@ def get_courses_map(request):
 
             Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
             Q(info__price__gte=mk_int(options['priceFrom'], False)),
+            Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
             Q(info__price__lte=mk_int(options['priceTo'], True)),
             Q(info__age_to__lte=mk_int(options['ageTo'], True))
     ):
