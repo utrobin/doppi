@@ -47,12 +47,6 @@ def mk_checkboxes(list):
             list.append(k.title)
         return list
 
-def mk_sort(sort):
-    if sort == 'ASC':
-        return '-info__price'
-    else:
-        return 'info__price'
-
 
 def get_courses(request):
     data = []
@@ -65,7 +59,7 @@ def get_courses(request):
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
         Q(info__price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
-    ).distinct()[page * 9:(page + 1) * 9]:
+    ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
