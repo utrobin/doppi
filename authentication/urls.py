@@ -7,5 +7,8 @@ urlpatterns = [
     url(r'^logout/?$', views.logout, name='logout'),
     url(r'^edit/?$', views.profile_edit, name='edit'),
     url(r'^addchild', views.add_child, name='add_child'),
-    url(r'^editchild/(?P<child_id>\d+)$', views.edit_child, name='edit_child')
+    url(r'^editchild/(?P<child_id>\d+)$', views.edit_child, name='edit_child'),
+
+    url(r'^test/(?P<test_id>\d+)$', views.single_test, name='single_test'),
+    url(r'^get/questions$', views.get_questions_test, name='get_questions_test'),
 ]

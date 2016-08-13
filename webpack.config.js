@@ -8,6 +8,7 @@ module.exports = {
     entry: {
         index: './assets/js/index',
         add_course: './assets/js/add_course',
+        test: './assets/js/test',
     },
 
     output: {

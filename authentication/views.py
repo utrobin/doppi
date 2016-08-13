@@ -3,11 +3,13 @@
 from django.shortcuts import render
 from django.contrib import auth
 from django.db import transaction
-from django.http import HttpResponseRedirect
 from django.forms.models import model_to_dict
 from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, ProfileEditForm, ParentForm, CompanyForm, \
     ChildForm
-from authentication.models import UserInfo, UserProfile, Child
+from authentication.models import UserInfo, UserProfile, Child, test, Question, Answer
+from django.http.response import HttpResponseRedirect, HttpResponse
+
+import json
 
 
 def signin(request):
@@ -116,3 +118,28 @@ def edit_child(request, child_id):
     else:
         form = ChildForm(instance=child)
     return render(request, 'edit_child.html', {'form': form, 'child': child})
+
+
+def single_test(request, test_id):
+    t = test.objects.get(id=test_id)
+    return render(request, 'test/test.html', {'test': t})
+
+
+def get_questions_test(request):
+    test_id = request.GET['test_id']
+    data = []
+    for qt in Question.objects.filter(question__id=test_id):
+        answers = []
+        for a in Answer.objects.filter(question__id=qt.id):
+            answers.append({
+                'id': a.id,
+                'answer': a.answer
+            })
+
+        data.append({
+            'id': qt.id,
+            'question': qt.text,
+            'answers': answers
+            })
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
