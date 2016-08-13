@@ -25,14 +25,24 @@ class CommentForm(forms.ModelForm):
 
 
 class CourseForm(forms.ModelForm):
-    description = forms.CharField(widget=TinyMCE(
-            attrs={'cols': 10, 'rows': 10, 'id': 'TinyMCE', 'class': 'TinyMCE'}),
-            label=u'Описание'
+    description = forms.CharField(
+        widget=TinyMCE(
+            attrs={'cols': 10, 'rows': 10, 'id': 'TinyMCE', 'class': 'TinyMCE'}
+        ),
+        label=u'Описание'
+    )
+    introtext = forms.CharField(
+        widget=Textarea(
+            attrs={'class': 'introtext', 'placeholder': u'Краткое описание',}
+        ),
+        label=u'Краткое описание'
     )
     pic = forms.FileField(
         widget=forms.ClearableFileInput(
-            attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}),
-        required=False, label=u'Картинка'
+            attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}
+        ),
+        required=False,
+        label=u'Картинка'
     )
 
     class Meta:
@@ -40,11 +50,9 @@ class CourseForm(forms.ModelForm):
         fields = ['title', 'introtext', 'description', 'pic']
         widgets = {
             'title': Textarea(attrs={'class': 'title', 'placeholder': u'Название',}),
-            'introtext': Textarea(attrs={'class': 'introtext', 'placeholder': u'Краткое описание',}),
         }
         labels = {
             'title': u'Название',
-            'introtext': 'Краткое описание',
         }
 
     def save(self, commit=True):
@@ -58,6 +66,13 @@ class CourseForm(forms.ModelForm):
 
 
 class CourseInfoForm(forms.ModelForm):
+    price = forms.IntegerField(
+        widget=NumberInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+        label=u'Цена'
+    )
 
     class Meta:
         model = CourseInfo
@@ -66,7 +81,6 @@ class CourseInfoForm(forms.ModelForm):
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
             'activity': HiddenInput(attrs={'class': ['form-control', 'radio-inline']}),
-            'price': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Цена',}),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
             'coordinate_x': HiddenInput(attrs={'id': 'coordinate_x'}),
             'coordinate_y': HiddenInput(attrs={'id': 'coordinate_y'}),
@@ -75,7 +89,6 @@ class CourseInfoForm(forms.ModelForm):
             'age_from': u'Минимальный возраст',
             'age_to': u'Максимальный возраст',
             'activity': '',
-            'price': u'Цена',
             'frequency': u'Количество занятий в неделю',
             'coordinate_x': '',
             'coordinate_y': '',

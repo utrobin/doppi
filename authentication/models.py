@@ -50,4 +50,15 @@ class Payment(models.Model):
     isPayed = models.BooleanField(default=False)
 
 
+class test(models.Model):
+    title = models.CharField(max_length=128)
 
+
+class Question(models.Model):
+    text = models.TextField(max_length=1024)
+    question = models.ForeignKey(test)
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=200)
