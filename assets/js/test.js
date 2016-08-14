@@ -11,10 +11,57 @@ var asyncDone = require('async-done');
 var currentAjax = $.ajax();
 var test_id = document.getElementById('test_id').innerHTML;
 
+var Answer = React.createClass({
+
+    render: function () {
+        return (
+            <li>
+                <input
+                    type="checkbox"
+                    value={this.props.answer}
+                />
+                {this.props.answer}
+            </li>
+        )
+    }
+});
+
+var CurrentQuestion = React.createClass({
+
+    render: function () {
+        var temp = [];
+        if (this.props.question.answers !== undefined)
+        {
+            temp = this.props.question.answers;
+        }
+        return (
+            <div>
+                <p>{this.props.question.question}</p>
+                {
+                    temp.map(function (el) {
+                        return (
+                            <ul>
+                                <Answer
+                                    key={el.id}
+                                    answer={el.answer}
+                                />
+                            </ul>
+                        )
+                    }, this)
+                }
+
+            </div>
+        )
+    }
+});
+
+
 var Test = React.createClass({
     getInitialState: function () {
         return {
-
+            data: [],
+            currentQuestion: {},
+            currentId: 0
         }
     },
 
@@ -27,20 +74,43 @@ var Test = React.createClass({
             cache: false,
 
             success: function (data) {
-                    console.log(data)
-                }.bind(this),
+                console.log(data)
 
-            error: function (xrh, status, error) {
-                console.error(this.props.get_url_activity, status, err.toString());
-            }.bind(this)
-        });
+                this.setState({
+                    data: data,
+                    currentQuestion: data[this.state.currentId]
+                });
+            }.bind(this),
+        })
+    },
+
+    nextQuestion: function () {
+        if (this.state.currentId + 1 < this.state.data.length)
+        {
+            this.setState({
+                currentId: ++this.state.currentId,
+                currentQuestion: this.state.data[this.state.currentId],
+            });
+        }
+        else
+        {
+           this.setState({
+                currentId: 0,
+                currentQuestion: this.state.data[0],
+            });
+        }
+
+        console.log(this.state)
     },
 
     render: function () {
         return (
-            <ul>
-
-            </ul>
+            <div>
+                <CurrentQuestion
+                    question={this.state.currentQuestion}
+                />
+                <input type="button" value="Пропустить вопрос" onClick={this.nextQuestion}/>
+            </div>
         )
     }
 });

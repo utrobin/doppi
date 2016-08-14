@@ -1077,6 +1077,9 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .add-course-second input[type="checkbox"]{
     -webkit-appearance: checkbox;
 }
+#test input[type="checkbox"]{
+    -webkit-appearance: checkbox;
+}
 .add-course-second input{
     display: block;
     margin-bottom: 18px;

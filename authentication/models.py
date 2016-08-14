@@ -57,6 +57,7 @@ class test(models.Model):
 class Question(models.Model):
     text = models.TextField(max_length=1024)
     question = models.ForeignKey(test)
+    several = models.BooleanField(default=False)
 
 
 class Answer(models.Model):
