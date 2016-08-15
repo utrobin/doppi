@@ -90,6 +90,7 @@ var CurrentQuestion = React.createClass({
 var Number = React.createClass({
     render: function () {
         console.log(this.props)
+        var temp
         return (
             <i className={this.props.element.answered === true ? 'green' : ''}>
                 {this.props.number}
