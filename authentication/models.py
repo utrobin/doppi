@@ -20,6 +20,7 @@ class UserProfile(models.Model):
     subscribed = models.BooleanField(default=True)
     user_type = models.CharField(max_length=2, choices=USER_TYPES, default='PA')
     info = models.OneToOneField('UserInfo')
+    results = models.TextField(max_length=2048)
 
 
 class UserInfo(models.Model):

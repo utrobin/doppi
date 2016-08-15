@@ -1161,3 +1161,93 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 #map a{
     color: #2aabd2;
 }
+.disabled, .disabled:hover{
+    cursor: not-allowed !important;
+    background-color: #b7b7b7!important;
+    opacity: 1!important;
+}
+.test h1{
+    color: #000;
+    margin: 0;
+    font-family: "OpenSansSemiBold";
+    font-size: 26px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    margin-top: 15px;
+}
+.test .info_test{
+    width: 270px;
+    height: 200px;
+    float: right;
+    padding: 15px;
+    background-color: #fff;
+    margin-left: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+.test .main{
+    background-color: #fff;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    float: left;
+    width: 655px;
+}
+.test p{
+    font-family: "OpenSansLight";
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 25px;
+}
+.test label{
+    font-family: "OpenSansLight";
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 8px;
+    display: block;
+    cursor: pointer;
+    padding: 8px 3px;
+    border-radius: 3px;
+}
+.test label:hover{
+    background: rgb(72, 0, 72);
+    color: #fff;
+}
+.test span{
+    margin-bottom: 10px;
+}
+.test input[type="checkbox"]{
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.test .answer_button{
+    margin-right: 15px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+input.answer_puss {
+    font-size: 16px;
+    margin-top: 15px;
+    color: rgb(72, 0, 72);
+    background-color: #fff;
+}
+input.answer_puss:hover{
+    color: rgb(72, 0, 72);
+    text-decoration: underline;
+}
+.test .info_test i{
+    display: inline-block;
+    padding: 3px;
+    border: 1px solid;
+    margin: 3px;
+    border-radius: 3px;
+}
+.test .info_test .green{
+    background-color: green;
+}

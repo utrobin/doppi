@@ -128,7 +128,7 @@ def single_test(request, test_id):
 def get_questions_test(request):
     test_id = request.GET['test_id']
     data = []
-    for qt in Question.objects.filter(question__id=test_id):
+    for qt in Question.objects.filter(question__id=test_id).order_by('id'):
         answers = []
         for a in Answer.objects.filter(question__id=qt.id):
             answers.append({
@@ -139,7 +139,8 @@ def get_questions_test(request):
         data.append({
             'id': qt.id,
             'question': qt.text,
-            'answers': answers
-            })
+            'answers': answers,
+            'answered': False
+        })
 
     return HttpResponse(json.dumps(data), content_type="application/json")
