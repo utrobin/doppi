@@ -1077,6 +1077,9 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .add-course-second input[type="checkbox"]{
     -webkit-appearance: checkbox;
 }
+#test input[type="radio"]{
+    -webkit-appearance: radio;
+}
 #test input[type="checkbox"]{
     -webkit-appearance: checkbox;
 }
@@ -1179,7 +1182,6 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 }
 .test .info_test{
     width: 270px;
-    height: 200px;
     float: right;
     padding: 15px;
     background-color: #fff;
@@ -1220,7 +1222,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .test span{
     margin-bottom: 10px;
 }
-.test input[type="checkbox"]{
+.test input[type="checkbox"], .test input[type="radio"]{
     float: left;
     width: 20px;
     height: 20px;
@@ -1242,12 +1244,66 @@ input.answer_puss:hover{
     text-decoration: underline;
 }
 .test .info_test i{
+     cursor:pointer;
     display: inline-block;
-    padding: 3px;
-    border: 1px solid;
-    margin: 3px;
-    border-radius: 3px;
+    padding: 5px 10px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    margin: 4px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.test .info_test i:hover{
+    background-color: #186de2;
+    color: #fff!important;
 }
 .test .info_test .green{
-    background-color: green;
+    background-color: #8cc63e!important;
+    color: #fff!important;
+}
+.test .info_test .orange{
+    background-color: #ffa900!important;
+    color: #fff!important;
+}
+.test .info_test .grey{
+    background-color: #a6a6a6;
+}
+.test .info_test .dis{
+    cursor: not-allowed !important;
+}
+.test .info_test span{
+    font-family: "OpenSansLight";
+    font-size: 18px;
+    color: #3e91df;
+    margin-bottom: 25px;
+    display: block;
+    margin-top: 10px;
+}
+.test .info_test span:before{
+    background-image: url(../img/question.svg);
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 5px;
+    float: left;
+    content: '';
+}
+.test .info_test a{
+    font-family: "OpenSansRegular";
+    font-size: 16px;
+    color: #777;
+    display: block;
+    margin-top: 25px;
+    cursor: pointer;
+}
+.test .info_test a:hover{
+    color: #D75A4A;
+}
+.test .info_test a:after{
+    background-image: url(../img/cross.svg);
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    content: '';
 }

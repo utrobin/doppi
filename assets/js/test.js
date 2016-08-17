@@ -33,30 +33,31 @@ var Answer = React.createClass({
     },
 
     render: function () {
+        var temp = '';
+        if (this.props.several)
+        {
+            temp = 'checkbox';
+        }
+        else {
+            temp = 'radio';
+        }
+
         return (
-            <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={this.props.id}
-                        name={this.props.answer}
-                        onClick={this.addAnswer}
-                    />
-                    <span>{this.props.answer}</span>
-                </label>
-            </div>
+            <label>
+                <input
+                    type={temp}
+                    value={this.props.id}
+                    onClick={this.addAnswer}
+                    name="answer"
+                />
+                {this.props.answer}
+            </label>
+
         )
     }
 });
 
 var CurrentQuestion = React.createClass({
-    getInitialState: function () {
-        return {
-            data: [],
-            currentQuestion: {},
-            currentId: 0,
-        }
-    },
 
     render: function () {
         var temp = [];
@@ -66,18 +67,17 @@ var CurrentQuestion = React.createClass({
         }
         return (
             <div>
-                <p>{this.state.currentId + 1}. {this.props.question.question}</p>
+                <p>{this.props.currentId + 1}. {this.props.question.question}</p>
                 {
                     temp.map(function (el) {
                         return (
-                            <div>
-                                <Answer
-                                    key={el.id}
-                                    id={el.id}
-                                    answer={el.answer}
-                                    activeButton={this.props.activeButton}
-                                />
-                            </div>
+                            <Answer
+                                key={el.id}
+                                id={el.id}
+                                several={this.props.question.several}
+                                answer={el.answer}
+                                activeButton={this.props.activeButton}
+                            />
                         )
                     }, this)
                 }
@@ -88,11 +88,29 @@ var CurrentQuestion = React.createClass({
 });
 
 var Number = React.createClass({
+
+    choiceQuestion: function () {
+        this.props.choiceQuestion(this.props.number - 1, this.props.element)
+    },
+
     render: function () {
-        console.log(this.props)
-        var temp
+        var temp;
+
+        if(this.props.element.answered === true){
+            temp = 'green'
+        }
+        else if(this.props.currentQuestionId == this.props.element.id)
+        {
+            temp = 'orange'
+        }
+        else if(this.props.element.answered === 8)
+        {
+            temp = 'grey'
+        }
+
         return (
-            <i className={this.props.element.answered === true ? 'green' : ''}>
+            <i className={temp === 'green' || temp === 'orange' ? temp + ' dis' : temp }
+               onClick={temp === 'green' || temp === 'orange' ? (0) : this.choiceQuestion }>
                 {this.props.number}
             </i>
         )
@@ -110,10 +128,11 @@ var Info = React.createClass({
                         i++;
                         return (
                             <Number
-                                currentId={this.props.currentId}
+                                currentQuestionId={this.props.currentQuestionId}
                                 number={i}
                                 element={el}
                                 key={el.id}
+                                choiceQuestion={this.props.choiceQuestion}
                             />
                         )
                     }, this)
@@ -177,7 +196,7 @@ var Test = React.createClass({
         var temp = true;
         var i = 1;
 
-        while (temp)
+        while (temp === true)
         {
             if (idQ + i < this.state.data.length)
             {
@@ -198,8 +217,32 @@ var Test = React.createClass({
         });
     },
 
+    missQuestion: function () {
+        var temp = this.state.data;
+        temp[this.state.currentId].answered = 8;
+        this.setState({
+            data: temp
+        });
+        if (this.state.amountQuestion > 0)
+            this.nextQuestion();
+        else {
+            this.setState({
+                finish: true
+            });
+            console.log(this.state.results)
+        }
+    },
+
     answerQuestion: function () {
-        var selectedAnswers = $("input:checkbox:checked");
+        var selectedAnswers = [];
+        if (this.state.currentQuestion.several)
+        {
+            selectedAnswers = $("input:checkbox:checked");
+        }
+        else {
+            selectedAnswers = $("input:radio:checked");
+        }
+
         var temp = [];
         for (var i = 0; i < selectedAnswers.length; i++) {
             temp.push(selectedAnswers[i].value)
@@ -224,8 +267,27 @@ var Test = React.createClass({
             this.setState({
                 finish: true
             });
+            console.log(this.state.results)
         }
 
+    },
+
+    choiceQuestion: function (a, b) {
+        var temp = this.state.data;
+        temp[this.state.currentId].answered = 8;
+
+        this.setState({
+            data: temp,
+            currentId: a,
+            currentQuestion: b,
+            selected: 0
+        });
+    },
+
+    finish: function () {
+        this.setState({
+            finish: true
+        });
     },
 
     render: function () {
@@ -233,20 +295,26 @@ var Test = React.createClass({
             return (
                 <div>
                     <div className="info_test">
+                        <span>Вопросы:</span>
                         <Info
                             data={this.state.data}
-                            currentId={this.state.currentId}
+                            currentQuestionId={this.state.currentQuestion.id}
+                            choiceQuestion={this.choiceQuestion}
                         />
+                        <a onClick={this.finish}>Завершить тест</a>
                     </div>
                     <div className="main">
                         <CurrentQuestion
                             question={this.state.currentQuestion}
                             activeButton={this.activeButton}
+                            currentId={this.state.currentId}
                         />
-                        <input type="button" value="Ответить" onClick={this.answerQuestion}
+                        <input type="button" value="Ответить"
+                            onClick={this.answerQuestion}
                             disabled={this.state.selected <= 0 ? 'disabled' : ''}
                             className={this.state.selected <= 0 ? 'disabled answer_button' : 'answer_button'}/>
-                        <input type="button" className="answer_puss" value="Пропустить вопрос" onClick={this.nextQuestion}/>
+
+                        <input type="button" className="answer_puss" value="Пропустить вопрос" onClick={this.missQuestion}/>
                     </div>
                 </div>
             )

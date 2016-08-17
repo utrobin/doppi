@@ -90,24 +90,23 @@
 	    },
 
 	    render: function render() {
+	        var temp = '';
+	        if (this.props.several) {
+	            temp = 'checkbox';
+	        } else {
+	            temp = 'radio';
+	        }
+
 	        return _react2.default.createElement(
-	            'div',
+	            'label',
 	            null,
-	            _react2.default.createElement(
-	                'label',
-	                null,
-	                _react2.default.createElement('input', {
-	                    type: 'checkbox',
-	                    value: this.props.id,
-	                    name: this.props.answer,
-	                    onClick: this.addAnswer
-	                }),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    this.props.answer
-	                )
-	            )
+	            _react2.default.createElement('input', {
+	                type: temp,
+	                value: this.props.id,
+	                onClick: this.addAnswer,
+	                name: 'answer'
+	            }),
+	            this.props.answer
 	        );
 	    }
 	});
@@ -115,13 +114,6 @@
 	var CurrentQuestion = _react2.default.createClass({
 	    displayName: 'CurrentQuestion',
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            data: [],
-	            currentQuestion: {},
-	            currentId: 0
-	        };
-	    },
 
 	    render: function render() {
 	        var temp = [];
@@ -134,21 +126,18 @@
 	            _react2.default.createElement(
 	                'p',
 	                null,
-	                this.state.currentId + 1,
+	                this.props.currentId + 1,
 	                '. ',
 	                this.props.question.question
 	            ),
 	            temp.map(function (el) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(Answer, {
-	                        key: el.id,
-	                        id: el.id,
-	                        answer: el.answer,
-	                        activeButton: this.props.activeButton
-	                    })
-	                );
+	                return _react2.default.createElement(Answer, {
+	                    key: el.id,
+	                    id: el.id,
+	                    several: this.props.question.several,
+	                    answer: el.answer,
+	                    activeButton: this.props.activeButton
+	                });
 	            }, this)
 	        );
 	    }
@@ -157,12 +146,26 @@
 	var Number = _react2.default.createClass({
 	    displayName: 'Number',
 
+
+	    choiceQuestion: function choiceQuestion() {
+	        this.props.choiceQuestion(this.props.number - 1, this.props.element);
+	    },
+
 	    render: function render() {
-	        console.log(this.props);
 	        var temp;
+
+	        if (this.props.element.answered === true) {
+	            temp = 'green';
+	        } else if (this.props.currentQuestionId == this.props.element.id) {
+	            temp = 'orange';
+	        } else if (this.props.element.answered === 8) {
+	            temp = 'grey';
+	        }
+
 	        return _react2.default.createElement(
 	            'i',
-	            { className: this.props.element.answered === true ? 'green' : '' },
+	            { className: temp === 'green' || temp === 'orange' ? temp + ' dis' : temp,
+	                onClick: temp === 'green' || temp === 'orange' ? 0 : this.choiceQuestion },
 	            this.props.number
 	        );
 	    }
@@ -180,10 +183,11 @@
 	            this.props.data.map(function (el) {
 	                i++;
 	                return _react2.default.createElement(Number, {
-	                    currentId: this.props.currentId,
+	                    currentQuestionId: this.props.currentQuestionId,
 	                    number: i,
 	                    element: el,
-	                    key: el.id
+	                    key: el.id,
+	                    choiceQuestion: this.props.choiceQuestion
 	                });
 	            }, this)
 	        );
@@ -244,7 +248,7 @@
 	        var temp = true;
 	        var i = 1;
 
-	        while (temp) {
+	        while (temp === true) {
 	            if (idQ + i < this.state.data.length) {
 	                temp = this.state.data[idQ + i].answered;
 	                i++;
@@ -261,8 +265,28 @@
 	        });
 	    },
 
+	    missQuestion: function missQuestion() {
+	        var temp = this.state.data;
+	        temp[this.state.currentId].answered = 8;
+	        this.setState({
+	            data: temp
+	        });
+	        if (this.state.amountQuestion > 0) this.nextQuestion();else {
+	            this.setState({
+	                finish: true
+	            });
+	            console.log(this.state.results);
+	        }
+	    },
+
 	    answerQuestion: function answerQuestion() {
-	        var selectedAnswers = $("input:checkbox:checked");
+	        var selectedAnswers = [];
+	        if (this.state.currentQuestion.several) {
+	            selectedAnswers = $("input:checkbox:checked");
+	        } else {
+	            selectedAnswers = $("input:radio:checked");
+	        }
+
 	        var temp = [];
 	        for (var i = 0; i < selectedAnswers.length; i++) {
 	            temp.push(selectedAnswers[i].value);
@@ -285,7 +309,26 @@
 	            this.setState({
 	                finish: true
 	            });
+	            console.log(this.state.results);
 	        }
+	    },
+
+	    choiceQuestion: function choiceQuestion(a, b) {
+	        var temp = this.state.data;
+	        temp[this.state.currentId].answered = 8;
+
+	        this.setState({
+	            data: temp,
+	            currentId: a,
+	            currentQuestion: b,
+	            selected: 0
+	        });
+	    },
+
+	    finish: function finish() {
+	        this.setState({
+	            finish: true
+	        });
 	    },
 
 	    render: function render() {
@@ -296,22 +339,35 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'info_test' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        'Вопросы:'
+	                    ),
 	                    _react2.default.createElement(Info, {
 	                        data: this.state.data,
-	                        currentId: this.state.currentId
-	                    })
+	                        currentQuestionId: this.state.currentQuestion.id,
+	                        choiceQuestion: this.choiceQuestion
+	                    }),
+	                    _react2.default.createElement(
+	                        'a',
+	                        { onClick: this.finish },
+	                        'Завершить тест'
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'main' },
 	                    _react2.default.createElement(CurrentQuestion, {
 	                        question: this.state.currentQuestion,
-	                        activeButton: this.activeButton
+	                        activeButton: this.activeButton,
+	                        currentId: this.state.currentId
 	                    }),
-	                    _react2.default.createElement('input', { type: 'button', value: 'Ответить', onClick: this.answerQuestion,
+	                    _react2.default.createElement('input', { type: 'button', value: 'Ответить',
+	                        onClick: this.answerQuestion,
 	                        disabled: this.state.selected <= 0 ? 'disabled' : '',
 	                        className: this.state.selected <= 0 ? 'disabled answer_button' : 'answer_button' }),
-	                    _react2.default.createElement('input', { type: 'button', className: 'answer_puss', value: 'Пропустить вопрос', onClick: this.nextQuestion })
+	                    _react2.default.createElement('input', { type: 'button', className: 'answer_puss', value: 'Пропустить вопрос', onClick: this.missQuestion })
 	                )
 	            );
 	        } else {

@@ -139,8 +139,9 @@ def get_questions_test(request):
         data.append({
             'id': qt.id,
             'question': qt.text,
+            'several': qt.several,
             'answers': answers,
-            'answered': False
+            'answered': False,
         })
 
     return HttpResponse(json.dumps(data), content_type="application/json")
