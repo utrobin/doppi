@@ -306,10 +306,7 @@
 	        });
 
 	        if (this.state.amountQuestion > 0) this.nextQuestion();else {
-	            this.setState({
-	                finish: true
-	            });
-	            console.log(this.state.results);
+	            this.finish();
 	        }
 	    },
 
@@ -326,8 +323,17 @@
 	    },
 
 	    finish: function finish() {
+	        console.log(this.state.results);
 	        this.setState({
 	            finish: true
+	        });
+
+	        $.ajax({
+	            url: this.props.save_test,
+	            type: 'GET',
+	            data: { data: JSON.stringify(this.state.results) },
+	            dataType: 'json',
+	            cache: false
 	        });
 	    },
 
@@ -384,7 +390,7 @@
 	    }
 	});
 
-	(0, _reactDom.render)(_react2.default.createElement(Test, { get_url_test: '/authentication/get/questions' }), document.getElementById("test"));
+	(0, _reactDom.render)(_react2.default.createElement(Test, { get_url_test: '/authentication/get/questions', save_test: '/authentication/test/save' }), document.getElementById("test"));
 
 /***/ },
 /* 1 */

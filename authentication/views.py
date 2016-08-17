@@ -8,6 +8,7 @@ from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, P
     ChildForm
 from authentication.models import UserInfo, UserProfile, Child, test, Question, Answer
 from django.http.response import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 
 import json
 
@@ -119,7 +120,7 @@ def edit_child(request, child_id):
         form = ChildForm(instance=child)
     return render(request, 'edit_child.html', {'form': form, 'child': child})
 
-
+@login_required(login_url='/authentication/signin/')
 def single_test(request, test_id):
     t = test.objects.get(id=test_id)
     return render(request, 'test/test.html', {'test': t})
@@ -144,4 +145,12 @@ def get_questions_test(request):
             'answered': False,
         })
 
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def save_test(request):
+    profile = UserProfile.objects.get(user=request.user)
+    data = request.GET['data']
+    profile.results = data
+    profile.save()
     return HttpResponse(json.dumps(data), content_type="application/json")

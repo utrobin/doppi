@@ -264,10 +264,7 @@ var Test = React.createClass({
         if (this.state.amountQuestion > 0)
             this.nextQuestion();
         else {
-            this.setState({
-                finish: true
-            });
-            console.log(this.state.results)
+            this.finish()
         }
 
     },
@@ -285,9 +282,18 @@ var Test = React.createClass({
     },
 
     finish: function () {
+        console.log(this.state.results)
         this.setState({
             finish: true
         });
+
+        $.ajax({
+            url: this.props.save_test,
+            type: 'GET',
+            data: {data: JSON.stringify(this.state.results)},
+            dataType: 'json',
+            cache: false,
+        })
     },
 
     render: function () {
@@ -331,6 +337,6 @@ var Test = React.createClass({
 });
 
 render(
-    <Test get_url_test="/authentication/get/questions"/>,
+    <Test get_url_test="/authentication/get/questions" save_test="/authentication/test/save"/>,
     document.getElementById("test")
 );

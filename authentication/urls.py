@@ -11,4 +11,5 @@ urlpatterns = [
 
     url(r'^test/(?P<test_id>\d+)$', views.single_test, name='single_test'),
     url(r'^get/questions$', views.get_questions_test, name='get_questions_test'),
+    url(r'^test/save$', views.save_test, name='save_test'),
 ]
