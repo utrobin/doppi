@@ -41,7 +41,7 @@
                 <ul class="navbar-right">
                     {% if  user.is_authenticated %}
                         <li class="dropdown" id="dropdown">
-                            <a>{{ user.username }} <b class="caret"></b></a>
+                            <a>{{ user.username|truncatechars:20 }} <b class="caret"></b></a>
                             <div class="drop">
                                 <ul class="dropdown-menu" id="dropdown-menu">
                                     <li><a href="{% url 'edit' %}">Мой профиль</a></li>

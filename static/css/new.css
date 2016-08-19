@@ -181,7 +181,7 @@ h1{
 .drop{
     display: block;
     position: absolute;
-    width: 180px;
+    min-width: 180px;
     height: 60px;
     top:0;
 }

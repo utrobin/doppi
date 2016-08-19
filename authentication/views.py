@@ -120,20 +120,16 @@ def edit_child(request, child_id):
 @login_required(login_url='/authentication/signin/')
 def settings(request):
     profile = UserProfile.objects.get(user=request.user)
-    u = User.objects.get(id=request.user.id)
+    form = ProfileEditForm()
+    form_profile = UserProfileSignupForm(instance=profile)
 
     if request.method == "POST":
         form = ProfileEditForm(request.POST)
-        form_profile = UserProfileSignupForm(request.POST, request.FILES,
-                                             instance=profile)
-
-        if form.is_valid() and form_profile.is_valid() and form_info.is_valid():
+        form_profile = UserProfileSignupForm(request.POST)
+        if form.is_valid() and form_profile.is_valid():
             form.save(request.user)
             form_profile.save()
             return HttpResponseRedirect('/')
-    else:
-        form = ProfileEditForm()
-        form_profile = UserProfileSignupForm(instance=profile)
 
     return render(request, 'settings.html', {
         'form': form,
