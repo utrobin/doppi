@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
 
 {% block content %}
-    <div class="container">
+    <div class="form-wrapper">
 
         <form class="form-signin" method="post" role="form" action="{% url 'signin' %}">
-            <h2 class="form-signin-heading">Sign in to Doppi</h2>
+            <h1 class="form-signin-heading">Войдите</h1>
             {% csrf_token %}
 
             {% for error in form.non_field_errors %}
@@ -21,7 +21,9 @@
                 </div>
             {% endfor %}
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <div class="right">
+                <button type="submit">Войти</button>
+            </div>
         </form>
 
     </div>

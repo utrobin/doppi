@@ -1,28 +1,13 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
 
 {% block content %}
-    <div class="container">
+    <div class="form-wrapper">
 
         <form class="form-signin" method="post" role="form" action="{% url 'edit' %}" enctype="multipart/form-data">
-            <h2 class="form-signin-heading">Edit profile</h2>
+            <h1 class="form-signin-heading">Мой профиль</h1>
             {% csrf_token %}
             <div class="{% if field.errors %}error{% endif %}">
             </div>
-            {% for field in form %}
-                <div class="{% if field.errors %}error{% endif %}">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
-                    {{ field }}
-                </div>
-            {% endfor %}
-            <p>Следущие поля не обязательны, но они могут нам подобрать Вам курсы</p>
-            {% for field in form_profile %}
-                <div class="{% if field.errors %}error{% endif %}">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
-                    {{ field }}
-                </div>
-            {% endfor %}
             {% for field in form_info %}
                 <div class="{% if field.errors %}error{% endif %}">
                     {{ field.errors }}
@@ -30,8 +15,9 @@
                     {{ field }}
                 </div>
             {% endfor %}
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+            <div class="right">
+                <button type="submit">Save</button>
+            </div>
         </form>
     </div>
 {% endblock %}

@@ -38,7 +38,7 @@ class CourseForm(forms.ModelForm):
         label=u'Краткое описание'
     )
     pic = forms.FileField(
-        widget=forms.ClearableFileInput(
+        widget=forms.FileInput(
             attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}
         ),
         required=False,
@@ -74,13 +74,14 @@ class CourseInfoForm(forms.ModelForm):
         label=u'Цена'
     )
 
+
     class Meta:
         model = CourseInfo
         fields = ['age_from', 'age_to', 'activity', 'price', 'frequency', 'coordinate_x', 'coordinate_y']
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),
-            'activity': HiddenInput(attrs={'class': ['form-control', 'radio-inline']}),
+            'activity': HiddenInput(),
             'frequency': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Частота',}),
             'coordinate_x': HiddenInput(attrs={'id': 'coordinate_x'}),
             'coordinate_y': HiddenInput(attrs={'id': 'coordinate_y'}),
@@ -93,5 +94,6 @@ class CourseInfoForm(forms.ModelForm):
             'coordinate_x': '',
             'coordinate_y': '',
         }
+
 
 

@@ -9,7 +9,7 @@ function init() {
     myMap = new ymaps.Map('map', {
         center: [55.7516, 37.6249],
         zoom: 12,
-         controls: ['zoomControl', 'typeSelector',  'fullscreenControl', 'geolocationControl']
+         controls: ['zoomControl', 'typeSelector', 'fullscreenControl', 'geolocationControl']
     });
 
     // Создадим экземпляр элемента управления «поиск по карте»
@@ -26,6 +26,7 @@ function init() {
 
 var cor = function ()
 {
+    console.log(searchControl.getRequestString());
     ymaps.geocode(searchControl.getRequestString(), {results: 1}).then(function (res)
     {
         // Выбираем первый результат геокодирования.
@@ -34,12 +35,12 @@ var cor = function ()
                 coords = firstGeoObject.geometry.getCoordinates(),
                 // Область видимости геообъекта.
                 bounds = firstGeoObject.properties.get('boundedBy');
-
+            searchControl.getRequestString()
             // Добавляем первый найденный геообъект на карту.
             myMap.geoObjects.add(firstGeoObject);
             // Масштабируем карту на область видимости геообъекта.
             myMap.setBounds(bounds, {
-                // Проверяем наличие тайлов на данном масштабе.
+                // Проверяем наличие тайлов на данном масштабе+|mn
                 checkZoomRange: true
             });
 

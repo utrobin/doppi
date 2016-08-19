@@ -62,32 +62,18 @@ class SignupForm(UserCreationForm):
 
 
 class UserProfileSignupForm(forms.ModelForm):
-    avatar = forms.ImageField(
-        widget=forms.ClearableFileInput(
-            attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside',}),
-        required=False, label='Аватар'
-    )
+
 
     class Meta:
         model = UserProfile
-        fields = ('user_type', 'avatar', 'subscribed',)
+        fields = ('user_type',)
         widgets = {
-            'subscribed': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
-                    'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
+            'user_type': RadioSelect(attrs={'class': ['form-control', 'radio-inline']}),
         }
         labels = {
-            'subscribed': 'Получать уведомления на электронную почту',
             'user_type': 'Кто вы?',
         }
 
-    def save(self, commit=True):
-        instance = super(UserProfileSignupForm, self).save(commit=False)
-        if self.cleaned_data.get('avatar') is not None:
-            instance.pic = self.cleaned_data.get('pic')
-            # instance.pic.save('%s_%s' % (instance.author.username, instance.pic.name), instance.pic, save=True)
-        if commit:
-            instance.save()
-        return instance
 
 
 class ProfileEditForm(forms.Form):
@@ -126,16 +112,14 @@ class ProfileEditForm(forms.Form):
 class ParentForm(forms.ModelForm):
     class Meta:
         model = UserInfo
-        fields = ['name', 'phone_number', 'is_payable', ]
+        fields = ['name', 'phone_number']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО'}),
             'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
-            'is_payable': CheckboxInput(attrs={'class': ['form-control', 'checkbox-inline']}),
         }
         labels = {
             'name': 'ФИО',
             'phone_number': 'Номер телефона',
-            'is_payable': 'Хотели бы вы воспользоваться платными услугами психологов?',
         }
 
 

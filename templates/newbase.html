@@ -44,7 +44,8 @@
                             <a>{{ user.username }} <b class="caret"></b></a>
                             <div class="drop">
                                 <ul class="dropdown-menu" id="dropdown-menu">
-                                    <li><a href="{% url 'edit' %}">Изменить профиль</a></li>
+                                    <li><a href="{% url 'edit' %}">Мой профиль</a></li>
+                                    <li><a href="{% url 'settings' %}">Настройки</a></li>
                                     <li><a href="{% url 'logout' %}">Выйти</a></li>
                                 </ul>
                             </div>

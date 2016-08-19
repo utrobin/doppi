@@ -9,6 +9,7 @@ from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, P
 from authentication.models import UserInfo, UserProfile, Child, test, Question, Answer
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 import json
 
@@ -63,36 +64,32 @@ def signup(request):
     }
     return render(request, 'signup.html', context)
 
-
+@login_required(login_url='/authentication/signin/')
 def profile_edit(request):
     profile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
-        form = ProfileEditForm(request.POST)
-        form_profile = UserProfileSignupForm(request.POST, request.FILES,
-                                             instance=profile)
+
         if profile.user_type == 'PA':
             form_info = ParentForm(request.POST, instance=profile.info)
         elif profile.user_type == 'CO':
             form_info = CompanyForm(request.POST, instance=profile.info)
-        if form.is_valid() and form_profile.is_valid() and form_info.is_valid():
-            form.save(request.user)
+        else:
+            form_info = ParentForm(request.POST, instance=profile.info)
+
+        if form_info.is_valid():
             form_info.save()
-            form_profile.save()
             return HttpResponseRedirect('/')
     else:
-        form = ProfileEditForm()
-        form_profile = UserProfileSignupForm(instance=profile)
         if profile.user_type == 'PA':
             form_info = ParentForm(instance=profile.info)
         elif profile.user_type == 'CO':
             form_info = CompanyForm(instance=profile.info)
+        else:
+            form_info = ParentForm(instance=profile.info)
 
     return render(request, 'profile_edit.html', {
-        'form': form,
         'form_info': form_info,
-        'form_profile': form_profile,
         'u': request.user,
-        'title': 'Именить профиль'
     })
 
 
@@ -119,6 +116,32 @@ def edit_child(request, child_id):
     else:
         form = ChildForm(instance=child)
     return render(request, 'edit_child.html', {'form': form, 'child': child})
+
+@login_required(login_url='/authentication/signin/')
+def settings(request):
+    profile = UserProfile.objects.get(user=request.user)
+    u = User.objects.get(id=request.user.id)
+
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST)
+        form_profile = UserProfileSignupForm(request.POST, request.FILES,
+                                             instance=profile)
+
+        if form.is_valid() and form_profile.is_valid() and form_info.is_valid():
+            form.save(request.user)
+            form_profile.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ProfileEditForm()
+        form_profile = UserProfileSignupForm(instance=profile)
+
+    return render(request, 'settings.html', {
+        'form': form,
+        'form_profile': form_profile,
+        'u': request.user,
+        'title': 'Именить профиль'
+    })
+
 
 @login_required(login_url='/authentication/signin/')
 def single_test(request, test_id):
@@ -153,4 +176,5 @@ def save_test(request):
     data = request.GET['data']
     profile.results = data
     profile.save()
+
     return HttpResponse(json.dumps(data), content_type="application/json")

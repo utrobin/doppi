@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "newbase.html" %}
 
 {% block content %}
-    <div class="container">
+    <div class="form-wrapper">
 
         <form class="form-signin" method="post" role="form" action="{% url 'signup' %}" enctype="multipart/form-data">
-            <h2 class="form-signin-heading">Sign up to Doppi</h2>
+            <h1 class="form-signin-heading">Быстрая регистрация на Doppi</h1>
             {% csrf_token %}
 
             {% for field in signup_form %}
@@ -22,8 +22,9 @@
                     {{ field }}
                 </div>
             {% endfor %}
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <div class="right">
+                <button class="" type="submit">Зарегистрироваться</button>
+            </div>
         </form>
 
     </div>
