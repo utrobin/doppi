@@ -1261,13 +1261,15 @@ input.answer_puss:hover{
     text-decoration: underline;
 }
 .test .info_test i{
-     cursor:pointer;
+    cursor: pointer;
     display: inline-block;
-    padding: 5px 10px;
+    padding: 9px 10px;
     box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
-    margin: 4px;
-    font-size: 18px;
+    margin: 3px;
+    font-size: 16px;
     border-radius: 10px;
+    width: 18px;
+    text-align: center;
 }
 .test .info_test i:hover{
     background-color: #186de2;

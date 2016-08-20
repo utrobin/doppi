@@ -1,6 +1,5 @@
 var path = require("path");
 var webpack = require('webpack');
-var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
     context: __dirname,
@@ -16,8 +15,6 @@ module.exports = {
         filename: "[name].js",
     },
 
-    watch: true,
-
     watchOptions: {
         aggregateTimeout: 100
     },
@@ -32,10 +29,6 @@ module.exports = {
             }
         ],
     },
-
-    plugins: [
-        new BundleTracker({filename: './webpack-stats.json'}),
-    ],
 
     resolve: {
         modulesDirectories: ['node_modules', 'bower_components'],

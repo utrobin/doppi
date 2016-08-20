@@ -1,12 +1,12 @@
 {% extends "newbase.html" %}
 {% block content %}
-{% load render_bundle from webpack_loader %}
 
     <div class="test">
         <h1>{{ test.title }}</h1>
         <div id="test_id" class="hidden">{{ test.id }}</div>
         <div id="test"></div>
-        {% render_bundle 'test' %}
     </div>
+    <script src="/static/js/test.js" type="text/javascript"></script>
 
+    <script src="/static/js/add_course.js" type="text/javascript"></script>
 {% endblock %}

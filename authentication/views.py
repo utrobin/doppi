@@ -175,6 +175,7 @@ def get_questions_test(request):
             'several': qt.several,
             'answers': answers,
             'answered': False,
+            'yesno': qt.yesno
         })
 
     return HttpResponse(json.dumps(data), content_type="application/json")

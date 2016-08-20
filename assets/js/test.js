@@ -63,7 +63,24 @@ var CurrentQuestion = React.createClass({
         var temp = [];
         if (this.props.question.answers !== undefined)
         {
-            temp = this.props.question.answers;
+            if(this.props.question.yesno === true){
+                temp = [
+                    {
+                        id: 1,
+                        answer: 'Да'
+                    }, {
+                        id: 0,
+                        answer: 'Нет'
+                    }
+                ]
+            }
+            else
+                temp = this.props.question.answers;
+        }
+
+        if (this.props.question.yesno === true)
+        {
+            var answer
         }
         return (
             <div>
@@ -164,6 +181,7 @@ var Test = React.createClass({
     },
 
     componentWillMount: function () {
+        console.log('wepback живи');
         $.ajax({
             url: this.props.get_url_test,
             type: 'GET',

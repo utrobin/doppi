@@ -1,7 +1,7 @@
 {
   "name": "doppi",
   "version": "1.0.0",
-  "description": "Redux RU tutorial",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,36 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/utrobin/doppi.git"
   },
-  "author": "batya",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/utrobin/doppi/issues"
   },
-  "homepage": "https://github.com/utrobin/doppi#readme",
-  "dependencies": {
-    "babel-polyfill": "^6.9.1",
-    "css-loader": "^0.23.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "react": "^15.2.1",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "style-loader": "^0.13.1"
-  },
-  "devDependencies": {
-    "async-done": "^1.2.2",
-    "babel": "^6.5.2",
-    "babel-core": "^6.11.4",
-    "babel-loader": "^6.2.4",
-    "babel-polyfill": "^6.9.1",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-2": "^6.11.0",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "redux-devtools": "^3.3.1",
-    "webpack": "^1.13.1",
-    "webpack-bundle-tracker": "0.0.93"
-  }
+  "homepage": "https://github.com/utrobin/doppi#readme"
 }
