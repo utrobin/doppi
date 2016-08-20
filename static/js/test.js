@@ -119,7 +119,7 @@
 	        var temp = [];
 	        if (this.props.question.answers !== undefined) {
 	            if (this.props.question.yesno === true) {
-	                console.log(this.props.question.id);
+
 	                temp = [{
 	                    id: this.props.question.id + 1,
 	                    answer: 'Да',
@@ -233,7 +233,7 @@
 	    },
 
 	    componentWillMount: function componentWillMount() {
-	        console.log('wepback живи');
+
 	        $.ajax({
 	            url: this.props.get_url_test,
 	            type: 'GET',
