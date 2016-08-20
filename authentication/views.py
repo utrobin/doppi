@@ -152,7 +152,7 @@ def settings(request):
     })
 
 
-
+@login_required(login_url='/authentication/signin/')
 def single_test(request, test_id):
     t = test.objects.get(id=test_id)
     return render(request, 'test/test.html', {'test': t})
