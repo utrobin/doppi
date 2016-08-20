@@ -63,7 +63,6 @@ class SignupForm(UserCreationForm):
 
 class UserProfileSignupForm(forms.ModelForm):
 
-
     class Meta:
         model = UserProfile
         fields = ('user_type',)
@@ -96,17 +95,23 @@ class ProfileEditForm(forms.Form):
 
         if pass1 != pass2:
             raise forms.ValidationError(u'Пароли не совпадают')
+        return pass2
 
     def save(self, user):
         data = self.cleaned_data
-        user.name = user.email = data.get('email')
+        print(self.cleaned_data)
+
+        if data.get('email') != '':
+            user.username = user.email = data.get('email')
 
         pass1 = self.cleaned_data.get('password1', '')
         if pass1 != '':
             user.set_password(pass1)
 
         user.save()
+
         return self
+
 
 
 class ParentForm(forms.ModelForm):

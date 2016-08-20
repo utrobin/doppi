@@ -117,18 +117,31 @@ def edit_child(request, child_id):
         form = ChildForm(instance=child)
     return render(request, 'edit_child.html', {'form': form, 'child': child})
 
+
 @login_required(login_url='/authentication/signin/')
 def settings(request):
     profile = UserProfile.objects.get(user=request.user)
-    form = ProfileEditForm()
+    u = request.user
+
+    form = ProfileEditForm({'email': u.username})
     form_profile = UserProfileSignupForm(instance=profile)
+
 
     if request.method == "POST":
         form = ProfileEditForm(request.POST)
-        form_profile = UserProfileSignupForm(request.POST)
+        form_profile = UserProfileSignupForm(request.POST, instance=profile)
+
         if form.is_valid() and form_profile.is_valid():
+
             form.save(request.user)
+            print(str(form_profile.instance.user_id))
             form_profile.save()
+
+            if form.cleaned_data['password1'] != '':
+                user = auth.authenticate(username=form.cleaned_data['email'],
+                                         password=form.cleaned_data['password1'])
+                auth.login(request, user)
+
             return HttpResponseRedirect('/')
 
     return render(request, 'settings.html', {
@@ -139,7 +152,7 @@ def settings(request):
     })
 
 
-@login_required(login_url='/authentication/signin/')
+
 def single_test(request, test_id):
     t = test.objects.get(id=test_id)
     return render(request, 'test/test.html', {'test': t})

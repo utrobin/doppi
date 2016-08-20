@@ -3,7 +3,7 @@
 {% block content %}
     <div class="form-wrapper">
 
-        <form class="form-signin" method="post" role="form" action="{% url 'edit' %}" enctype="multipart/form-data">
+        <form class="form-signin" method="post" role="form" action="{% url 'settings' %}">
             <h1 class="form-signin-heading">Настройки</h1>
             {% csrf_token %}
             <div class="{% if field.errors %}error{% endif %}">
