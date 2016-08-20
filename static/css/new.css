@@ -1221,6 +1221,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     font-size: 24px;
     color: #000;
     margin-bottom: 25px;
+    line-height: 30px;
 }
 .test label{
     font-family: "OpenSansLight";
