@@ -46,7 +46,7 @@ var Answer = React.createClass({
             <label>
                 <input
                     type={temp}
-                    value={this.props.id}
+                    value={this.props.yesno? this.props.v : this.props.id}
                     onClick={this.addAnswer}
                     name="answer"
                 />
@@ -64,13 +64,16 @@ var CurrentQuestion = React.createClass({
         if (this.props.question.answers !== undefined)
         {
             if(this.props.question.yesno === true){
+
                 temp = [
                     {
-                        id: 1,
-                        answer: 'Да'
+                        id: this.props.question.id + 1,
+                        answer: 'Да',
+                        value: true
                     }, {
-                        id: 0,
-                        answer: 'Нет'
+                        id: this.props.question.id + 1000,
+                        answer: 'Нет',
+                        value: false
                     }
                 ]
             }
@@ -78,10 +81,6 @@ var CurrentQuestion = React.createClass({
                 temp = this.props.question.answers;
         }
 
-        if (this.props.question.yesno === true)
-        {
-            var answer
-        }
         return (
             <div>
                 <p>{this.props.currentId + 1}. {this.props.question.question}</p>
@@ -94,6 +93,9 @@ var CurrentQuestion = React.createClass({
                                 several={this.props.question.several}
                                 answer={el.answer}
                                 activeButton={this.props.activeButton}
+                                yesno={this.props.question.yesno}
+                                v={el.value}
+
                             />
                         )
                     }, this)
@@ -181,7 +183,7 @@ var Test = React.createClass({
     },
 
     componentWillMount: function () {
-        console.log('wepback живи');
+
         $.ajax({
             url: this.props.get_url_test,
             type: 'GET',
@@ -284,7 +286,6 @@ var Test = React.createClass({
         else {
             this.finish()
         }
-
     },
 
     choiceQuestion: function (a, b) {

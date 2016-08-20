@@ -102,7 +102,7 @@
 	            null,
 	            _react2.default.createElement('input', {
 	                type: temp,
-	                value: this.props.id,
+	                value: this.props.yesno ? this.props.v : this.props.id,
 	                onClick: this.addAnswer,
 	                name: 'answer'
 	            }),
@@ -116,23 +116,22 @@
 
 
 	    render: function render() {
-	        console.log(this.props);
 	        var temp = [];
 	        if (this.props.question.answers !== undefined) {
 	            if (this.props.question.yesno === true) {
+	                console.log(this.props.question.id);
 	                temp = [{
-	                    id: 0,
-	                    answer: 'Да'
+	                    id: this.props.question.id + 1,
+	                    answer: 'Да',
+	                    value: true
 	                }, {
-	                    id: 1,
-	                    answer: 'Нет'
+	                    id: this.props.question.id + 1000,
+	                    answer: 'Нет',
+	                    value: false
 	                }];
 	            } else temp = this.props.question.answers;
 	        }
 
-	        if (this.props.question.yesno === true) {
-	            var answer;
-	        }
 	        return _react2.default.createElement(
 	            'div',
 	            null,
@@ -147,9 +146,12 @@
 	                return _react2.default.createElement(Answer, {
 	                    key: el.id,
 	                    id: el.id,
-	                    several: false,
+	                    several: this.props.question.several,
 	                    answer: el.answer,
-	                    activeButton: this.props.activeButton
+	                    activeButton: this.props.activeButton,
+	                    yesno: this.props.question.yesno,
+	                    v: el.value
+
 	                });
 	            }, this)
 	        );
