@@ -247,6 +247,7 @@ h1{
 .filters{
     display: block;
     margin-left: 199px;
+    margin-bottom: 15px;
 }
 .tree-menu{
     float: left;
@@ -1132,7 +1133,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     border: 2px solid rgb(72, 0, 72);
     padding: 5px 10px;
     margin-left: 25px;
-    width: 620px;
+    width: 703px;
     border-radius: 3px;
 }
 .search-filter{
@@ -1375,4 +1376,33 @@ input.answer_puss:hover{
     border: 1px solid crimson;
     border-radius: 5px;
     margin-bottom: 15px;
+}
+select{
+    height: 32px;
+    background-color: #fff;
+    display: inline-block;
+    padding-right: 24px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-left: 12px;
+    font-family: "OpenSansRegular";
+    color: #929292;
+    font-size: 13px;
+    border-radius: 0px;
+    background-repeat: no-repeat;
+    background-size: 14px 8px;
+    font-size: 16px;
+    border: 2px solid rgb(72, 0, 72);
+    border-radius: 3px;
+    cursor: pointer;
+    background-image: url(../img/str.png);
+    background-position: calc(100% - 5px) 12px;
+    -ms-appearance: none;
+    appearance: none !important;
+}
+.mar{
+    float: right;
+}
+input.marnone{
+    margin-right: 0;
 }

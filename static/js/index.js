@@ -82,9 +82,14 @@
 	var SORT_VALUE = 'SORT_VALUE';
 	var GET_COURSES = 'GET_COURSES';
 	var ADD_COURSES = 'ADD_COURSES';
+	var LEVEL = 'LEVEL';
 
 	function checkboxes(value) {
 	    return { type: CHEKBOXES, value: value };
+	}
+
+	function _level(value) {
+	    return { type: LEVEL, value: value };
 	}
 
 	function ageFrom(value) {
@@ -133,6 +138,7 @@
 	            priceTo: "",
 	            ageFrom: "",
 	            ageTo: "",
+	            level: "",
 	            sortValue: "-id"
 	        };
 	    }
@@ -156,6 +162,14 @@
 	                var resState = _objectWithoutProperties(state, ['query']);
 
 	                return Object.assign({}, resState, { query: action.value });
+	            }
+	        case LEVEL:
+	            {
+	                var level = state.level;
+
+	                var resState6 = _objectWithoutProperties(state, ['level']);
+
+	                return Object.assign({}, resState6, { level: action.value });
 	            }
 	        case SORT_VALUE:
 	            {
@@ -555,6 +569,14 @@
 	        }
 	    },
 
+	    level: function level(event) {
+	        var omg = event.target.options[event.target.selectedIndex].value;
+
+	        asyncDone(this.props.dispatch(_level(omg)), function (error, result) {
+	            this.props.Search();
+	        }.bind(this));
+	    },
+
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
@@ -607,7 +629,7 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'filter-age' },
+	                        { className: 'filter-age mar' },
 	                        _react2.default.createElement(
 	                            'label',
 	                            null,
@@ -619,7 +641,55 @@
 	                            null,
 	                            'Возраст до'
 	                        ),
-	                        _react2.default.createElement('input', { type: 'text', name: 'ageTo', onChange: this.handleNumberInput })
+	                        _react2.default.createElement('input', { type: 'text', className: 'marnone', name: 'ageTo', onChange: this.handleNumberInput })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: this.props.sortCourses },
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '-rating' },
+	                        'Сортировка по популярности'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '-added_at' },
+	                        'Сортировка по новизне'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '-price' },
+	                        'Сортировка по цене убыванию'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: 'price' },
+	                        'Сортировка по цене возрастанию'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: this.level, className: 'mar' },
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '' },
+	                        'Выберите уровень подготовки'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '1' },
+	                        'Низкий'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '2' },
+	                        'Средний'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '3' },
+	                        'Высокий'
 	                    )
 	                )
 	            )
@@ -739,8 +809,8 @@
 	    },
 
 	    sortCourses: function sortCourses(event) {
-	        var omg = event.target.name;
-	        console.log(omg);
+	        console.log(event.target.options[event.target.selectedIndex].value);
+	        var omg = event.target.options[event.target.selectedIndex].value;
 
 	        asyncDone(this.props.dispatch(sortValue(omg)), function (error, result) {
 	            this.getCourses();
@@ -758,25 +828,9 @@
 	                    courseActivities: this.state.coursesActivity,
 	                    applySearch: this.omg,
 	                    Search: this.getCourses,
-	                    dispatch: this.props.dispatch
+	                    dispatch: this.props.dispatch,
+	                    sortCourses: this.sortCourses
 	                }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'sort-price' },
-	                    _react2.default.createElement(
-	                        'a',
-	                        { id: 'priceAsc', name: '-rating',
-	                            onClick: this.sortCourses },
-	                        'Сортировка по рейтингу убыванию'
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { id: 'priceDesk', name: 'rating',
-	                            onClick: this.sortCourses,
-	                            style: { display: 'none' } },
-	                        'Сортировка по рейтингу возрастанию'
-	                    )
-	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'courses' },
@@ -867,18 +921,7 @@
 	    _react2.default.createElement(ConnectedCoursesList, null)
 	), document.getElementById("content"));
 
-	var priceAsc = document.getElementById('priceAsc');
-	var priceDesk = document.getElementById('priceDesk');
 	var clickMap = document.getElementById('click-map');
-
-	priceAsc.onclick = function () {
-	    priceDesk.style.display = 'block';
-	    priceAsc.style.display = 'none';
-	};
-	priceDesk.onclick = function () {
-	    priceDesk.style.display = 'none';
-	    priceAsc.style.display = 'block';
-	};
 	clickMap.onclick = function () {
 	    if (document.getElementById('map').style.display == 'none') {
 	        clickMap.value = 'Скрыть карту';

@@ -48,6 +48,13 @@ def mk_checkboxes(list):
         return list
 
 
+def mk_level(level):
+    if len(level) != 0:
+        return [level]
+    else:
+        return [1, 2, 3]
+
+
 def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])
@@ -58,7 +65,8 @@ def get_courses(request):
         Q(price__gte=mk_int(options['priceFrom'], False)),
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
         Q(price__lte=mk_int(options['priceTo'], True)),
-        Q(info__age_to__lte=mk_int(options['ageTo'], True))
+        Q(info__age_to__lte=mk_int(options['ageTo'], True)),
+        Q(info__level__in=mk_level(options['level']))
     ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
                      'author': course.author.user.username,

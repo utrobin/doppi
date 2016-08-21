@@ -23,9 +23,14 @@ const SEARCH_QUERY = 'SEARCH_QUERY'
 const SORT_VALUE = 'SORT_VALUE'
 const GET_COURSES = 'GET_COURSES'
 const ADD_COURSES = 'ADD_COURSES'
+const LEVEL = 'LEVEL'
 
 function checkboxes(value) {
     return {type: CHEKBOXES, value}
+}
+
+function level(value) {
+    return {type: LEVEL, value}
 }
 
 function ageFrom(value) {
@@ -75,6 +80,7 @@ function options(state, action) {
             priceTo: "",
             ageFrom: "",
             ageTo: "",
+            level: "",
             sortValue: "-id"
         }
     }
@@ -93,6 +99,10 @@ function options(state, action) {
         case SEARCH_QUERY: {
             var {query, ...resState} = state;
             return Object.assign({}, resState, {query: action.value});
+        }
+        case LEVEL: {
+            var {level, ...resState6} = state;
+            return Object.assign({}, resState6, {level: action.value});
         }
         case SORT_VALUE: {
             var {sortValue, ...resState5} = state;
@@ -426,6 +436,16 @@ var CoursesOptions = React.createClass({
 
     },
 
+    level: function (event) {
+        var omg = event.target.options[event.target.selectedIndex].value;
+
+        asyncDone(
+            this.props.dispatch(level(omg)),
+            function (error, result) {
+                this.props.Search();
+            }.bind(this));
+    },
+
     render: function () {
         return (
             <div>
@@ -447,11 +467,25 @@ var CoursesOptions = React.createClass({
                             <label>Цена до</label><input type="text" name="priceTo" onChange={this.handleNumberInput}/>
                         </div>
 
-                        <div className="filter-age">
+                        <div className="filter-age mar">
                             <label>Возраст от</label><input type="text" name="ageFrom" onChange={this.handleNumberInput}/>
-                            <label>Возраст до</label><input type="text" name="ageTo" onChange={this.handleNumberInput}/>
+                            <label>Возраст до</label><input type="text" className="marnone" name="ageTo" onChange={this.handleNumberInput}/>
                         </div>
                     </div>
+
+                    <select onChange={this.props.sortCourses}>
+                        <option value="-rating">Сортировка по популярности</option>
+                        <option value="-added_at">Сортировка по новизне</option>
+                        <option value="-price">Сортировка по цене убыванию</option>
+                        <option value="price">Сортировка по цене возрастанию</option>
+                    </select>
+
+                    <select onChange={this.level} className="mar">
+                        <option value="">Выберите уровень подготовки</option>
+                        <option value="1">Низкий</option>
+                        <option value="2">Средний</option>
+                        <option value="3">Высокий</option>
+                    </select>
                 </div>
             </div>)
     }
@@ -577,8 +611,8 @@ var CoursesList = React.createClass({
     },
 
     sortCourses: function (event) {
-        var omg = event.target.name;
-        console.log(omg)
+        console.log(event.target.options[event.target.selectedIndex].value);
+        var omg = event.target.options[event.target.selectedIndex].value;
 
         asyncDone(
             this.props.dispatch(sortValue(omg)),
@@ -596,20 +630,8 @@ var CoursesList = React.createClass({
                         applySearch={this.omg}
                         Search={this.getCourses}
                         dispatch={this.props.dispatch}
+                        sortCourses={this.sortCourses}
                     />
-
-                    <div className="sort-price">
-                        <a id="priceAsc" name="-rating"
-                           onClick={this.sortCourses}>
-                            Сортировка по рейтингу убыванию
-                        </a>
-
-                        <a id="priceDesk" name="rating"
-                           onClick={this.sortCourses}
-                           style={{display: 'none'}}>
-                            Сортировка по рейтингу возрастанию
-                        </a>
-                    </div>
 
                     <div className="courses">
                         <div className="wrapper-map">
@@ -687,19 +709,7 @@ render(
     document.getElementById("content")
 );
 
-
-var priceAsc = document.getElementById('priceAsc');
-var priceDesk = document.getElementById('priceDesk');
 var clickMap = document.getElementById('click-map');
-
-priceAsc.onclick = function () {
-    priceDesk.style.display = 'block';
-    priceAsc.style.display = 'none';
-};
-priceDesk.onclick = function () {
-    priceDesk.style.display = 'none';
-    priceAsc.style.display = 'block';
-};
 clickMap.onclick = function () {
     if (document.getElementById('map').style.display == 'none') {
         clickMap.value = 'Скрыть карту';
