@@ -55,9 +55,9 @@ def get_courses(request):
     print(options)
     for course in Course.objects.filter(
         Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
-        Q(info__price__gte=mk_int(options['priceFrom'], False)),
+        Q(price__gte=mk_int(options['priceFrom'], False)),
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
-        Q(info__price__lte=mk_int(options['priceTo'], True)),
+        Q(price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True))
     ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
@@ -114,9 +114,9 @@ def get_courses_map(request):
             Q(info__coordinate_y__lte = coordinates[1][1]),
 
             Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
-            Q(info__price__gte=mk_int(options['priceFrom'], False)),
+            Q(price__gte=mk_int(options['priceFrom'], False)),
             Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
-            Q(info__price__lte=mk_int(options['priceTo'], True)),
+            Q(price__lte=mk_int(options['priceTo'], True)),
             Q(info__age_to__lte=mk_int(options['ageTo'], True))
     ):
         data['features'].append({'type': 'Feature', 'id': course.id, 'geometry':
