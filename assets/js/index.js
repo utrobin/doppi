@@ -81,7 +81,7 @@ function options(state, action) {
             ageFrom: "",
             ageTo: "",
             level: "",
-            sortValue: "-id"
+            sortValue: "-added_at"
         }
     }
     switch (action.type) {
@@ -474,8 +474,8 @@ var CoursesOptions = React.createClass({
                     </div>
 
                     <select onChange={this.props.sortCourses}>
-                        <option value="-rating">Сортировка по популярности</option>
                         <option value="-added_at">Сортировка по новизне</option>
+                        <option value="-rating">Сортировка по популярности</option>
                         <option value="-price">Сортировка по цене убыванию</option>
                         <option value="price">Сортировка по цене возрастанию</option>
                     </select>
