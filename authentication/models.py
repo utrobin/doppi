@@ -25,12 +25,18 @@ class UserProfile(models.Model):
 
 class UserInfo(models.Model):
     name = models.CharField(max_length=128, blank=True)
+    surname = models.CharField(max_length=128, blank=True)
     title = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     is_payable = models.BooleanField(default=False)
     is_photo = models.BooleanField(default=False)
     is_notify = models.BooleanField(default=False)
     activity = models.ManyToManyField('search.CourseType', blank=True)
+    age = models.IntegerField(max_length=2, blank=True)
+    sex = models.BooleanField(blank=True)
+    test = models.BooleanField(default=False)
+    nameCompany = models.CharField(max_length=128, blank=True)
+    siteCompany = models.CharField(max_length=128, blank=True)
 
 
 class Child(models.Model):

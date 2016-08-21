@@ -123,7 +123,7 @@ class ParentForm(forms.ModelForm):
             'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
         }
         labels = {
-            'name': 'ФИО',
+            'name': 'Ваше имя',
             'phone_number': 'Номер телефона',
         }
 
