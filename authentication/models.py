@@ -33,7 +33,7 @@ class UserInfo(models.Model):
     is_notify = models.BooleanField(default=False)
     activity = models.ManyToManyField('search.CourseType', blank=True)
     age = models.IntegerField(max_length=2, blank=True)
-    sex = models.BooleanField(blank=True)
+    sex = models.IntegerField(default=0)
     test = models.BooleanField(default=False)
     nameCompany = models.CharField(max_length=128, blank=True)
     siteCompany = models.CharField(max_length=128, blank=True)
