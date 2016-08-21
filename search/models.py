@@ -24,6 +24,7 @@ class Course(models.Model):
     likes = models.ManyToManyField(UserProfile, related_name='likes_userprofiles', through='Like')  # Лайки
     info = models.OneToOneField('CourseInfo')  # Связь с информацией
     rating = models.PositiveIntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)  # Цена
 
 
 # Информация о курсе
@@ -36,7 +37,6 @@ class CourseInfo(models.Model):
     location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     coordinate_x = models.FloatField(blank=True, default=0)
     coordinate_y = models.FloatField(blank=True, default=0)
-    price = models.PositiveIntegerField(default=0)  # Цена
     frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
     level = models.ForeignKey('Level', null=True)
     skill = models.ManyToManyField('Skill', blank=True)

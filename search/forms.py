@@ -14,7 +14,7 @@ class SearchBarForm(forms.ModelForm):
     class Meta:
         model = CourseInfo
         fields = ['age_from', 'age_to',
-                  'price', 'frequency']
+                  'frequency']
 
 
 
@@ -45,9 +45,16 @@ class CourseForm(forms.ModelForm):
         label=u'Картинка'
     )
 
+    price = forms.IntegerField(
+        widget=NumberInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+        label=u'Цена'
+    )
     class Meta:
         model = Course
-        fields = ['title', 'introtext', 'description', 'pic']
+        fields = ['title', 'introtext', 'price', 'description', 'pic']
         widgets = {
             'title': Textarea(attrs={'class': 'title', 'placeholder': u'Название',}),
         }
@@ -66,18 +73,11 @@ class CourseForm(forms.ModelForm):
 
 
 class CourseInfoForm(forms.ModelForm):
-    price = forms.IntegerField(
-        widget=NumberInput(
-            attrs={'class': 'form-control'}
-        ),
-        required=False,
-        label=u'Цена'
-    )
 
 
     class Meta:
         model = CourseInfo
-        fields = ['age_from', 'age_to', 'activity', 'price', 'frequency', 'coordinate_x', 'coordinate_y']
+        fields = ['age_from', 'age_to', 'activity', 'frequency', 'coordinate_x', 'coordinate_y']
         widgets = {
             'age_from': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Минимальный возраст',}),
             'age_to': NumberInput(attrs={'class': 'form-control', 'placeholder': u'Максимальный возраст',}),

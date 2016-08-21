@@ -71,7 +71,7 @@ def get_courses(request):
                      'activity': course.info.activity.title if course.info.activity else 'fgfjhgifh',
                      'time_to': course.info.time_to,
                      'location': [str(a) for a in course.info.location.all()],
-                     'price': course.info.price,
+                     'price': course.price,
                      'frequency': course.info.frequency,
                      'is_authenticated': True if request.user.is_authenticated() else False,
                      'rating': course.rating,
@@ -154,7 +154,7 @@ def get_recommend_courses(request):
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': course.info.activity.title,
                      'location': [str(a) for a in course.info.location.all()],
-                     'price': course.info.price, 'frequency': course.info.frequency,
+                     'price': course.price, 'frequency': course.info.frequency,
                      'is_authenticated': True if request.user.is_authenticated() else False,
                      'rating': course.rating,
                      'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user=UserProfile.objects.get(user=request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
