@@ -125,6 +125,7 @@ def get_courses_map(request):
             Q(price__gte=mk_int(options['priceFrom'], False)),
             Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
             Q(price__lte=mk_int(options['priceTo'], True)),
+            Q(info__level__in=mk_level(options['level'])),
             Q(info__age_to__lte=mk_int(options['ageTo'], True))
     ):
         data['features'].append({'type': 'Feature', 'id': course.id, 'geometry':
