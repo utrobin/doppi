@@ -59,7 +59,6 @@ def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])
     page = int(request.GET['page'])
-    print(options)
     for course in Course.objects.filter(
         Q(description__icontains=(options['query'])) | Q(title__icontains=options['query']),
         Q(price__gte=mk_int(options['priceFrom'], False)),
@@ -110,7 +109,6 @@ def do_like(request):
 def get_courses_map(request):
     coordinates = json.loads(request.GET['coordinates'])
     options = json.loads(request.GET['options'])
-    print(options)
     data = {}
     data['features'] = []
     data['type'] = 'FeatureCollection'
@@ -149,6 +147,14 @@ def get_activity(request):
 
 
 def searchbar(request):
+    magic = 0
+    types = 28
+    res = json.loads(UserProfile.objects.get(user=request.user).results)
+    for k in res:
+        for n in k:
+            magic += int(n)
+
+    c = Course.objects.filter(info__activity__id=magic % types + 1)
     return render(request, 'pinki_drag.html')
 
 
