@@ -37,6 +37,8 @@ class UserInfo(models.Model):
     test = models.BooleanField(default=False)
     nameCompany = models.CharField(max_length=128, blank=True)
     siteCompany = models.CharField(max_length=128, blank=True)
+    coordinate_x = models.FloatField(default=0)
+    coordinate_y = models.FloatField(default=0)
 
 
 class Child(models.Model):
