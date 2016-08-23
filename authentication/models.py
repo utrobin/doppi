@@ -24,6 +24,10 @@ class UserProfile(models.Model):
 
 
 class UserInfo(models.Model):
+    SEX = (
+        ('M', u'мальчик'),
+        ('W', u'девочка'),
+    )
     name = models.CharField(max_length=128, blank=True)
     surname = models.CharField(max_length=128, blank=True)
     title = models.CharField(max_length=128, blank=True)
@@ -33,7 +37,7 @@ class UserInfo(models.Model):
     is_notify = models.BooleanField(default=False)
     activity = models.ManyToManyField('search.CourseType', blank=True)
     age = models.IntegerField(max_length=2, blank=True)
-    sex = models.IntegerField(default=0)
+    sex = models.CharField(max_length=2, choices=SEX, default=None)
     test = models.BooleanField(default=False)
     nameCompany = models.CharField(max_length=128, blank=True)
     siteCompany = models.CharField(max_length=128, blank=True)

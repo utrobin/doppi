@@ -117,14 +117,16 @@ class ProfileEditForm(forms.Form):
 class ParentForm(forms.ModelForm):
     class Meta:
         model = UserInfo
-        fields = ['name', 'phone_number']
+        fields = ['name', 'age']
         widgets = {
-            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'ФИО'}),
-            'phone_number': TextInput(attrs={'class': 'form-control', 'placeholder': 'Телефон'}),
+            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя'}),
+            'sex': TextInput(attrs={'class': 'form-control',}),
+            'age': NumberInput(attrs={'class': 'form-control',}),
         }
         labels = {
             'name': 'Ваше имя',
-            'phone_number': 'Номер телефона',
+            'sex': 'Пол вашего ребенка',
+            'age': 'Возраст вашего ребенка',
         }
 
 
