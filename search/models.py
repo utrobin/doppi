@@ -24,6 +24,7 @@ class Course(models.Model):
     likes = models.ManyToManyField(UserProfile, related_name='likes_userprofiles', through='Like')  # Лайки
     info = models.OneToOneField('CourseInfo')  # Связь с информацией
     rating = models.PositiveIntegerField(default=0)
+    moderation = models.BooleanField(default=False)
     price = models.PositiveIntegerField(default=0)  # Цена
 
 

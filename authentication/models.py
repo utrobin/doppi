@@ -20,7 +20,11 @@ class UserProfile(models.Model):
     subscribed = models.BooleanField(default=True)
     user_type = models.CharField(max_length=2, choices=USER_TYPES, default='PA')
     info = models.OneToOneField('UserInfo')
-    results = models.TextField(max_length=2048)
+
+
+class Results(models.Model):
+    results = models.ForeignKey(UserProfile)
+    answers = models.TextField(max_length=128)
 
 
 class UserInfo(models.Model):
@@ -38,7 +42,7 @@ class UserInfo(models.Model):
     activity = models.ManyToManyField('search.CourseType', blank=True)
     age = models.IntegerField(max_length=2, blank=True)
     sex = models.CharField(max_length=2, choices=SEX, default=None)
-    test = models.BooleanField(default=False)
+    test = models.IntegerField(default=0)
     nameCompany = models.CharField(max_length=128, blank=True)
     siteCompany = models.CharField(max_length=128, blank=True)
     coordinate_x = models.FloatField(default=0)

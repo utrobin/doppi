@@ -117,10 +117,10 @@ class ProfileEditForm(forms.Form):
 class ParentForm(forms.ModelForm):
     class Meta:
         model = UserInfo
-        fields = ['name', 'age']
+        fields = ['name', 'age', 'sex']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя'}),
-            'sex': TextInput(attrs={'class': 'form-control',}),
+            'sex': RadioSelect(attrs={'class': 'form-control',}),
             'age': NumberInput(attrs={'class': 'form-control',}),
         }
         labels = {
