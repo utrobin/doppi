@@ -66,6 +66,18 @@ def signup(request):
 
 @login_required(login_url='/authentication/signin/')
 def profile_edit(request):
+    tests = []
+    for t in test.objects.all():
+        try:
+            Results.objects.get(results=request.user, idTest=t.id)
+        except:
+            result = False
+        else:
+            result = True
+
+        tests.append({'title': t.title, 'id': t.id, 'passed': result})
+
+
     profile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
 
@@ -90,6 +102,7 @@ def profile_edit(request):
     return render(request, 'profile_edit.html', {
         'form_info': form_info,
         'u': request.user,
+        'tests': tests
     })
 
 
@@ -148,7 +161,7 @@ def settings(request):
         'form': form,
         'form_profile': form_profile,
         'u': request.user,
-        'title': 'Именить профиль'
+        'title': 'Именить профиль',
     })
 
 
@@ -182,9 +195,14 @@ def get_questions_test(request):
 
 
 def save_test(request):
-    profile = Results.objects.get(results=request.user.id)
     data = request.GET['data']
-    profile.answers = data
-    profile.save()
+    test_id = request.GET['test_id']
+    r = Results(
+        answers=data,
+        results=request.user,
+        idTest=test_id,
+        passed=True
+            )
+    r.save()
 
     return HttpResponse(json.dumps(data), content_type="application/json")

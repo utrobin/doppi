@@ -139,7 +139,7 @@
 	            ageFrom: "",
 	            ageTo: "",
 	            level: "",
-	            sortValue: "-id"
+	            sortValue: "-added_at"
 	        };
 	    }
 	    switch (action.type) {
@@ -649,13 +649,13 @@
 	                    { onChange: this.props.sortCourses },
 	                    _react2.default.createElement(
 	                        'option',
-	                        { value: '-rating' },
-	                        'Сортировка по популярности'
+	                        { value: '-added_at' },
+	                        'Сортировка по новизне'
 	                    ),
 	                    _react2.default.createElement(
 	                        'option',
-	                        { value: '-added_at' },
-	                        'Сортировка по новизне'
+	                        { value: '-rating' },
+	                        'Сортировка по популярности'
 	                    ),
 	                    _react2.default.createElement(
 	                        'option',

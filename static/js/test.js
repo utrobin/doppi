@@ -132,6 +132,12 @@
 	            } else temp = this.props.question.answers;
 	        }
 
+	        var str = this.props.question.question;
+
+	        if (str !== undefined) {
+	            str.replace(/[\r\n]+/g, '');
+	        }
+
 	        return _react2.default.createElement(
 	            'div',
 	            null,
@@ -140,7 +146,7 @@
 	                null,
 	                this.props.currentId + 1,
 	                '. ',
-	                this.props.question.question
+	                str
 	            ),
 	            temp.map(function (el) {
 	                return _react2.default.createElement(Answer, {
@@ -347,7 +353,7 @@
 	        $.ajax({
 	            url: this.props.save_test,
 	            type: 'GET',
-	            data: { data: JSON.stringify(this.state.results) },
+	            data: { data: JSON.stringify(this.state.results), test_id: test_id },
 	            dataType: 'json',
 	            cache: false
 	        });

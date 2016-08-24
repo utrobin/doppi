@@ -81,9 +81,17 @@ var CurrentQuestion = React.createClass({
                 temp = this.props.question.answers;
         }
 
+        var str = this.props.question.question;
+
+        if (str !== undefined)
+        {
+            str.replace(/[\r\n]+/g, '');
+        }
+
+
         return (
             <div>
-                <p>{this.props.currentId + 1}. {this.props.question.question}</p>
+                <p>{this.props.currentId + 1}. {str}</p>
                 {
                     temp.map(function (el) {
                         return (
@@ -309,7 +317,7 @@ var Test = React.createClass({
         $.ajax({
             url: this.props.save_test,
             type: 'GET',
-            data: {data: JSON.stringify(this.state.results)},
+            data: {data: JSON.stringify(this.state.results), test_id: test_id},
             dataType: 'json',
             cache: false,
         })

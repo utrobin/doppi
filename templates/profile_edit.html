@@ -19,6 +19,24 @@
                 <button type="submit">Сохранить</button>
             </div>
         </form>
-    <h1>{{ u.info }} gf gf gf</h1>
+        <div class="tests">
+            <h2>Пройдите пожалуйста тесты, чтобы мы могли подобрать вам курсы!</h2>
+            <table>
+            {% for t in tests %}
+                <tr>
+                    <th>
+                        <a href="test/{{ t.id }}">{{ t.title }}</a>
+
+                    <th>
+                        {% if t.passed %}
+                            <span class="green">Пройден</span>
+                        {% else %}
+                            <span class="red">Не пройден</span>
+                        {% endif %}
+                    </th>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
     </div>
 {% endblock %}

@@ -643,22 +643,22 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
 .page-course .photo img{
     margin: 15px 0;
 }
-.page-course table{
+.page-course table, .form-wrapper table{
     width: 100%;
     margin-bottom: 25px;
 }
-.page-course th{
+.page-course th, .form-wrapper th{
     width: 50%;
     padding: 20px;
     text-align: left;
 }
-.page-course tr:nth-child(2n) {
+.page-course tr:nth-child(2n), .form-wrapper tr:nth-child(2n){
 	background-color: rgba(89, 0, 89, 0.3);
 }
-.page-course th:nth-child(2n - 1) {
+.page-course th:nth-child(2n - 1), .form-wrapper th:nth-child(2n - 1){
     color: #777;
 }
-.page-course th:nth-child(2n) {
+.page-course th:nth-child(2n), .form-wrapper th:nth-child(2n){
     font-family: "OpenSansSemiBold";
     color: #000;
 }
@@ -1224,6 +1224,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     color: #000;
     margin-bottom: 25px;
     line-height: 30px;
+    word-wrap: break-word;
 }
 .test label{
     font-family: "OpenSansLight";
@@ -1281,6 +1282,12 @@ input.answer_puss:hover{
 .test .info_test .green{
     background-color: #8cc63e!important;
     color: #fff!important;
+}
+.green{
+    color: #8cc63e;
+}
+.red{
+    color: crimson;
 }
 .test .info_test .orange{
     background-color: #ffa900!important;
@@ -1415,4 +1422,18 @@ input#id_age.form-control{
     width: 70px;
     padding: 5px;
     font-size: 16px;
+}
+.form-wrapper h2{
+    color: crimson;
+    margin: 25px 0 25px 0;
+    font-size: 20px;
+    font-family: "OpenSansSemiBold";
+    line-height: 28px;
+}
+.form-wrapper .tests a{
+    color: rgb(49, 0, 49);
+}
+.form-wrapper .tests a:hover {
+    color: #000;
+    text-decoration: underline;
 }
