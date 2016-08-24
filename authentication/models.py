@@ -25,7 +25,7 @@ class UserProfile(models.Model):
 class Results(models.Model):
     results = models.ForeignKey(UserProfile)
     answers = models.TextField(max_length=128)
-    idTest = models.IntegerField(max_length=2, blank=True)
+    idTest = models.IntegerField(blank=True)
 
 
 class UserInfo(models.Model):
