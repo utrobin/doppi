@@ -42,7 +42,7 @@ class UserInfo(models.Model):
     is_photo = models.BooleanField(default=False)
     is_notify = models.BooleanField(default=False)
     activity = models.ManyToManyField('search.CourseType', blank=True)
-    age = models.IntegerField(max_length=2, blank=True)
+    age = models.IntegerField(max_length=2, default=0)
     sex = models.CharField(max_length=2, choices=SEX, default=None)
     test = models.IntegerField(default=0)
     nameCompany = models.CharField(max_length=128, blank=True)

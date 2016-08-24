@@ -3,6 +3,7 @@ from django.shortcuts import render
 from search.forms import SearchBarForm, CommentForm, CourseForm, CourseInfoForm
 from authentication.models import UserProfile
 from search.models import *
+from authentication.models import test, Results
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -148,7 +149,30 @@ def get_activity(request):
 
 
 def searchbar(request):
-    return render(request, 'pinki_drag.html')
+    completedProfile = True
+    completedTests = True
+
+    if request.user.is_authenticated():
+        profile = UserProfile.objects.get(user=request.user)
+
+        if profile.user_type == 'PA' or profile.user_type == 'CH':
+            if profile.info.age == 0:
+                completedProfile = False
+
+            for t in test.objects.all():
+                try:
+                    Results.objects.get(results=request.user, idTest=t.id)
+                except:
+                    completedTests = False
+                    break
+                else:
+                    completedTests = True
+
+
+    return render(request, 'pinki_drag.html', {
+        'profile': completedProfile,
+        'tests': completedTests
+    })
 
 
 def get_recommend_courses(request):

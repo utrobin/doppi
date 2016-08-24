@@ -10,8 +10,16 @@
         <span>/</span>
         <b>Поиск курсов</b>
     </div>
-
     {% if  user.is_authenticated %}
+        <div class="request">
+            {% if profile == False and tests == False %}
+                <span class="orange">Заполните пожалуйста <a>профиль</a> и пройдите <a>тесты</a>. Это нужно для того чтобы мы смогли подобрать вам курсы</span>
+            {% elif profile == False %}
+                <span class="orange">Заполните пожалуйста <a>профиль</a>. Это нужно для того чтобы мы смогли подобрать вам курсы</span>
+            {% elif tests == False %}
+                <span class="orange">Пройдите <a>тесты</a>. Это нужно для того чтобы мы смогли подобрать вам курсы</span>
+            {% endif %}
+        </div>
         <div id='content' class="content-like"></div>
     {% else %}
         <div id='content'></div>
