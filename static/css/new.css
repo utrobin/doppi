@@ -1439,6 +1439,15 @@ input#id_age.form-control{
 }
 .request span{
     padding: 15px;
-    background-color: #ffe48a;
-    color: #ffa900;
+    background-color: rgba(255, 228, 138, 0.78);
+    color: #ff7c39;
+    display: block;
+    margin-bottom: 25px;
+    border-radius: 5px;
+}
+.request a{
+    color: rgb(72, 0, 72);
+}
+.request a:hover{
+    text-decoration: underline;
 }

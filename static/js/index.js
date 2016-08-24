@@ -139,7 +139,7 @@
 	            ageFrom: "",
 	            ageTo: "",
 	            level: "",
-	            sortValue: "-added_at"
+	            sortValue: "-id"
 	        };
 	    }
 	    switch (action.type) {
