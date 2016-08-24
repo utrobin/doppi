@@ -13,8 +13,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        for c in CourseInfo.objects.all():
-            c.level_id = random.randint(1, 3)
+        for c in Course.objects.all():
+            c.moderation = True
         #    c.activity = CourseType.objects.get(id = random.randint(1, 27))
             c.save()
         #    for course in CourseInfo.objects.all():

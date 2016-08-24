@@ -6,7 +6,7 @@ from django.db import transaction
 from django.forms.models import model_to_dict
 from authentication.forms import SignupForm, UserProfileSignupForm, LoginForm, ProfileEditForm, ParentForm, CompanyForm, \
     ChildForm
-from authentication.models import UserInfo, UserProfile, Child, test, Question, Answer
+from authentication.models import UserInfo, UserProfile, Child, test, Question, Answer, Results
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -182,9 +182,9 @@ def get_questions_test(request):
 
 
 def save_test(request):
-    profile = UserProfile.objects.get(user=request.user)
+    profile = Results.objects.get(results=request.user.id)
     data = request.GET['data']
-    profile.results = data
+    profile.answers = data
     profile.save()
 
     return HttpResponse(json.dumps(data), content_type="application/json")

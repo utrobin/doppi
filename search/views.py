@@ -65,10 +65,11 @@ def get_courses(request):
         Q(info__activity__title__in=mk_checkboxes(options['checkboxes'])),
         Q(price__lte=mk_int(options['priceTo'], True)),
         Q(info__age_to__lte=mk_int(options['ageTo'], True)),
-        Q(info__level__in=mk_level(options['level']))
+        Q(info__level__in=mk_level(options['level'])),
+        Q(moderation=True)
     ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
-                     'author': course.author.user.username,
+                     'aut`hor': course.author.user.username,
                      'title': course.title,
                      'introtext': course.introtext,
                      'pic': course.pic.url,
@@ -147,14 +148,6 @@ def get_activity(request):
 
 
 def searchbar(request):
-    magic = 0
-    types = 28
-    res = json.loads(UserProfile.objects.get(user=request.user).results)
-    for k in res:
-        for n in k:
-            magic += int(n)
-
-    c = Course.objects.filter(info__activity__id=magic % types + 1)
     return render(request, 'pinki_drag.html')
 
 

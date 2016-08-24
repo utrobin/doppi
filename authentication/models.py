@@ -23,9 +23,10 @@ class UserProfile(models.Model):
 
 
 class Results(models.Model):
-    results = models.ForeignKey(UserProfile)
+    results = models.ForeignKey(User)
     answers = models.TextField(max_length=128)
     idTest = models.IntegerField(blank=True)
+    passed = models.BooleanField(default=False)
 
 
 class UserInfo(models.Model):
