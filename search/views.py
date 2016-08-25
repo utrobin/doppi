@@ -28,10 +28,6 @@ def fish(request):
     return render(request, 'fish.html')
 
 
-def data(request):
-    return render(request, '../static/data.json')
-
-
 def mk_int(s, tabur):
     s = s.strip()
     if tabur:
@@ -54,6 +50,33 @@ def mk_level(level):
         return [level]
     else:
         return [1, 2, 3]
+
+
+def main(request):
+    completedProfile = True
+    completedTests = True
+
+    if request.user.is_authenticated():
+        profile = UserProfile.objects.get(user=request.user)
+
+        if profile.user_type == 'PA' or profile.user_type == 'CH':
+            if profile.info.age == 0:
+                completedProfile = False
+
+            for t in test.objects.all():
+                try:
+                    Results.objects.get(results=request.user, idTest=t.id)
+                except:
+                    completedTests = False
+                    break
+                else:
+                    completedTests = True
+
+
+    return render(request, 'main.html', {
+        'profile': completedProfile,
+        'tests': completedTests
+    })
 
 
 def get_courses(request):

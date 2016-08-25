@@ -1451,3 +1451,28 @@ input#id_age.form-control{
 .request a:hover{
     text-decoration: underline;
 }
+
+.test img{
+    display: block;
+    width: 500px;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+p.masha{
+    font-family: "OpenSansRegular";
+    font-size: 16px;
+    text-align: justify;
+}
+.ker{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+}
+.lol{
+    box-shadow: none!important;
+    margin-bottom: 35px!important;
+}
+.masha strong{
+    background-color: #bac448;
+}

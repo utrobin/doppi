@@ -2,7 +2,7 @@ from django.conf.urls import url
 from search import views
 
 urlpatterns = [
-    url(r'^$', views.searchbar, name='main'),
+    url(r'^$', views.main, name='main'),
     url(r'^search$', views.searchbar, name='bar'),
     url(r'^course/(?P<course_id>\d+)$', views.single_course, name='single_course'),
     url(r'^add$', views.add_course, name='add_course'),
@@ -19,8 +19,6 @@ urlpatterns = [
     url(r'^api/get/courses$', views.get_courses, name='get_courses'),
     url(r'^api/get/recommendcourses$', views.get_recommend_courses, name='get_recommend_courses'),
     url(r'^api/get/activity$', views.get_activity, name='get_activity'),
-
-    url(r'^data$', views.data, name='data'),
 
     url(r'^coordinates$', views.get_courses_map, name='coordinates'),
     url(r'^like', views.do_like, name='like'),

@@ -2,7 +2,7 @@
   "name": "doppi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "search_course.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/utrobin/doppi/issues"
   },
-  "homepage": "https://github.com/utrobin/doppi#readme"
+  "homepage": "https://github.com/utrobin/doppi#readme",
+  "dependencies": {
+    "react-tap-event-plugin": "^1.0.0"
+  }
 }

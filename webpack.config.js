@@ -5,13 +5,14 @@ module.exports = {
     context: __dirname,
 
     entry: {
-        index: './assets/js/index',
+        search_course: './assets/js/search_course',
         add_course: './assets/js/add_course',
         test: './assets/js/test',
+        pinki: './assets/js/pinki',
     },
 
     output: {
-        path: path.resolve('./static/js/'),
+        path: __dirname + '/static/js',
         filename: "[name].js",
     },
 
