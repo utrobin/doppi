@@ -5,14 +5,19 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
-    height: 50
+    height: 70,
+    width: 350
 };
 
+const labelStyle = {
+    fontSize: 26,
+    fontWeight: 700
+};
 
 
 const Offer = () => (
   <div>
-    <RaisedButton label="Пройти тест" primary={true} style={style} />
+    <RaisedButton label="Пройдите тест" primary={true} style={style} labelStyle={labelStyle} />
   </div>
 );
 

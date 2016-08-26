@@ -2,6 +2,7 @@
  * Created by egorutrobin on 25.08.16.
  */
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 import Course from './Course';
 import Offer from './offer';
 
@@ -94,57 +95,53 @@ var CoursesList = React.createClass({
         return (
             <div>
                 <Offer />
-                <div className="row">
-                    <div className="courses">
-                        {
-                            this.state.courses.map(function (el) {
-                                return (
-                                    <Course
-                                        key={el.id}
-                                        id={el.id}
-                                        author={el.author}
-                                        image={el.pic}
-                                        title={el.title}
-                                        introtext={el.introtext}
-                                        age_from={el.age_from}
-                                        age_to={el.age_to}
-                                        time_from={el.time_from}
-                                        time_to={el.time_to}
-                                        activity={el.activity}
-                                        location={el.location}
-                                        price={el.price}
-                                        frequency={el.frequency}
-                                        rating={el.rating}
-                                        liked={el.liked}
-                                        authenticated={el.is_authenticated}
-                                    />
-                                )
-                            })
-                        }
+                <div className="courses">
+                    {
+                        this.state.courses.map(function (el) {
+                            return (
+                                <Course
+                                    key={el.id}
+                                    id={el.id}
+                                    author={el.author}
+                                    image={el.pic}
+                                    title={el.title}
+                                    introtext={el.introtext}
+                                    age_from={el.age_from}
+                                    age_to={el.age_to}
+                                    time_from={el.time_from}
+                                    time_to={el.time_to}
+                                    activity={el.activity}
+                                    location={el.location}
+                                    price={el.price}
+                                    frequency={el.frequency}
+                                    rating={el.rating}
+                                    liked={el.liked}
+                                    authenticated={el.is_authenticated}
+                                />
+                            )
+                        })
+                    }
 
-                        <div className="loading">
-                            <div className={this.state.isLoading ? '' : 'none'}>
-                                <div className="cssload-fond">
-                                    <div className="cssload-container-general">
-                                        <div className="cssload-internal">
-                                            <div className="cssload-ballcolor cssload-ball_1"></div>
-                                        </div>
-                                        <div className="cssload-internal">
-                                            <div className="cssload-ballcolor cssload-ball_2"></div>
-                                        </div>
-                                        <div className="cssload-internal">
-                                            <div className="cssload-ballcolor cssload-ball_3"></div>
-                                        </div>
-                                        <div className="cssload-internal">
-                                            <div className="cssload-ballcolor cssload-ball_4"></div>
-                                        </div>
+                    <div className="loading">
+                        <div className={this.state.isLoading ? '' : 'none'}>
+                            <div className="cssload-fond">
+                                <div className="cssload-container-general">
+                                    <div className="cssload-internal">
+                                        <div className="cssload-ballcolor cssload-ball_1"></div>
+                                    </div>
+                                    <div className="cssload-internal">
+                                        <div className="cssload-ballcolor cssload-ball_2"></div>
+                                    </div>
+                                    <div className="cssload-internal">
+                                        <div className="cssload-ballcolor cssload-ball_3"></div>
+                                    </div>
+                                    <div className="cssload-internal">
+                                        <div className="cssload-ballcolor cssload-ball_4"></div>
                                     </div>
                                 </div>
                             </div>
-                            <button className={this.state.isLoading ? 'none' : ''} onClick={this.loadMoreCourses}>
-                                Загрузить еще
-                            </button>
                         </div>
+                        <RaisedButton onTouchTap={this.loadMoreCourses} className={this.state.isLoading ? 'none' : ''} label="Загрузить еще" primary={true} />
                     </div>
                 </div>
                 <div className="clear"></div>

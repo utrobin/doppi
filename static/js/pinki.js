@@ -44437,11 +44437,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Course = __webpack_require__(1343);
+	var _RaisedButton = __webpack_require__(1343);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _Course = __webpack_require__(1369);
 
 	var _Course2 = _interopRequireDefault(_Course);
 
-	var _offer = __webpack_require__(1344);
+	var _offer = __webpack_require__(1370);
 
 	var _offer2 = _interopRequireDefault(_offer);
 
@@ -44542,72 +44546,64 @@
 	            _react2.default.createElement(_offer2.default, null),
 	            _react2.default.createElement(
 	                'div',
-	                { className: 'row' },
+	                { className: 'courses' },
+	                this.state.courses.map(function (el) {
+	                    return _react2.default.createElement(_Course2.default, {
+	                        key: el.id,
+	                        id: el.id,
+	                        author: el.author,
+	                        image: el.pic,
+	                        title: el.title,
+	                        introtext: el.introtext,
+	                        age_from: el.age_from,
+	                        age_to: el.age_to,
+	                        time_from: el.time_from,
+	                        time_to: el.time_to,
+	                        activity: el.activity,
+	                        location: el.location,
+	                        price: el.price,
+	                        frequency: el.frequency,
+	                        rating: el.rating,
+	                        liked: el.liked,
+	                        authenticated: el.is_authenticated
+	                    });
+	                }),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'courses' },
-	                    this.state.courses.map(function (el) {
-	                        return _react2.default.createElement(_Course2.default, {
-	                            key: el.id,
-	                            id: el.id,
-	                            author: el.author,
-	                            image: el.pic,
-	                            title: el.title,
-	                            introtext: el.introtext,
-	                            age_from: el.age_from,
-	                            age_to: el.age_to,
-	                            time_from: el.time_from,
-	                            time_to: el.time_to,
-	                            activity: el.activity,
-	                            location: el.location,
-	                            price: el.price,
-	                            frequency: el.frequency,
-	                            rating: el.rating,
-	                            liked: el.liked,
-	                            authenticated: el.is_authenticated
-	                        });
-	                    }),
+	                    { className: 'loading' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'loading' },
+	                        { className: this.state.isLoading ? '' : 'none' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.isLoading ? '' : 'none' },
+	                            { className: 'cssload-fond' },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'cssload-fond' },
+	                                { className: 'cssload-container-general' },
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'cssload-container-general' },
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'cssload-internal' },
-	                                        _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_1' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'cssload-internal' },
-	                                        _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_2' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'cssload-internal' },
-	                                        _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_3' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'cssload-internal' },
-	                                        _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_4' })
-	                                    )
+	                                    { className: 'cssload-internal' },
+	                                    _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_1' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'cssload-internal' },
+	                                    _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_2' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'cssload-internal' },
+	                                    _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_3' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'cssload-internal' },
+	                                    _react2.default.createElement('div', { className: 'cssload-ballcolor cssload-ball_4' })
 	                                )
 	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: this.state.isLoading ? 'none' : '', onClick: this.loadMoreCourses },
-	                            'Загрузить еще'
 	                        )
-	                    )
+	                    ),
+	                    _react2.default.createElement(_RaisedButton2.default, { onTouchTap: this.loadMoreCourses, className: this.state.isLoading ? 'none' : '', label: 'Загрузить еще', primary: true })
 	                )
 	            ),
 	            _react2.default.createElement('div', { className: 'clear' })
@@ -44624,183 +44620,11 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(298);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Course = _react2.default.createClass({
-	    displayName: 'Course',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            liked: this.props.liked,
-	            rating: this.props.rating
-	        };
-	    },
-
-	    handleLike: function handleLike(event) {
-	        this.setState({
-	            liked: !this.state.liked,
-	            rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
-	        });
-	        $.ajax({
-	            url: "/like",
-	            type: 'GET',
-	            dataType: 'json',
-	            cache: false,
-	            data: { course_id: this.props.id }
-	        }).done(function (data) {
-	            //
-	        }.bind(this));
-	    },
-
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'course' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'course-wrapper' },
-	                _react2.default.createElement('img', { className: 'course-image', src: this.props.image, width: '250px' }),
-	                _react2.default.createElement('div', { className: 'Golubev' }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'course-wrapper-title' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'rating' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'rating-number' },
-	                            this.state.rating
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'wrapper-like', onClick: this.props.authenticated ? this.handleLike : '' },
-	                            _react2.default.createElement('div', { className: this.state.liked ? "heart heart_red" : "heart" })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'course-name' },
-	                        this.props.author
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '/course/' + this.props.id },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'course-title' },
-	                            this.props.title
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'age' },
-	                        this.props.age_from,
-	                        '+'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'course-info' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'course-description' },
-	                        this.props.introtext
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'course-activity' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Категория:'
-	                        ),
-	                        _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            this.props.activity
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'course-price' },
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
-	                            'Стоимость:'
-	                        ),
-	                        _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            this.props.price,
-	                            ' руб.'
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    }
-	}); /**
-	     * Created by egorutrobin on 25.08.16.
-	     */
-	exports.default = Course;
-
-/***/ },
-/* 1344 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(298);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _RaisedButton = __webpack_require__(1345);
-
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by egorutrobin on 25.08.16.
-	 */
-	var style = {
-	  height: 50
-	};
-
-	var Offer = function Offer() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(_RaisedButton2.default, { label: 'Пройти тест', primary: true, style: style })
-	  );
-	};
-
-	exports.default = Offer;
-
-/***/ },
-/* 1345 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = undefined;
 
-	var _RaisedButton = __webpack_require__(1346);
+	var _RaisedButton = __webpack_require__(1344);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -44809,7 +44633,7 @@
 	exports.default = _RaisedButton2.default;
 
 /***/ },
-/* 1346 */
+/* 1344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -44822,7 +44646,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -44830,19 +44654,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _transitions = __webpack_require__(1348);
+	var _transitions = __webpack_require__(1346);
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
 	var _colorManipulator = __webpack_require__(1301);
 
-	var _childUtils = __webpack_require__(1349);
+	var _childUtils = __webpack_require__(1347);
 
-	var _EnhancedButton = __webpack_require__(1352);
+	var _EnhancedButton = __webpack_require__(1350);
 
 	var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
-	var _Paper = __webpack_require__(1368);
+	var _Paper = __webpack_require__(1366);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
@@ -45263,7 +45087,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 1347 */
+/* 1345 */
 /***/ function(module, exports) {
 
 	module.exports = function (target) {
@@ -45280,7 +45104,7 @@
 
 
 /***/ },
-/* 1348 */
+/* 1346 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45319,7 +45143,7 @@
 	};
 
 /***/ },
-/* 1349 */
+/* 1347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45334,7 +45158,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsCreateFragment = __webpack_require__(1350);
+	var _reactAddonsCreateFragment = __webpack_require__(1348);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
@@ -45372,13 +45196,13 @@
 	}
 
 /***/ },
-/* 1350 */
+/* 1348 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1351).create;
+	module.exports = __webpack_require__(1349).create;
 
 /***/ },
-/* 1351 */
+/* 1349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -45453,7 +45277,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 1352 */
+/* 1350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45466,7 +45290,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -45474,25 +45298,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _childUtils = __webpack_require__(1349);
+	var _childUtils = __webpack_require__(1347);
 
-	var _events = __webpack_require__(1353);
+	var _events = __webpack_require__(1351);
 
 	var _events2 = _interopRequireDefault(_events);
 
-	var _keycode = __webpack_require__(1354);
+	var _keycode = __webpack_require__(1352);
 
 	var _keycode2 = _interopRequireDefault(_keycode);
 
-	var _FocusRipple = __webpack_require__(1355);
+	var _FocusRipple = __webpack_require__(1353);
 
 	var _FocusRipple2 = _interopRequireDefault(_FocusRipple);
 
-	var _TouchRipple = __webpack_require__(1364);
+	var _TouchRipple = __webpack_require__(1362);
 
 	var _TouchRipple2 = _interopRequireDefault(_TouchRipple);
 
-	var _deprecatedPropType = __webpack_require__(1367);
+	var _deprecatedPropType = __webpack_require__(1365);
 
 	var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
 
@@ -45859,7 +45683,7 @@
 	exports.default = EnhancedButton;
 
 /***/ },
-/* 1353 */
+/* 1351 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45903,7 +45727,7 @@
 	};
 
 /***/ },
-/* 1354 */
+/* 1352 */
 /***/ function(module, exports) {
 
 	// Source: http://jsfiddle.net/vWx8V/
@@ -46055,7 +45879,7 @@
 
 
 /***/ },
-/* 1355 */
+/* 1353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46066,7 +45890,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -46078,19 +45902,19 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _shallowEqual = __webpack_require__(1356);
+	var _shallowEqual = __webpack_require__(1354);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _autoPrefix = __webpack_require__(1358);
+	var _autoPrefix = __webpack_require__(1356);
 
 	var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
-	var _transitions = __webpack_require__(1348);
+	var _transitions = __webpack_require__(1346);
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _ScaleIn = __webpack_require__(1359);
+	var _ScaleIn = __webpack_require__(1357);
 
 	var _ScaleIn2 = _interopRequireDefault(_ScaleIn);
 
@@ -46244,14 +46068,14 @@
 	exports.default = FocusRipple;
 
 /***/ },
-/* 1356 */
+/* 1354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _shallowEqual = __webpack_require__(1357);
+	var _shallowEqual = __webpack_require__(1355);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -46260,7 +46084,7 @@
 	exports.default = _shallowEqual2.default;
 
 /***/ },
-/* 1357 */
+/* 1355 */
 /***/ function(module, exports) {
 
 	/**
@@ -46331,7 +46155,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 1358 */
+/* 1356 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46346,7 +46170,7 @@
 	};
 
 /***/ },
-/* 1359 */
+/* 1357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46359,7 +46183,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -46367,11 +46191,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsTransitionGroup = __webpack_require__(1360);
+	var _reactAddonsTransitionGroup = __webpack_require__(1358);
 
 	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
 
-	var _ScaleInChild = __webpack_require__(1363);
+	var _ScaleInChild = __webpack_require__(1361);
 
 	var _ScaleInChild2 = _interopRequireDefault(_ScaleInChild);
 
@@ -46464,13 +46288,13 @@
 	exports.default = ScaleIn;
 
 /***/ },
-/* 1360 */
+/* 1358 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1361);
+	module.exports = __webpack_require__(1359);
 
 /***/ },
-/* 1361 */
+/* 1359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46490,7 +46314,7 @@
 
 	var React = __webpack_require__(299);
 	var ReactInstanceMap = __webpack_require__(415);
-	var ReactTransitionChildMapping = __webpack_require__(1362);
+	var ReactTransitionChildMapping = __webpack_require__(1360);
 
 	var emptyFunction = __webpack_require__(308);
 
@@ -46722,7 +46546,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 1362 */
+/* 1360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46831,7 +46655,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 1363 */
+/* 1361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46844,7 +46668,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -46856,11 +46680,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _autoPrefix = __webpack_require__(1358);
+	var _autoPrefix = __webpack_require__(1356);
 
 	var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
-	var _transitions = __webpack_require__(1348);
+	var _transitions = __webpack_require__(1346);
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
@@ -46990,7 +46814,7 @@
 	exports.default = ScaleInChild;
 
 /***/ },
-/* 1364 */
+/* 1362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47001,7 +46825,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -47013,15 +46837,15 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactAddonsTransitionGroup = __webpack_require__(1360);
+	var _reactAddonsTransitionGroup = __webpack_require__(1358);
 
 	var _reactAddonsTransitionGroup2 = _interopRequireDefault(_reactAddonsTransitionGroup);
 
-	var _dom = __webpack_require__(1365);
+	var _dom = __webpack_require__(1363);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _CircleRipple = __webpack_require__(1366);
+	var _CircleRipple = __webpack_require__(1364);
 
 	var _CircleRipple2 = _interopRequireDefault(_CircleRipple);
 
@@ -47286,7 +47110,7 @@
 	exports.default = TouchRipple;
 
 /***/ },
-/* 1365 */
+/* 1363 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -47315,7 +47139,7 @@
 	};
 
 /***/ },
-/* 1366 */
+/* 1364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47328,7 +47152,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -47340,15 +47164,15 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _shallowEqual = __webpack_require__(1356);
+	var _shallowEqual = __webpack_require__(1354);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _autoPrefix = __webpack_require__(1358);
+	var _autoPrefix = __webpack_require__(1356);
 
 	var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
 
-	var _transitions = __webpack_require__(1348);
+	var _transitions = __webpack_require__(1346);
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
@@ -47476,7 +47300,7 @@
 	exports.default = CircleRipple;
 
 /***/ },
-/* 1367 */
+/* 1365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -47520,7 +47344,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 1368 */
+/* 1366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47530,7 +47354,7 @@
 	});
 	exports.default = undefined;
 
-	var _Paper = __webpack_require__(1369);
+	var _Paper = __webpack_require__(1367);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
@@ -47539,7 +47363,7 @@
 	exports.default = _Paper2.default;
 
 /***/ },
-/* 1369 */
+/* 1367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47552,7 +47376,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _simpleAssign = __webpack_require__(1347);
+	var _simpleAssign = __webpack_require__(1345);
 
 	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
 
@@ -47560,11 +47384,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(1370);
+	var _propTypes = __webpack_require__(1368);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _transitions = __webpack_require__(1348);
+	var _transitions = __webpack_require__(1346);
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
@@ -47678,7 +47502,7 @@
 	exports.default = Paper;
 
 /***/ },
-/* 1370 */
+/* 1368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47712,6 +47536,184 @@
 	  zDepth: _react.PropTypes.oneOf([0, 1, 2, 3, 4, 5])
 
 	};
+
+/***/ },
+/* 1369 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Course = _react2.default.createClass({
+	    displayName: 'Course',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            liked: this.props.liked,
+	            rating: this.props.rating
+	        };
+	    },
+
+	    handleLike: function handleLike(event) {
+	        this.setState({
+	            liked: !this.state.liked,
+	            rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
+	        });
+	        $.ajax({
+	            url: "/like",
+	            type: 'GET',
+	            dataType: 'json',
+	            cache: false,
+	            data: { course_id: this.props.id }
+	        }).done(function (data) {
+	            //
+	        }.bind(this));
+	    },
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'course' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'course-wrapper' },
+	                _react2.default.createElement('img', { className: 'course-image', src: this.props.image, width: '250px' }),
+	                _react2.default.createElement('div', { className: 'Golubev' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'course-wrapper-title' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'rating' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'rating-number' },
+	                            this.state.rating
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'wrapper-like', onClick: this.props.authenticated ? this.handleLike : '' },
+	                            _react2.default.createElement('div', { className: this.state.liked ? "heart heart_red" : "heart" })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'course-name' },
+	                        this.props.author
+	                    ),
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '/course/' + this.props.id },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'course-title' },
+	                            this.props.title
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'age' },
+	                        this.props.age_from,
+	                        '+'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'course-info' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'course-description' },
+	                        this.props.introtext
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'course-activity' },
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Категория:'
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            null,
+	                            this.props.activity
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'course-price' },
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Стоимость:'
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            null,
+	                            this.props.price,
+	                            ' руб.'
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	}); /**
+	     * Created by egorutrobin on 25.08.16.
+	     */
+	exports.default = Course;
+
+/***/ },
+/* 1370 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _RaisedButton = __webpack_require__(1343);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Created by egorutrobin on 25.08.16.
+	 */
+	var style = {
+	    height: 70,
+	    width: 350
+	};
+
+	var labelStyle = {
+	    fontSize: 26,
+	    fontWeight: 700
+	};
+
+	var Offer = function Offer() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_RaisedButton2.default, { label: 'Пройти тест', primary: true, style: style, labelStyle: labelStyle })
+	    );
+	};
+
+	exports.default = Offer;
 
 /***/ },
 /* 1371 */
