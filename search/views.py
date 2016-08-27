@@ -79,6 +79,10 @@ def main(request):
     })
 
 
+def selection_courses(request):
+    return render(request, 'selection_courses.html', )
+
+
 def get_courses(request):
     data = []
     options = json.loads(request.GET['options'])

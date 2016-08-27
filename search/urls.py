@@ -3,6 +3,7 @@ from search import views
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
+    url(r'^selection$', views.selection_courses, name='selection'),
     url(r'^search$', views.searchbar, name='bar'),
     url(r'^course/(?P<course_id>\d+)$', views.single_course, name='single_course'),
     url(r'^add$', views.add_course, name='add_course'),

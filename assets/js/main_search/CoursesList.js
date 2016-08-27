@@ -5,6 +5,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Course from './Course';
 import Offer from './offer';
+import CircularProgress from 'material-ui/CircularProgress';
 
 var currentAjax = $.ajax();
 
@@ -124,22 +125,7 @@ var CoursesList = React.createClass({
 
                     <div className="loading">
                         <div className={this.state.isLoading ? '' : 'none'}>
-                            <div className="cssload-fond">
-                                <div className="cssload-container-general">
-                                    <div className="cssload-internal">
-                                        <div className="cssload-ballcolor cssload-ball_1"></div>
-                                    </div>
-                                    <div className="cssload-internal">
-                                        <div className="cssload-ballcolor cssload-ball_2"></div>
-                                    </div>
-                                    <div className="cssload-internal">
-                                        <div className="cssload-ballcolor cssload-ball_3"></div>
-                                    </div>
-                                    <div className="cssload-internal">
-                                        <div className="cssload-ballcolor cssload-ball_4"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <CircularProgress size={0.6} />
                         </div>
                         <RaisedButton onTouchTap={this.loadMoreCourses} className={this.state.isLoading ? 'none' : ''} label="Загрузить еще" primary={true} />
                     </div>

@@ -8,7 +8,8 @@ module.exports = {
         search_course: './assets/js/search_course',
         add_course: './assets/js/add_course',
         test: './assets/js/test',
-        pinki: './assets/js/pinki',
+        main_search: './assets/js/main_search',
+        selection_courses: './assets/js/selection_courses',
     },
 
     output: {
@@ -19,6 +20,8 @@ module.exports = {
     watchOptions: {
         aggregateTimeout: 100
     },
+
+    watch: true,
 
     module: {
         loaders: [
