@@ -26,7 +26,7 @@ class Course(models.Model):
     rating = models.PositiveIntegerField(default=0)
     moderation = models.BooleanField(default=False)
     price = models.PositiveIntegerField(default=0)  # Цена
-    location = models.ForeignKey('Metro', blank=True, default=None)  # Местоположение
+    location = models.ForeignKey('Metro', blank=True, null=True)
 
 
 # Информация о курсе
