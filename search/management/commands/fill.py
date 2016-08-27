@@ -19,7 +19,9 @@ class Command(BaseCommand):
             stations = json.loads(json_file.read())
         for line in stations:
             for st in line['stations']:
-                print(st)
+                m = Metro(title=st)
+                m.save()
+                print(m)
         #for c in CourseInfo.objects.all():
         #    c.level_id = random.randint(1, 3)
         #    c.activity = CourseType.objects.get(id = random.randint(1, 27))
