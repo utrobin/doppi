@@ -36,13 +36,9 @@ export default class ChipExampleArray extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {chipData: [
-      {key: 0, label: 'Angular'},
-      {key: 1, label: 'JQuery'},
-      {key: 2, label: 'Polymer'},
-      {key: 3, label: 'ReactJS'},
-    ],
-        value: 'f'
+    this.state = {
+        chipData: [],
+        value: 0,
     };
     this.styles = {
       chip: {
@@ -75,12 +71,15 @@ export default class ChipExampleArray extends React.Component {
   }
 
   getRed(event){
+      console.log(event.target)
       let temp = this.state.chipData;
 
-      temp.push({key: 5, label: event.target.value});
-      event.target.value = 'gfg'
+      temp.push({key: this.state.value, label: event.target.value});
+      event.target.value = '';
+    console.log(event.target)
       this.setState({
-          chipData: temp
+          chipData: temp,
+          value: ++this.state.value
       });
   }
 
@@ -98,7 +97,9 @@ export default class ChipExampleArray extends React.Component {
               dataSource={fruit}
               maxSearchResults={5}
               onBlur={this.getRed.bind(this)}
+              onNewRequest={() => {}}
             />
+          <input type="text" onBlur={this.getRed.bind(this)}/>
         </div>
     );
   }
