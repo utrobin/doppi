@@ -4,6 +4,8 @@ from authentication.models import UserProfile
 from django.contrib.auth.models import User
 from faker import Factory
 import random
+import json
+
 
 fake = Factory.create('en_US')
 
@@ -13,10 +15,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        for c in CourseInfo.objects.all():
-            c.level_id = random.randint(1, 3)
+        with open('/home/pgolubev/PycharmProjects/doppi/doppi/search/management/commands/stations.json') as json_file:
+            stations = json.loads(json_file.read())
+        for line in stations:
+            for st in line['stations']:
+                print(st)
+        #for c in CourseInfo.objects.all():
+        #    c.level_id = random.randint(1, 3)
         #    c.activity = CourseType.objects.get(id = random.randint(1, 27))
-            c.save()
+        #    c.save()
         #    for course in CourseInfo.objects.all():
         #    course.coordinate = '5' + str(random.randint(4, 6)) + '.' + str(random.randint(0, 900000)) + ',3' + str(random.randint(6, 8)) + '.' + str(random.randint(0, 900000))
         #    course.save()
