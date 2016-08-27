@@ -36,9 +36,6 @@ body{
     margin-top: 15px;
     display: block;
 }
-.spann{
-    font-size: 24px;
-    font-weight: 400;
-    margin-top: 15px;
-    display: block;
+.selection_courses .selection{
+    width: 490px!important;
 }
