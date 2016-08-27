@@ -48906,12 +48906,10 @@
 	  }, {
 	    key: 'getRed',
 	    value: function getRed(event) {
-	      console.log(event.target);
 	      var temp = this.state.chipData;
-
 	      temp.push({ key: this.state.value, label: event.target.value });
 	      event.target.value = '';
-	      console.log(event.target);
+
 	      this.setState({
 	        chipData: temp,
 	        value: ++this.state.value
@@ -48933,9 +48931,9 @@
 	          filter: _AutoComplete2.default.fuzzyFilter,
 	          value: this.state.value,
 	          dataSource: fruit,
+
 	          maxSearchResults: 5,
-	          onBlur: this.getRed.bind(this),
-	          onNewRequest: function onNewRequest() {}
+	          onBlur: this.getRed.bind(this)
 	        }),
 	        _react2.default.createElement('input', { type: 'text', onBlur: this.getRed.bind(this) })
 	      );

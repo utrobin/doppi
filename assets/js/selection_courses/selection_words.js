@@ -71,12 +71,10 @@ export default class ChipExampleArray extends React.Component {
   }
 
   getRed(event){
-      console.log(event.target)
       let temp = this.state.chipData;
-
       temp.push({key: this.state.value, label: event.target.value});
       event.target.value = '';
-    console.log(event.target)
+
       this.setState({
           chipData: temp,
           value: ++this.state.value
@@ -95,9 +93,9 @@ export default class ChipExampleArray extends React.Component {
               filter={AutoComplete.fuzzyFilter}
               value={this.state.value}
               dataSource={fruit}
+
               maxSearchResults={5}
               onBlur={this.getRed.bind(this)}
-              onNewRequest={() => {}}
             />
           <input type="text" onBlur={this.getRed.bind(this)}/>
         </div>
