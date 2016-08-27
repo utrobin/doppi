@@ -82,6 +82,14 @@ def main(request):
 def selection_courses(request):
     return render(request, 'selection_courses.html', )
 
+def c_title_kostil(course):
+    res = ''
+    try:
+        res = course.location
+    except:
+        return ''
+    else:
+        return res
 
 def get_courses(request):
     data = []
@@ -106,7 +114,7 @@ def get_courses(request):
                      'time_from': course.info.time_from,
                      'activity': course.info.activity.title if course.info.activity else 'fgfjhgifh',
                      'time_to': course.info.time_to,
-                     'location': [str(a) for a in course.info.location.all()],
+                     'location': c_title_kostil(course),
                      'price': course.price,
                      'frequency': course.info.frequency,
                      'is_authenticated': True if request.user.is_authenticated() else False,
@@ -212,7 +220,7 @@ def get_recommend_courses(request):
                      'age_from': course.info.age_from, 'age_to': course.info.age_to,
                      'time_from': course.info.time_from, 'time_to': course.info.time_to,
                      'activity': course.info.activity.title,
-                     'location': [str(a) for a in course.info.location.all()],
+                     'location': course.location.title,
                      'price': course.price, 'frequency': course.info.frequency,
                      'is_authenticated': True if request.user.is_authenticated() else False,
                      'rating': course.rating,

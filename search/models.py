@@ -26,6 +26,7 @@ class Course(models.Model):
     rating = models.PositiveIntegerField(default=0)
     moderation = models.BooleanField(default=False)
     price = models.PositiveIntegerField(default=0)  # Цена
+    location = models.ForeignKey('Metro', blank=True, default=None)  # Местоположение
 
 
 # Информация о курсе
@@ -35,7 +36,6 @@ class CourseInfo(models.Model):
     time_from = models.PositiveSmallIntegerField(default=0)  # Время от
     time_to = models.PositiveSmallIntegerField(default=23)  # Время до
     activity = models.ForeignKey('CourseType', null=True, default=None)  # Вид курса
-    location = models.ManyToManyField('Metro', blank=True)  # Местоположение
     coordinate_x = models.FloatField(blank=True, default=0)
     coordinate_y = models.FloatField(blank=True, default=0)
     frequency = models.PositiveSmallIntegerField(default=0)  # Количество занятий в неделю
