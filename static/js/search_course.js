@@ -378,13 +378,12 @@
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
-	                            'Стоимость:'
+	                            'Местонахождение:'
 	                        ),
 	                        _react2.default.createElement(
 	                            'span',
 	                            null,
-	                            this.props.price,
-	                            ' руб.'
+	                            this.props.location
 	                        )
 	                    )
 	                )
@@ -770,7 +769,7 @@
 	                    sort: this.props.user.sort
 	                },
 	                success: function (data) {
-
+	                    console.log(data);
 	                    this.props.dispatch(_getCourses(data));
 
 	                    this.setState({

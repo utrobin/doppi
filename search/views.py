@@ -105,7 +105,7 @@ def get_courses(request):
         Q(moderation=True)
     ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
-                     'aut`hor': course.author.user.username,
+                     'author': course.author.user.username,
                      'title': course.title,
                      'introtext': course.introtext,
                      'pic': course.pic.url,

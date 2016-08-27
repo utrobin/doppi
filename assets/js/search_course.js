@@ -249,8 +249,8 @@ var Courses = React.createClass({
                             <span>{this.props.activity}</span>
                         </div>
                         <div className="course-price">
-                            <b>Стоимость:</b>
-                            <span>{this.props.price} руб.</span>
+                            <b>Местонахождение:</b>
+                            <span>{this.props.location}</span>
                         </div>
                     </div>
                 </div>
@@ -568,7 +568,7 @@ var CoursesList = React.createClass({
                         sort: this.props.user.sort
                     },
                     success: function (data) {
-
+                        console.log(data)
                         this.props.dispatch(getCourses(data));
 
                         this.setState({

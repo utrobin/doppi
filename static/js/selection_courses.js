@@ -48872,7 +48872,8 @@
 
 	    _this.state = {
 	      chipData: [],
-	      value: 0
+	      value: 0,
+	      searchText: ''
 	    };
 	    _this.styles = {
 	      chip: {
@@ -48906,14 +48907,28 @@
 	  }, {
 	    key: 'getRed',
 	    value: function getRed(event) {
+	      console.log(event);
 	      var temp = this.state.chipData;
-	      temp.push({ key: this.state.value, label: event.target.value });
-	      event.target.value = '';
+	      temp.push({ key: this.state.value, label: event });
 
 	      this.setState({
 	        chipData: temp,
+	        search: '',
 	        value: ++this.state.value
+
 	      });
+	      console.log(this.state.search);
+	      this.forceUpdate();
+	    }
+	  }, {
+	    key: 'handleUpdateInput',
+	    value: function handleUpdateInput(t) {
+	      this.setState({ searchText: t });
+	    }
+	  }, {
+	    key: 'handleSelect',
+	    value: function handleSelect(t) {
+	      this.setState({ searchText: '' });
 	    }
 	  }, {
 	    key: 'render',
@@ -48929,13 +48944,14 @@
 	        _react2.default.createElement(_AutoComplete2.default, {
 	          floatingLabelText: 'Type \'peah\', fuzzy search',
 	          filter: _AutoComplete2.default.fuzzyFilter,
-	          value: this.state.value,
 	          dataSource: fruit,
-
 	          maxSearchResults: 5,
-	          onBlur: this.getRed.bind(this)
-	        }),
-	        _react2.default.createElement('input', { type: 'text', onBlur: this.getRed.bind(this) })
+	          onBlur: this.getR,
+
+	          searchText: this.state.searchText,
+	          onNewRequest: this.handleSelect.bind(this),
+	          onUpdateInput: this.handleUpdateInput.bind(this)
+	        })
 	      );
 	    }
 	  }]);

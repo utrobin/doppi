@@ -39,6 +39,7 @@ export default class ChipExampleArray extends React.Component {
     this.state = {
         chipData: [],
         value: 0,
+        searchText: ''
     };
     this.styles = {
       chip: {
@@ -71,15 +72,23 @@ export default class ChipExampleArray extends React.Component {
   }
 
   getRed(event){
+      console.log(event)
       let temp = this.state.chipData;
-      temp.push({key: this.state.value, label: event.target.value});
-      event.target.value = '';
+      temp.push({key: this.state.value, label: event});
 
       this.setState({
           chipData: temp,
-          value: ++this.state.value
+          search: '',
+          value: ++this.state.value,
+
       });
+    console.log(this.state.search)
+      this.forceUpdate()
   }
+
+  handleUpdateInput (t) { this.setState({ searchText: t }) }
+
+  handleSelect (t) { this.setState( { searchText: '' }) }
 
   render() {
     return (
@@ -91,14 +100,16 @@ export default class ChipExampleArray extends React.Component {
             <AutoComplete
               floatingLabelText="Type 'peah', fuzzy search"
               filter={AutoComplete.fuzzyFilter}
-              value={this.state.value}
               dataSource={fruit}
-
               maxSearchResults={5}
-              onBlur={this.getRed.bind(this)}
+              onBlur={this.getR}
+
+
+              searchText={this.state.searchText}
+             onNewRequest={this.handleSelect.bind(this)}
+             onUpdateInput={this.handleUpdateInput.bind(this)}
             />
-          <input type="text" onBlur={this.getRed.bind(this)}/>
         </div>
     );
-  }
+  }f
 }
