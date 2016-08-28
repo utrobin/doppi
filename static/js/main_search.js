@@ -41209,7 +41209,7 @@
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'offer' },
-	        _react2.default.createElement(_RaisedButton2.default, { label: 'Пройдите тест', primary: true, style: style, labelStyle: labelStyle }),
+	        _react2.default.createElement(_RaisedButton2.default, { href: '/selection', label: 'Пройдите тест', primary: true, style: style, labelStyle: labelStyle }),
 	        _react2.default.createElement(
 	            'span',
 	            { className: 'span' },

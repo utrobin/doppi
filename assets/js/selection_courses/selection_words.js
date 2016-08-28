@@ -71,45 +71,37 @@ export default class ChipExampleArray extends React.Component {
     );
   }
 
-  getRed(event){
-      console.log(event)
-      let temp = this.state.chipData;
-      temp.push({key: this.state.value, label: event});
-
-      this.setState({
-          chipData: temp,
-          search: '',
-          value: ++this.state.value,
-
-      });
-    console.log(this.state.search)
-      this.forceUpdate()
-  }
-
   handleUpdateInput (t) { this.setState({ searchText: t }) }
 
-  handleSelect (t) { this.setState( { searchText: '' }) }
+  handleSelect (t) {
+    let temp = this.state.chipData;
+    temp.push({key: this.state.value, label: t});
+
+    this.setState({
+      searchText: '',
+      chipData: temp,
+      value: ++this.state.value,
+    })
+  }
 
   render() {
     return (
-        <div>
-            <div style={this.styles.wrapper}>
-            {this.state.chipData.map(this.renderChip, this)}
-            </div>
-
-            <AutoComplete
-              floatingLabelText="Type 'peah', fuzzy search"
-              filter={AutoComplete.fuzzyFilter}
-              dataSource={fruit}
-              maxSearchResults={5}
-              onBlur={this.getR}
-
-
-              searchText={this.state.searchText}
-             onNewRequest={this.handleSelect.bind(this)}
-             onUpdateInput={this.handleUpdateInput.bind(this)}
-            />
+      <div>
+        <div style={this.styles.wrapper}>
+        {this.state.chipData.map(this.renderChip, this)}
         </div>
+
+        <AutoComplete
+          className="selection"
+          floatingLabelText="Введите до 5 слов, характеризующих увлечения вашего ребенка"
+          filter={AutoComplete.fuzzyFilter}
+          dataSource={fruit}
+          maxSearchResults={5}
+          searchText={this.state.searchText}
+          onNewRequest={this.handleSelect.bind(this)}
+          onUpdateInput={this.handleUpdateInput.bind(this)}
+        />
+      </div>
     );
   }f
 }

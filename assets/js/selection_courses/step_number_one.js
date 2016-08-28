@@ -6,8 +6,6 @@ import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import ChipExampleArray from './selection_words';
 
-import AutoComplete from 'material-ui/AutoComplete';
-
 const fruit = [
   'Apple', 'Apricot', 'Avocado',
   'Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry',
@@ -35,50 +33,41 @@ const fruit = [
   'Watermelon',
 ];
 
-
 const styles = {
   block: {
-    maxWidth: 250,
+	maxWidth: 250,
   },
   radioButton: {
-    marginBottom: 16,
+	marginBottom: 16,
   },
 };
 
-var currentAjax = $.ajax();
 
-var StepOne = React.createClass({
+const StepOne = () => (
+  <div>
+    <TextField
+      hintText="Имя"
+      floatingLabelText="Введите имя вашего ребенка"
+    />
 
-    render: function () {
-        return (
-            <div>
-                <TextField
-                  hintText="Hint Text"
-                  floatingLabelText="Floating Label Text"
-                />
-                <RadioButtonGroup name="shipSpeed" >
-                  <RadioButton
-                    value="man"
-                    label="Simple"
-                    style={styles.radioButton}
-                  />
-                  <RadioButton
-                    value="women"
-                    label="Selected by default"
-                    style={styles.radioButton}
-                  />
-                </RadioButtonGroup>
+    <div>
+      <label>Выберите пол:</label>
+      <RadioButtonGroup name="shipSpeed" >
+        <RadioButton
+          value="man"
+          label="Мальчик"
+          style={styles.radioButton}
+        />
+        <RadioButton
+          value="women"
+          label="Девочка"
+          style={styles.radioButton}
+        />
+      </RadioButtonGroup>
+    </div>
 
-                <ChipExampleArray />
-
-
-            </div>
-        );
-    }
-});
+    <ChipExampleArray />
+  </div>
+);
 
 export default StepOne;
-
-
-
-
