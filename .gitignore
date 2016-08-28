@@ -7,6 +7,10 @@
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+tags
+*.jpg
+*.swp
+
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids

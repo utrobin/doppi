@@ -8,11 +8,11 @@ import json
 
 urls = {
         'Футбол':'http://zoon.ru/msk/trainings/type/sektsiya_futbola/',
-        'Теннис':'http://zoon.ru/msk/trainings/type/sektsiya_tennisa/',
-        'Хоккей':'http://zoon.ru/msk/trainings/type/sektsiya_hokkej/',
-        'Борьба':'http://zoon.ru/msk/trainings/type/sektsiya_borby/',
-        'Гитара':'http://zoon.ru/msk/trainings/network/uroki_gitary_i_kursy_vokala/',
-        'Английский':'http://zoon.ru/msk/trainings/type/anglijskij/',
+        #'Теннис':'http://zoon.ru/msk/trainings/type/sektsiya_tennisa/',
+        #'Хоккей':'http://zoon.ru/msk/trainings/type/sektsiya_hokkej/',
+        #'Борьба':'http://zoon.ru/msk/trainings/type/sektsiya_borby/',
+        #'Гитара':'http://zoon.ru/msk/trainings/network/uroki_gitary_i_kursy_vokala/',
+        #'Английский':'http://zoon.ru/msk/trainings/type/anglijskij/',
 }
 
 def int0(str):
