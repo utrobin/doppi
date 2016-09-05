@@ -39,3 +39,44 @@ body{
 .selection_courses .selection{
     width: 490px!important;
 }
+footer{
+    background-color: rgb(33, 33, 33);
+    height: 120px;
+}
+footer span{
+    color: rgba(255, 255, 255, 0.870588);
+    line-height: 120px;
+    font-size: 28px;
+}
+.content {
+    padding-bottom: 160px;
+}
+.new-logo h1{
+    cursor: pointer;
+}
+.logoK button{
+    width: auto!important;
+}
+.logoK span{
+   color: #fff!important;
+}
+.logoK{
+    color: #fff;
+    background-image: url(../img/menu.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 1px) 14px;
+    padding-right: 15px;
+}
+.partners{
+    float: right;
+    margin-right: 25px;
+    margin-top: 25px;
+}
+footer span{
+    margin-left: 463px;
+    float: left;
+    display: block;
+}
+.partners a:hover{
+    color: rgb(255, 64, 129);
+}

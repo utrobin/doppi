@@ -9,6 +9,7 @@ import {createStore, combineReducers} from 'redux'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import HorizontalLinearStepper  from './selection_courses/Stepper';
+
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 

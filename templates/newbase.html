@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&subset=cyrillic-ext" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/new.css">
+    <link rel="stylesheet" href="/static/css/newnew.css">
     <meta name="viewport" content="width=1040">
 
 
@@ -24,58 +25,42 @@
 <!-- Yandex.Metrika counter -->
 {% include 'YandexMetrika.html' %}
 <!-- /Yandex.Metrika counter -->
+
+
 <div class="wrapper">
     <div class="content">
         <nav class="nav">
-            <div class="container">
-                <div class="logo">
-                    <a href="{% url 'main' %}">Doppi</a>
-                </div>
-                <ul class="navbar-left">
-                    <li><a href="{% url 'bar' %}">Поиск</a></li>
-                    <li><a href="{% url 'add_course' %}">Добавить курс</a></li>
-                    <li><a href="{% url 'fish' %}">Партнерам</a></li>
-                    <li><a href="{% url 'fish' %}">Инвесторам</a></li>
-                    <li><a href="{% url 'fish' %}">Контакты</a></li>
-                </ul>
-
-                <ul class="navbar-right">
-                    {% if  user.is_authenticated %}
-                        <li class="dropdown" id="dropdown">
-                            <a>{{ user.username|truncatechars:20 }} <b class="caret"></b></a>
-                            <div class="drop">
-                                <ul class="dropdown-menu" id="dropdown-menu">
-                                    <li><a href="{% url 'edit' %}">Мой профиль</a></li>
-                                    <li><a href="{% url 'settings' %}">Настройки</a></li>
-                                    <li><a href="{% url 'logout' %}">Выйти</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    {% else %}
-                        <a href="{% url 'signup' %}">
-                            <button type="button" class="btn signup">Sign up</button>
-                        </a>
-                        <a href="{% url 'signin' %}">
-                            <button type="button" class="btn signin">Sign in</button>
-                        </a>
-                    {% endif %}
-                </ul>
-            </div>
+            <div id="nav"></div>
         </nav>
-
         <div class="container">
             {% block content %}{% endblock %}
         </div>
         <div class="clear"></div>
     </div>
     <footer>
-        <span>Doppi</span>
+        <div class="container">
+            <span>Doppi</span>
+            <ul class="partners">
+                <li><a href="{% url 'fish' %}">Партнерам</a></li>
+                <li><a href="{% url 'fish' %}">Инвесторам</a></li>
+                <li><a href="{% url 'fish' %}">Контакты</a>
+            </ul>
+        </div>
     </footer>
 </div>
+<div style="display: none">
+    {% if user.is_authenticated %} 
+        <div id="username">{{ request.user.username }}</div>
+        <script>
+            window.auth = true
+        </script>
+    {% else %} 
+        <script>
+            window.auth = false
+        </script>
+    {% endif %} 
+</div>
+<script src="/static/js/header.js"></script>
 <script src="/static/js/library/pusher.min.js"></script>
 <script src="/static/js/js.cookie.js"></script>
-
-
-
-
 </body>

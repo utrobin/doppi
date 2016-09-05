@@ -10,6 +10,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import StepOne  from './step_number_one';
+import Paper from 'material-ui/Paper';
 
 
 class HorizontalLinearStepper extends React.Component {
@@ -52,7 +53,7 @@ class HorizontalLinearStepper extends React.Component {
     const contentStyle = {margin: '0 16px'};
 
     return (
-      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+      <Paper zDepth={1} style={{width: '100%', maxWidth: 700, margin: 'auto', marginTop: '25px'}}>
         <Stepper activeStep={stepIndex}>
           <Step>
             <StepLabel>Первый шаг</StepLabel>
@@ -80,15 +81,15 @@ class HorizontalLinearStepper extends React.Component {
           ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
-              <div style={{marginTop: 12}}>
+              <div style={{marginTop: 25, paddingBottom: 15, textAlign: 'right'}}>
                 <FlatButton
-                  label="Back"
+                  label="Назад"
                   disabled={stepIndex === 0}
                   onTouchTap={this.handlePrev}
                   style={{marginRight: 12}}
                 />
                 <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Next'}
+                  label={stepIndex === 2 ? 'Finish' : 'Вперед'}
                   primary={true}
                   onTouchTap={this.handleNext}
                 />
@@ -96,7 +97,7 @@ class HorizontalLinearStepper extends React.Component {
             </div>
           )}
         </div>
-      </div>
+      </Paper>
     );
   }
 }

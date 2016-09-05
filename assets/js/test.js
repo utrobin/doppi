@@ -6,7 +6,6 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Provider, connect} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
-var asyncDone = require('async-done');
 
 var currentAjax = $.ajax();
 var test_id = document.getElementById('test_id').innerHTML;

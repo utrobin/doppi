@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'tinymce',
     'search',
     'authentication',
-    'webpack_loader',
 )
 
 MIDDLEWARE_CLASSES = [

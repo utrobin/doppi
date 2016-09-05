@@ -10,6 +10,7 @@ module.exports = {
         test: './assets/js/test',
         main_search: './assets/js/main_search',
         selection_courses: './assets/js/selection_courses',
+        header: './assets/js/header',
     },
 
     output: {

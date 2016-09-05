@@ -38,7 +38,8 @@ const styles = {
 	maxWidth: 250,
   },
   radioButton: {
-	marginBottom: 16,
+	marginBottom: 10,
+    marginLeft: 10,
   },
 };
 
@@ -47,11 +48,12 @@ const StepOne = () => (
   <div>
     <TextField
       hintText="Имя"
+      style={{marginBottom: '15px'}}
       floatingLabelText="Введите имя вашего ребенка"
     />
 
     <div>
-      <label>Выберите пол:</label>
+      <label style={{marginBottom: '15px', display: 'block'}}>Выберите пол:</label>
       <RadioButtonGroup name="shipSpeed" >
         <RadioButton
           value="man"

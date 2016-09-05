@@ -32,7 +32,6 @@ footer {
     margin-top: 40px;
     height: 40px;
     background-color: rgba(89, 0, 89, 0.3);
-    text-align: center;
     background: #c5c5c5;
 }
 footer span{
@@ -55,11 +54,11 @@ input{
     -webkit-appearance: none;
 }
 .nav{
-    background: rgb(72, 0, 72);
-    border-bottom: 1px solid rgb(49, 0, 49);
+    background-color: rgb(0, 188, 212);
     color: #777;
     display: block;
-    height: 50px;
+    height: 64px;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 }
 .container{
     width: 1000px;
