@@ -2,6 +2,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
+.idea
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/dictionaries
@@ -52,3 +53,12 @@ fabric.properties
 /node_modules/
 /webpack.config.js
 /assets/js/index.jsx
+.DS_Store
+authentication/__pycache__/
+authentication/migrations/__pycache__/
+doppi/__pycache__/
+search/__pycache__/
+search/migrations/__pycache__/
+static/.DS_Store
+static/img/.DS_Store
+static/img/menu.svg
