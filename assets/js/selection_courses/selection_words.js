@@ -52,11 +52,23 @@ export default class ChipExampleArray extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('worlds') === null)
+      localStorage.setItem('name', '');
+    else {
+      this.setState({
+        chipData: JSON.parse(localStorage.getItem("worlds"))
+      });
+    }
+  }
+
   handleRequestDelete = (key) => {
     this.chipData = this.state.chipData;
     const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
     this.chipData.splice(chipToDelete, 1);
     this.setState({chipData: this.chipData});
+
+    localStorage.setItem("worlds", JSON.stringify(this.chipData));
   };
 
   renderChip(data) {
@@ -77,6 +89,8 @@ export default class ChipExampleArray extends React.Component {
     let temp = this.state.chipData;
     temp.push({key: this.state.value, label: t});
 
+    localStorage.setItem("worlds", JSON.stringify(temp));
+
     this.setState({
       searchText: '',
       chipData: temp,
@@ -88,7 +102,7 @@ export default class ChipExampleArray extends React.Component {
     return (
       <div>
         <div style={this.styles.wrapper}>
-        {this.state.chipData.map(this.renderChip, this)}
+          {this.state.chipData.map(this.renderChip, this)}
         </div>
 
         <AutoComplete

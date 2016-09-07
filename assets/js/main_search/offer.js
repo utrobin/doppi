@@ -20,7 +20,7 @@ const labelStyle = {
 
 const Offer = () => (
   <div className="offer">
-    <RaisedButton href={'/selection'} label="Пройдите тест" primary={true} style={style} labelStyle={labelStyle} />
+    <RaisedButton href={'/selection'} secondary={true} label="Пройдите тест" style={style} labelStyle={labelStyle} />
     <span className="span">и мы поможем найти оптимальный курс для вашего ребенка</span>
   </div>
 );

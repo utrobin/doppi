@@ -62,13 +62,13 @@
 
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-	var _CoursesList = __webpack_require__(754);
+	var _CoursesList = __webpack_require__(751);
 
 	var _CoursesList2 = _interopRequireDefault(_CoursesList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var injectTapEventPlugin = __webpack_require__(748);
+	var injectTapEventPlugin = __webpack_require__(745);
 	injectTapEventPlugin();
 
 	var App = function App() {
@@ -40530,14 +40530,11 @@
 
 /***/ },
 /* 744 */,
-/* 745 */,
-/* 746 */,
-/* 747 */,
-/* 748 */
+/* 745 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(749);
-	var defaultClickRejectionStrategy = __webpack_require__(750);
+	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(746);
+	var defaultClickRejectionStrategy = __webpack_require__(747);
 
 	var alreadyInjected = false;
 
@@ -40559,14 +40556,14 @@
 	  alreadyInjected = true;
 
 	  __webpack_require__(339).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(751)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(748)(shouldRejectClick)
 	  });
 	};
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 749 */
+/* 746 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -40621,7 +40618,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 750 */
+/* 747 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -40632,7 +40629,7 @@
 
 
 /***/ },
-/* 751 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40660,10 +40657,10 @@
 	var EventPluginUtils = __webpack_require__(341);
 	var EventPropagators = __webpack_require__(338);
 	var SyntheticUIEvent = __webpack_require__(372);
-	var TouchEventUtils = __webpack_require__(752);
+	var TouchEventUtils = __webpack_require__(749);
 	var ViewportMetrics = __webpack_require__(373);
 
-	var keyOf = __webpack_require__(753);
+	var keyOf = __webpack_require__(750);
 	var topLevelTypes = EventConstants.topLevelTypes;
 
 	var isStartish = EventPluginUtils.isStartish;
@@ -40808,7 +40805,7 @@
 
 
 /***/ },
-/* 752 */
+/* 749 */
 /***/ function(module, exports) {
 
 	/**
@@ -40856,7 +40853,7 @@
 
 
 /***/ },
-/* 753 */
+/* 750 */
 /***/ function(module, exports) {
 
 	/**
@@ -40896,7 +40893,7 @@
 	module.exports = keyOf;
 
 /***/ },
-/* 754 */
+/* 751 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40913,15 +40910,15 @@
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-	var _Course = __webpack_require__(755);
+	var _Course = __webpack_require__(752);
 
 	var _Course2 = _interopRequireDefault(_Course);
 
-	var _offer = __webpack_require__(756);
+	var _offer = __webpack_require__(753);
 
 	var _offer2 = _interopRequireDefault(_offer);
 
-	var _CircularProgress = __webpack_require__(757);
+	var _CircularProgress = __webpack_require__(754);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -41063,7 +41060,7 @@
 	exports.default = CoursesList;
 
 /***/ },
-/* 755 */
+/* 752 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41198,7 +41195,7 @@
 	exports.default = Course;
 
 /***/ },
-/* 756 */
+/* 753 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41237,7 +41234,7 @@
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'offer' },
-	        _react2.default.createElement(_RaisedButton2.default, { href: '/selection', label: 'Пройдите тест', primary: true, style: style, labelStyle: labelStyle }),
+	        _react2.default.createElement(_RaisedButton2.default, { href: '/selection', secondary: true, label: 'Пройдите тест', style: style, labelStyle: labelStyle }),
 	        _react2.default.createElement(
 	            'span',
 	            { className: 'span' },
@@ -41249,7 +41246,7 @@
 	exports.default = Offer;
 
 /***/ },
-/* 757 */
+/* 754 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41259,7 +41256,7 @@
 	});
 	exports.default = undefined;
 
-	var _CircularProgress = __webpack_require__(758);
+	var _CircularProgress = __webpack_require__(755);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -41268,7 +41265,7 @@
 	exports.default = _CircularProgress2.default;
 
 /***/ },
-/* 758 */
+/* 755 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

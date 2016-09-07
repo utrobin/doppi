@@ -10,18 +10,35 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import StepOne  from './step_number_one';
+import StepTwo  from './step_number_two';
+import StepThree  from './step_number_three';
 import Paper from 'material-ui/Paper';
 
 
 class HorizontalLinearStepper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.state = {
+      finished: false,
+      stepIndex: 0,
+    };
+  }
 
-  state = {
-    finished: false,
-    stepIndex: 0,
-  };
+  componentWillMount() {
+    if (localStorage.getItem('stepIndex') === null)
+      localStorage.setItem('stepIndex', 0);
+    else {
+      this.setState({
+        stepIndex: JSON.parse(localStorage.getItem('stepIndex')),
+        finished: JSON.parse(localStorage.getItem('stepIndex')) > 2,
+      });
+    }
+  }
 
   handleNext = () => {
     const {stepIndex} = this.state;
+    localStorage.setItem('stepIndex', stepIndex + 1);
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2,
@@ -31,6 +48,7 @@ class HorizontalLinearStepper extends React.Component {
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
+      localStorage.setItem('stepIndex', stepIndex - 1);
       this.setState({stepIndex: stepIndex - 1});
     }
   };
@@ -40,9 +58,9 @@ class HorizontalLinearStepper extends React.Component {
       case 0:
         return <StepOne />;
       case 1:
-        return 'What is an ad group anyways?';
+        return <StepTwo get_url_test="/authentication/get/questions" />;
       case 2:
-        return 'This is the bit I really care about!';
+        return <StepThree get_url_test="/authentication/get/questions" />;
       default:
         return 'You\'re a long way from home sonny jim!';
     }
@@ -50,7 +68,7 @@ class HorizontalLinearStepper extends React.Component {
 
   render() {
     const {finished, stepIndex} = this.state;
-    const contentStyle = {margin: '0 16px'};
+    const contentStyle = {margin: '0 16px', paddingBottom: 25};
 
     return (
       <Paper zDepth={1} style={{width: '100%', maxWidth: 700, margin: 'auto', marginTop: '25px'}}>
@@ -73,15 +91,17 @@ class HorizontalLinearStepper extends React.Component {
                 onClick={(event) => {
                   event.preventDefault();
                   this.setState({stepIndex: 0, finished: false});
+                  localStorage.setItem('stepIndex', 0);
                 }}
+                style={{color: 'rgb(255, 64, 129)'}}
               >
-                Click here
-              </a> to reset the example.
+                Вернуться на первый шаг
+              </a> Далее тут ещё не доделали.
             </p>
           ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
-              <div style={{marginTop: 25, paddingBottom: 15, textAlign: 'right'}}>
+              <div style={{marginTop: 25, textAlign: 'right'}}>
                 <FlatButton
                   label="Назад"
                   disabled={stepIndex === 0}
@@ -89,7 +109,7 @@ class HorizontalLinearStepper extends React.Component {
                   style={{marginRight: 12}}
                 />
                 <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Вперед'}
+                  label={stepIndex === 2 ? 'Закончить' : 'Вперед'}
                   primary={true}
                   onTouchTap={this.handleNext}
                 />

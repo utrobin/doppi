@@ -70,7 +70,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var injectTapEventPlugin = __webpack_require__(748);
+	var injectTapEventPlugin = __webpack_require__(745);
 	injectTapEventPlugin();
 
 	function handleTouchTap() {
@@ -37417,14 +37417,11 @@
 	exports.default = NavigationMoreVert;
 
 /***/ },
-/* 745 */,
-/* 746 */,
-/* 747 */,
-/* 748 */
+/* 745 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(749);
-	var defaultClickRejectionStrategy = __webpack_require__(750);
+	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(746);
+	var defaultClickRejectionStrategy = __webpack_require__(747);
 
 	var alreadyInjected = false;
 
@@ -37446,14 +37443,14 @@
 	  alreadyInjected = true;
 
 	  __webpack_require__(339).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(751)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(748)(shouldRejectClick)
 	  });
 	};
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 749 */
+/* 746 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -37508,7 +37505,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 750 */
+/* 747 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -37519,7 +37516,7 @@
 
 
 /***/ },
-/* 751 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37547,10 +37544,10 @@
 	var EventPluginUtils = __webpack_require__(341);
 	var EventPropagators = __webpack_require__(338);
 	var SyntheticUIEvent = __webpack_require__(372);
-	var TouchEventUtils = __webpack_require__(752);
+	var TouchEventUtils = __webpack_require__(749);
 	var ViewportMetrics = __webpack_require__(373);
 
-	var keyOf = __webpack_require__(753);
+	var keyOf = __webpack_require__(750);
 	var topLevelTypes = EventConstants.topLevelTypes;
 
 	var isStartish = EventPluginUtils.isStartish;
@@ -37695,7 +37692,7 @@
 
 
 /***/ },
-/* 752 */
+/* 749 */
 /***/ function(module, exports) {
 
 	/**
@@ -37743,7 +37740,7 @@
 
 
 /***/ },
-/* 753 */
+/* 750 */
 /***/ function(module, exports) {
 
 	/**
