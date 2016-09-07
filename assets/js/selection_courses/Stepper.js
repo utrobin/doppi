@@ -53,6 +53,11 @@ class HorizontalLinearStepper extends React.Component {
     }
   };
 
+  errorStep = () => {
+    localStorage.setItem('stepIndex', 0);
+    this.setState({stepIndex: 0});
+  };
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -62,7 +67,7 @@ class HorizontalLinearStepper extends React.Component {
       case 2:
         return <StepThree get_url_test="/authentication/get/questions" />;
       default:
-        return 'You\'re a long way from home sonny jim!';
+        return this.errorStep;
     }
   }
 
