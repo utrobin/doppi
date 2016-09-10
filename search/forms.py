@@ -37,6 +37,18 @@ class CourseForm(forms.ModelForm):
         ),
         label=u'Краткое описание'
     )
+    site = forms.CharField(
+        widget=Textarea(
+            attrs={'class': 'site', 'placeholder': u'Сайт',}
+        ),
+        label=u'Сайт'
+    )
+    phone = forms.CharField(
+        widget=Textarea(
+            attrs={'class': 'phone', 'placeholder': u'Телефон',}
+        ),
+        label=u'Телефон'
+    )
     pic = forms.FileField(
         widget=forms.FileInput(
             attrs={'class': 'ask-signup-avatar-input', 'data-filename-placement': 'inside'}
@@ -54,7 +66,7 @@ class CourseForm(forms.ModelForm):
     )
     class Meta:
         model = Course
-        fields = ['title', 'introtext', 'price', 'description', 'pic']
+        fields = ['title', 'introtext', 'price', 'description', 'pic', 'site', 'phone']
         widgets = {
             'title': Textarea(attrs={'class': 'title', 'placeholder': u'Название',}),
         }
