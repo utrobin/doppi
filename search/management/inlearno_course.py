@@ -51,7 +51,6 @@ class ICourHTMLParser(HTMLParser):
     def handle_data(self, data):
         if self.inTitle:
             self.course['title'] = data
-            print(data)
         elif self.inDesc:
             self.desc.append(self.beatify(data))
         elif self.inAddr:
@@ -63,10 +62,10 @@ class ICourHTMLParser(HTMLParser):
 def getCourseByUrl(url):
     headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'}
     page = requests.get(url=url, headers=headers).text
-    print(page)
     parser = ICourHTMLParser()
     parser.feed(page)
     return parser.course
 
-getCourseByUrl('http://www.inlearno.ru/event/1633-detskii-yazykovoi-art-lager-top-kids/')
+print(getCourseByUrl('http://www.inlearno.ru/event/1633-detskii-yazykovoi-art-lager-top-kids/'))
+
 

@@ -27,6 +27,8 @@ class Course(models.Model):
     moderation = models.BooleanField(default=False)
     price = models.PositiveIntegerField(default=0)  # Цена
     location = models.ForeignKey('Metro', blank=True, null=True)
+    phone = models.CharField(max_length=32, blank=True)
+    site = models.CharField(max_length=128, blank=True)
 
 
 # Информация о курсе
