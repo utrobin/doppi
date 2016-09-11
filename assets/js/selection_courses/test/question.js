@@ -23,6 +23,7 @@ export default class Question extends React.Component {
                 answer={el.answer}
                 id={el.id}
                 key={el.id}
+                getCourses={this.props.getCourses}
               />
             )
           })

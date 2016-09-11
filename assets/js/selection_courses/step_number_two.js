@@ -54,6 +54,7 @@ export default class StepTwo extends React.Component {
                 <Question
                   answers={el}
                   key={el.id}
+                  getCourses={this.props.getCourses}
                 />
               )
             })

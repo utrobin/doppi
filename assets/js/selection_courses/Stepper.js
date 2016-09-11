@@ -53,21 +53,30 @@ class HorizontalLinearStepper extends React.Component {
     }
   };
 
-  errorStep = () => {
-    localStorage.setItem('stepIndex', 0);
-    this.setState({stepIndex: 0});
-  };
+  getCourses() {
+    console.log('Павлик Морозов')
+    $.ajax({
+      url: '/api/get/recommendcoursestest1',
+      type: 'GET',
+      dataType: 'json',
+      cache: false,
+      data: localStorage,
+      success: function (data) {
+          console.log(data)
+      }
+    });
+  }
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <StepOne />;
+        return <StepOne getCourses={this.getCourses}/>;
       case 1:
-        return <StepTwo get_url_test="/authentication/get/questions" />;
+        return <StepTwo getCourses={this.getCourses} get_url_test="/authentication/get/questions" />;
       case 2:
-        return <StepThree get_url_test="/authentication/get/questions" />;
+        return <StepThree getCourses={this.getCourses} get_url_test="/authentication/get/questions" />;
       default:
-        return this.errorStep;
+        return 'You\'re a long way from home sonny jim!';
     }
   }
 

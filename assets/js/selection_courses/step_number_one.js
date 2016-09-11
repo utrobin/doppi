@@ -5,6 +5,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import ChipExampleArray from './selection_words';
+import Slider from 'material-ui/Slider';
 
 const fruit = [
   'Apple', 'Apricot', 'Avocado',
@@ -52,6 +53,7 @@ export default class StepOne extends React.Component {
     this.state = {
       sex: '',
       name: '',
+      age: 5
     };
   }
 
@@ -71,6 +73,14 @@ export default class StepOne extends React.Component {
         sex: localStorage.getItem('sex')
       });
     }
+
+    if (localStorage.getItem('age') === null)
+      localStorage.setItem('age', '');
+    else {
+      this.setState({
+        age: localStorage.getItem('age')
+      });
+    }
   }
 
   onUpdateInput(searchText, value) {
@@ -78,6 +88,7 @@ export default class StepOne extends React.Component {
     this.setState({
         name: value
     });
+    this.props.getCourses;
   }
 
   onChangeRadio(event, value) {
@@ -85,6 +96,31 @@ export default class StepOne extends React.Component {
     this.setState({
         value: value
     });
+    this.props.getCourses;
+  }
+
+  handleSecondSlider(event, value) {
+    localStorage.setItem('age', value);
+    this.setState({age: value});
+    this.props.getCourses;
+  }
+
+  getAge(){
+    switch(this.state.age) {
+      case 0:
+        return 'годов';
+
+      case 1:
+        return 'год';
+
+      case 2:
+      case 3:
+      case 4:
+        return 'годa';
+
+      default:
+        return 'лет';
+    }
   }
 
   render() {
@@ -123,7 +159,27 @@ export default class StepOne extends React.Component {
         </div>
 
         <ChipExampleArray />
+
+        <div>
+          <Slider
+            min={0}
+            max={18}
+            step={1}
+            defaultValue={+this.state.age}
+            value={+this.state.age}
+            sliderStyle={{marginBottom: 15}}
+            onChange={this.handleSecondSlider.bind(this)}
+          />
+          <p>
+            <span>Выберите возраст вашего ребенка: </span>
+            <span style={{fontWeight: 700, fontSize: 28}}>{this.state.age}</span>
+            <span> {this.getAge()}</span>
+          </p>
+        </div>
       </div>
     );
   }
 }
+
+
+

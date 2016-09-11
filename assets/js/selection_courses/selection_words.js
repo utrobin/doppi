@@ -57,7 +57,8 @@ export default class ChipExampleArray extends React.Component {
       localStorage.setItem('name', '');
     else {
       this.setState({
-        chipData: JSON.parse(localStorage.getItem("worlds"))
+        chipData: JSON.parse(localStorage.getItem("worlds")),
+        value: JSON.parse(localStorage.getItem("worlds")).length
       });
     }
   }
@@ -83,7 +84,9 @@ export default class ChipExampleArray extends React.Component {
     );
   }
 
-  handleUpdateInput (t) { this.setState({ searchText: t }) }
+  handleUpdateInput (t) {
+    this.setState({ searchText: t }) ;
+  }
 
   handleSelect (t) {
     let temp = this.state.chipData;

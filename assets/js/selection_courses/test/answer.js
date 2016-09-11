@@ -33,6 +33,7 @@ export default class Answer extends React.Component {
     this.setState({
         value: isInputChecked
     });
+    this.props.getCourses;
   }
 
   render() {
