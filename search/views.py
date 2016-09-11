@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.db.models import Q
 import random
-
+import operator
 import json
 import pusher
 
@@ -345,24 +345,43 @@ def damn(x):
             '30': 'ЧТ',
     }[x]
 
+def get_types(t):
+    if t == 'ЧХО':
+        return ['Художественное слово', 'Актерское мастерство', 'Фото']
+    if t == 'ЧП':
+        return ['Футбол', 'Теннис', 'Бассейн', 'Легкая атлетика', 'Фото']
+    if t == 'ЧТ':
+        return ['Вождение', 'Английский', 'Гитара']
+    if t == 'ЧС':
+        return ['Бассейн', 'Борьба', 'Футбол', 'Теннис', 'Хоккей', 'Бассейн', 'Легкая атлетика']
+    if t == 'ЧЧ':
+        return ['Английский', 'Немецкий', 'Французский', 'Испанский', 'Психология']
+    if t == 'ЧЗ':
+        return ['Cовременные', 'Вокал', 'Актерское мастерство', 'Художественное слово', 'Гитара' ]
+
 def test_to_ctype(request):
     test = json.loads(request.GET['data'])
     damns = {'ЧХО': 0, 'ЧП': 0, 'ЧТ': 0, 'ЧС': 0, 'ЧЧ': 0, 'ЧЗ': 0}
     ids = []
+    sick_types = []
+    res = {'amount': 0, 'data': []}
+
     for k in test:
         if test[k] == 'true':
             ids.append(int(k[2:])-108)
     for a in ids:
         damns[damn(str(a))] += 1
-    print(damns)
-    data = []
-    for course in Course.objects.filter(
-            Q(info__activity__title__in=['Бассейн', 'Борьба']),
-            Q(info__age_to__gte=10),
-            Q(info__age_from__lte=10),
+
+    sick_types = get_types(max(damns.keys(), key=(lambda k: damns[k])))
+    sick_courses = Course.objects.filter(
+            Q(info__activity__title__in=sick_types),
+            Q(info__age_to__gte=mk_int(test['age'], False)),
+            Q(info__age_from__lte=mk_int(test['age'], True)),
             Q(moderation=True)
-        ).distinct()[:6]:
-        data.append({'id': course.id,
+            ).distinct()
+    res['amount'] = len(sick_courses)
+    for course in sick_courses[:6]:
+        res['data'].append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
                      'introtext': course.description[:200].replace('<br>', ' ') + '...' if len(course.description) > 200 else course.description,
@@ -378,9 +397,8 @@ def test_to_ctype(request):
                      'is_authenticated': True if request.user.is_authenticated() else False,
                      'rating': course.rating,
                      'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
+    print(res)
 
-
-
-    return HttpResponse(json.dumps({}), content_type="application/json")
+    return HttpResponse(json.dumps(res), content_type="application/json")
 
 
