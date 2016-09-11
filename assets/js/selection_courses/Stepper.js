@@ -19,6 +19,7 @@ class HorizontalLinearStepper extends React.Component {
   constructor(props) {
     super(props);
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.getStepContent = this.getStepContent.bind(this);
     this.state = {
       finished: false,
       stepIndex: 0,

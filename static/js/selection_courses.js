@@ -46128,6 +46128,7 @@
 	    };
 
 	    _this.componentWillMount = _this.componentWillMount.bind(_this);
+	    _this.getStepContent = _this.getStepContent.bind(_this);
 	    _this.state = {
 	      finished: false,
 	      stepIndex: 0
@@ -52626,14 +52627,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Chip = __webpack_require__(784);
-
-	var _Chip2 = _interopRequireDefault(_Chip);
-
-	var _AutoComplete = __webpack_require__(787);
-
-	var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
-
 	var _question = __webpack_require__(795);
 
 	var _question2 = _interopRequireDefault(_question);
@@ -52707,10 +52700,10 @@
 	          this.state.data.map(function (el) {
 	            return _react2.default.createElement(_question2.default, {
 	              answers: el,
-	              key: el.id,
-	              getCourses: this.props.getCourses
+	              key: el.id
+
 	            });
-	          })
+	          }.bind(this))
 	        );
 	      }
 	    }
@@ -52776,8 +52769,8 @@
 	          return _react2.default.createElement(_answer2.default, {
 	            answer: el.answer,
 	            id: el.id,
-	            key: el.id,
-	            getCourses: this.props.getCourses
+	            key: el.id
+
 	          });
 	        })
 	      );
@@ -52855,7 +52848,6 @@
 	      this.setState({
 	        value: isInputChecked
 	      });
-	      this.props.getCourses;
 	    }
 	  }, {
 	    key: 'render',

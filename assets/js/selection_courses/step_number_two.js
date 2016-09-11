@@ -2,8 +2,6 @@
  * Created by egorutrobin on 27.08.16.
  */
 import React from 'react';
-import Chip from 'material-ui/Chip';
-import AutoComplete from 'material-ui/AutoComplete';
 import Question from './test/question';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -54,10 +52,10 @@ export default class StepTwo extends React.Component {
                 <Question
                   answers={el}
                   key={el.id}
-                  getCourses={this.props.getCourses}
+
                 />
               )
-            })
+            }.bind(this))
           }
         </div>
       );
