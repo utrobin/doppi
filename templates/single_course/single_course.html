@@ -42,18 +42,24 @@
             <th>Требуемы уровень подготовки:</th>
             <th>{{ course.info.level }}</th>
         </tr>
+        {% if course.info.price %}
         <tr>
             <th>Цена:</th>
             <th>{{ course.info.price }} руб.</th>
         </tr>
+        {% endif %}
+        {% if course.phone %}
         <tr>
             <th>Телефон:</th>
             <th>{{ course.phone }}</th>
         </tr>
+        {% endif %}
+        {% if course.site %}
         <tr>
             <th>Сайт:</th>
             <th>{{ course.site }}</th>
         </tr>
+        {% endif %}
     </table>
 
     <input name="coordinate_x" type="hidden" value="{{ course.info.coordinate_x }}">

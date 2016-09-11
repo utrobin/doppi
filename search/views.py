@@ -98,7 +98,7 @@ def get_courses(request):
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
-                     'introtext': course.introtext,
+                     'introtext': course.description[:200].replace('<br>', ' ') + '...',
                      'pic': course.pic.url,
                      'age_from': course.info.age_from,
                      'age_to': course.info.age_to,
@@ -310,3 +310,10 @@ def post_comment(request):
 
 def pinki(request):
     return render(request, 'pinki_drag.html')
+
+def test_to_ctype(request):
+    test = json_loads(request.GET[''])
+    print(test)
+    return HttpResponse(json.dumps({}), content_type="application/json")
+
+

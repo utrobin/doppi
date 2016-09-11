@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^like', views.do_like, name='like'),
     url(r'^rating', views.get_raiting, name='rating'),
 
-    url(r'^api/get/recommendcoursestest1$', views.get_recommend_courses, name='recommendcoursestest1'),
+    url(r'^api/get/recommendcoursestest1$', views.test_to_ctype, name='recommendcoursestest1'),
 ]
