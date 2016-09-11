@@ -98,7 +98,7 @@ def get_courses(request):
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
-                     'introtext': course.description[:200].replace('<br>', ' ') + '...',
+                     'introtext': course.description[:200].replace('<br>', ' ') + '...' if len(course.description) > 200 else course.description,
                      'pic': course.pic.url,
                      'age_from': course.info.age_from,
                      'age_to': course.info.age_to,
@@ -311,9 +311,76 @@ def post_comment(request):
 def pinki(request):
     return render(request, 'pinki_drag.html')
 
+def damn(x):
+    return {
+            '1': 'ЧХО',
+            '2': 'ЧП',
+            '3': 'ЧХО',
+            '4': 'ЧЗ',
+            '5': 'ЧХО',
+            '6': 'ЧЧ',
+            '7': 'ЧХО',
+            '8': 'ЧТ',
+            '9': 'ЧХО',
+            '10': 'ЧС',
+            '11': 'ЧП',
+            '12': 'ЧЗ',
+            '13': 'ЧП',
+            '14': 'ЧЧ',
+            '15': 'ЧП',
+            '16': 'ЧТ',
+            '17': 'ЧП',
+            '18': 'ЧС',
+            '19': 'ЧЗ',
+            '20': 'ЧЧ',
+            '21': 'ЧЗ',
+            '22': 'ЧТ',
+            '23': 'ЧЗ',
+            '24': 'ЧС',
+            '25': 'ЧЧ',
+            '26': 'ЧТ',
+            '27': 'ЧЧ',
+            '28': 'ЧС',
+            '29': 'ЧС',
+            '30': 'ЧТ',
+    }[x]
+
 def test_to_ctype(request):
-    test = json_loads(request.GET[''])
-    print(test)
+    test = json.loads(request.GET['data'])
+    damns = {'ЧХО': 0, 'ЧП': 0, 'ЧТ': 0, 'ЧС': 0, 'ЧЧ': 0, 'ЧЗ': 0}
+    ids = []
+    for k in test:
+        if test[k] == 'true':
+            ids.append(int(k[2:])-108)
+    for a in ids:
+        damns[damn(str(a))] += 1
+    print(damns)
+    data = []
+    for course in Course.objects.filter(
+            Q(info__activity__title__in=['Бассейн', 'Борьба']),
+            Q(info__age_to__gte=10),
+            Q(info__age_from__lte=10),
+            Q(moderation=True)
+        ).distinct()[:6]:
+        data.append({'id': course.id,
+                     'author': course.author.user.username,
+                     'title': course.title,
+                     'introtext': course.description[:200].replace('<br>', ' ') + '...' if len(course.description) > 200 else course.description,
+                     'pic': course.pic.url,
+                     'age_from': course.info.age_from,
+                     'age_to': course.info.age_to,
+                     'time_from': course.info.time_from,
+                     'activity': course.info.activity.title if course.info.activity else 'fgfjhgifh',
+                     'time_to': course.info.time_to,
+                     'location': course.location.title if course.location else '',
+                     'price': course.price,
+                     'frequency': course.info.frequency,
+                     'is_authenticated': True if request.user.is_authenticated() else False,
+                     'rating': course.rating,
+                     'liked': False if not request.user.is_authenticated() or len(Like.objects.filter(user = UserProfile.objects.get(user = request.user)).filter(course=course).filter(is_liked=True)) == 0 else True})
+
+
+
     return HttpResponse(json.dumps({}), content_type="application/json")
 
 

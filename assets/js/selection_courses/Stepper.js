@@ -1,5 +1,4 @@
-/**
- * Created by egorutrobin on 27.08.16.
+/* Created by egorutrobin on 27.08.16.
  */
 import React from 'react';
 import {
@@ -61,7 +60,7 @@ class HorizontalLinearStepper extends React.Component {
       type: 'GET',
       dataType: 'json',
       cache: false,
-      data: localStorage,
+      data: {"data": JSON.stringify(localStorage)},
       success: function (data) {
           console.log(data)
       }

@@ -88,7 +88,7 @@ export default class StepOne extends React.Component {
     this.setState({
         name: value
     });
-    this.props.getCourses;
+    this.props.getCourses();
   }
 
   onChangeRadio(event, value) {
@@ -96,13 +96,13 @@ export default class StepOne extends React.Component {
     this.setState({
         value: value
     });
-    this.props.getCourses;
+    this.props.getCourses();
   }
 
   handleSecondSlider(event, value) {
     localStorage.setItem('age', value);
     this.setState({age: value});
-    this.props.getCourses;
+    this.props.getCourses();
   }
 
   getAge(){
