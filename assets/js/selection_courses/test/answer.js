@@ -10,6 +10,7 @@ export default class Answer extends React.Component {
     super(props);
     this.componentWillMount = this.componentWillMount.bind(this);
     this.onCheck = this.onCheck.bind(this);
+    this.onCheck = this.onCheck.bind(this);
     this.state = {
         data: {},
         value: false
@@ -33,7 +34,7 @@ export default class Answer extends React.Component {
     this.setState({
         value: isInputChecked
     });
-
+    this.props.getCourses();
   }
 
   render() {
