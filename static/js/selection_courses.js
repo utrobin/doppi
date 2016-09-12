@@ -30994,8 +30994,392 @@
 /* 519 */,
 /* 520 */,
 /* 521 */,
-/* 522 */,
-/* 523 */,
+/* 522 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+
+	var _AppBar = __webpack_require__(523);
+
+	var _AppBar2 = _interopRequireDefault(_AppBar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _AppBar2.default;
+
+/***/ },
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	exports.getStyles = getStyles;
+
+	var _simpleAssign = __webpack_require__(524);
+
+	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _IconButton = __webpack_require__(525);
+
+	var _IconButton2 = _interopRequireDefault(_IconButton);
+
+	var _menu = __webpack_require__(551);
+
+	var _menu2 = _interopRequireDefault(_menu);
+
+	var _Paper = __webpack_require__(563);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _propTypes = __webpack_require__(528);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _warning = __webpack_require__(547);
+
+	var _warning2 = _interopRequireDefault(_warning);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function getStyles(props, context) {
+	  var _context$muiTheme = context.muiTheme;
+	  var appBar = _context$muiTheme.appBar;
+	  var iconButtonSize = _context$muiTheme.button.iconButtonSize;
+	  var zIndex = _context$muiTheme.zIndex;
+
+
+	  var flatButtonSize = 36;
+
+	  var styles = {
+	    root: {
+	      position: 'relative',
+	      zIndex: zIndex.appBar,
+	      width: '100%',
+	      display: 'flex',
+	      backgroundColor: appBar.color,
+	      paddingLeft: appBar.padding,
+	      paddingRight: appBar.padding
+	    },
+	    title: {
+	      whiteSpace: 'nowrap',
+	      overflow: 'hidden',
+	      textOverflow: 'ellipsis',
+	      margin: 0,
+	      paddingTop: 0,
+	      letterSpacing: 0,
+	      fontSize: 24,
+	      fontWeight: appBar.titleFontWeight,
+	      color: appBar.textColor,
+	      height: appBar.height,
+	      lineHeight: appBar.height + 'px'
+	    },
+	    mainElement: {
+	      boxFlex: 1,
+	      flex: '1'
+	    },
+	    iconButtonStyle: {
+	      marginTop: (appBar.height - iconButtonSize) / 2,
+	      marginRight: 8,
+	      marginLeft: -16
+	    },
+	    iconButtonIconStyle: {
+	      fill: appBar.textColor,
+	      color: appBar.textColor
+	    },
+	    flatButton: {
+	      color: appBar.textColor,
+	      marginTop: (iconButtonSize - flatButtonSize) / 2 + 1
+	    }
+	  };
+
+	  return styles;
+	}
+
+	var AppBar = function (_Component) {
+	  _inherits(AppBar, _Component);
+
+	  function AppBar() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, AppBar);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(AppBar)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleTouchTapLeftIconButton = function (event) {
+	      if (_this.props.onLeftIconButtonTouchTap) {
+	        _this.props.onLeftIconButtonTouchTap(event);
+	      }
+	    }, _this.handleTouchTapRightIconButton = function (event) {
+	      if (_this.props.onRightIconButtonTouchTap) {
+	        _this.props.onRightIconButtonTouchTap(event);
+	      }
+	    }, _this.handleTitleTouchTap = function (event) {
+	      if (_this.props.onTitleTouchTap) {
+	        _this.props.onTitleTouchTap(event);
+	      }
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(AppBar, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(!this.props.iconElementLeft || !this.props.iconClassNameLeft, 'Properties iconElementLeft\n      and iconClassNameLeft cannot be simultaneously defined. Please use one or the other.') : void 0;
+
+	      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(!this.props.iconElementRight || !this.props.iconClassNameRight, 'Properties iconElementRight\n      and iconClassNameRight cannot be simultaneously defined. Please use one or the other.') : void 0;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var title = _props.title;
+	      var titleStyle = _props.titleStyle;
+	      var iconStyleLeft = _props.iconStyleLeft;
+	      var iconStyleRight = _props.iconStyleRight;
+	      var onTitleTouchTap = _props.onTitleTouchTap;
+	      var showMenuIconButton = _props.showMenuIconButton;
+	      var iconElementLeft = _props.iconElementLeft;
+	      var iconElementRight = _props.iconElementRight;
+	      var iconClassNameLeft = _props.iconClassNameLeft;
+	      var iconClassNameRight = _props.iconClassNameRight;
+	      var onLeftIconButtonTouchTap = _props.onLeftIconButtonTouchTap;
+	      var className = _props.className;
+	      var style = _props.style;
+	      var zDepth = _props.zDepth;
+	      var children = _props.children;
+
+	      var other = _objectWithoutProperties(_props, ['title', 'titleStyle', 'iconStyleLeft', 'iconStyleRight', 'onTitleTouchTap', 'showMenuIconButton', 'iconElementLeft', 'iconElementRight', 'iconClassNameLeft', 'iconClassNameRight', 'onLeftIconButtonTouchTap', 'className', 'style', 'zDepth', 'children']);
+
+	      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+	      var styles = getStyles(this.props, this.context);
+
+	      var menuElementLeft = void 0;
+	      var menuElementRight = void 0;
+
+	      // If the title is a string, wrap in an h1 tag.
+	      // If not, wrap in a div tag.
+	      var titleComponent = typeof title === 'string' || title instanceof String ? 'h1' : 'div';
+
+	      var titleElement = _react2.default.createElement(titleComponent, {
+	        onTouchTap: this.handleTitleTouchTap,
+	        style: prepareStyles((0, _simpleAssign2.default)(styles.title, styles.mainElement, titleStyle))
+	      }, title);
+
+	      var iconLeftStyle = (0, _simpleAssign2.default)({}, styles.iconButtonStyle, iconStyleLeft);
+
+	      if (showMenuIconButton) {
+	        var iconElementLeftNode = iconElementLeft;
+
+	        if (iconElementLeft) {
+	          if (iconElementLeft.type.muiName === 'IconButton') {
+	            var iconElemLeftChildren = iconElementLeft.props.children;
+	            var iconButtonIconStyle = !(iconElemLeftChildren && iconElemLeftChildren.props && iconElemLeftChildren.props.color) ? styles.iconButtonIconStyle : null;
+
+	            iconElementLeftNode = _react2.default.cloneElement(iconElementLeft, {
+	              iconStyle: (0, _simpleAssign2.default)({}, iconButtonIconStyle, iconElementLeft.props.iconStyle)
+	            });
+	          }
+
+	          menuElementLeft = _react2.default.createElement(
+	            'div',
+	            { style: prepareStyles(iconLeftStyle) },
+	            iconElementLeftNode
+	          );
+	        } else {
+	          var child = iconClassNameLeft ? '' : _react2.default.createElement(_menu2.default, { style: (0, _simpleAssign2.default)({}, styles.iconButtonIconStyle) });
+	          menuElementLeft = _react2.default.createElement(
+	            _IconButton2.default,
+	            {
+	              style: iconLeftStyle,
+	              iconStyle: styles.iconButtonIconStyle,
+	              iconClassName: iconClassNameLeft,
+	              onTouchTap: this.handleTouchTapLeftIconButton
+	            },
+	            child
+	          );
+	        }
+	      }
+
+	      var iconRightStyle = (0, _simpleAssign2.default)({}, styles.iconButtonStyle, {
+	        marginRight: -16,
+	        marginLeft: 'auto'
+	      }, iconStyleRight);
+
+	      if (iconElementRight) {
+	        var iconElementRightNode = iconElementRight;
+
+	        switch (iconElementRight.type.muiName) {
+	          case 'IconMenu':
+	          case 'IconButton':
+	            var iconElemRightChildren = iconElementRight.props.children;
+	            var _iconButtonIconStyle = !(iconElemRightChildren && iconElemRightChildren.props && iconElemRightChildren.props.color) ? styles.iconButtonIconStyle : null;
+
+	            iconElementRightNode = _react2.default.cloneElement(iconElementRight, {
+	              iconStyle: (0, _simpleAssign2.default)({}, _iconButtonIconStyle, iconElementRight.props.iconStyle)
+	            });
+	            break;
+
+	          case 'FlatButton':
+	            iconElementRightNode = _react2.default.cloneElement(iconElementRight, {
+	              style: (0, _simpleAssign2.default)({}, styles.flatButton, iconElementRight.props.style)
+	            });
+	            break;
+
+	          default:
+	        }
+
+	        menuElementRight = _react2.default.createElement(
+	          'div',
+	          { style: prepareStyles(iconRightStyle) },
+	          iconElementRightNode
+	        );
+	      } else if (iconClassNameRight) {
+	        menuElementRight = _react2.default.createElement(_IconButton2.default, {
+	          style: iconRightStyle,
+	          iconStyle: styles.iconButtonIconStyle,
+	          iconClassName: iconClassNameRight,
+	          onTouchTap: this.handleTouchTapRightIconButton
+	        });
+	      }
+
+	      return _react2.default.createElement(
+	        _Paper2.default,
+	        _extends({}, other, {
+	          rounded: false,
+	          className: className,
+	          style: (0, _simpleAssign2.default)({}, styles.root, style),
+	          zDepth: zDepth
+	        }),
+	        menuElementLeft,
+	        titleElement,
+	        menuElementRight,
+	        children
+	      );
+	    }
+	  }]);
+
+	  return AppBar;
+	}(_react.Component);
+
+	AppBar.muiName = 'AppBar';
+	AppBar.propTypes = {
+	  /**
+	   * Can be used to render a tab inside an app bar for instance.
+	   */
+	  children: _react.PropTypes.node,
+	  /**
+	   * Applied to the app bar's root element.
+	   */
+	  className: _react.PropTypes.string,
+	  /**
+	   * The classname of the icon on the left of the app bar.
+	   * If you are using a stylesheet for your icons, enter the class name for the icon to be used here.
+	   */
+	  iconClassNameLeft: _react.PropTypes.string,
+	  /**
+	   * Similiar to the iconClassNameLeft prop except that
+	   * it applies to the icon displayed on the right of the app bar.
+	   */
+	  iconClassNameRight: _react.PropTypes.string,
+	  /**
+	   * The custom element to be displayed on the left side of the
+	   * app bar such as an SvgIcon.
+	   */
+	  iconElementLeft: _react.PropTypes.element,
+	  /**
+	   * Similiar to the iconElementLeft prop except that this element is displayed on the right of the app bar.
+	   */
+	  iconElementRight: _react.PropTypes.element,
+	  /**
+	   * Override the inline-styles of the element displayed on the left side of the app bar.
+	   */
+	  iconStyleLeft: _react.PropTypes.object,
+	  /**
+	   * Override the inline-styles of the element displayed on the right side of the app bar.
+	   */
+	  iconStyleRight: _react.PropTypes.object,
+	  /**
+	   * Callback function for when the left icon is selected via a touch tap.
+	   *
+	   * @param {object} event TouchTap event targeting the left `IconButton`.
+	   */
+	  onLeftIconButtonTouchTap: _react.PropTypes.func,
+	  /**
+	   * Callback function for when the right icon is selected via a touch tap.
+	   *
+	   * @param {object} event TouchTap event targeting the right `IconButton`.
+	   */
+	  onRightIconButtonTouchTap: _react.PropTypes.func,
+	  /**
+	   * Callback function for when the title text is selected via a touch tap.
+	   *
+	   * @param {object} event TouchTap event targeting the `title` node.
+	   */
+	  onTitleTouchTap: _react.PropTypes.func,
+	  /**
+	   * Determines whether or not to display the Menu icon next to the title.
+	   * Setting this prop to false will hide the icon.
+	   */
+	  showMenuIconButton: _react.PropTypes.bool,
+	  /**
+	   * Override the inline-styles of the root element.
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * The title to display on the app bar.
+	   */
+	  title: _react.PropTypes.node,
+	  /**
+	   * Override the inline-styles of the app bar's title element.
+	   */
+	  titleStyle: _react.PropTypes.object,
+	  /**
+	   * The zDepth of the component.
+	   * The shadow of the app bar is also dependent on this property.
+	   */
+	  zDepth: _propTypes2.default.zDepth
+	};
+	AppBar.defaultProps = {
+	  showMenuIconButton: true,
+	  title: '',
+	  zDepth: 1
+	};
+	AppBar.contextTypes = {
+	  muiTheme: _react.PropTypes.object.isRequired
+	};
+	exports.default = AppBar;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
+
+/***/ },
 /* 524 */
 /***/ function(module, exports) {
 
@@ -33995,7 +34379,43 @@
 	exports.default = Tooltip;
 
 /***/ },
-/* 551 */,
+/* 551 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _pure = __webpack_require__(552);
+
+	var _pure2 = _interopRequireDefault(_pure);
+
+	var _SvgIcon = __webpack_require__(561);
+
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NavigationMenu = function NavigationMenu(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' })
+	  );
+	};
+	NavigationMenu = (0, _pure2.default)(NavigationMenu);
+	NavigationMenu.displayName = 'NavigationMenu';
+	NavigationMenu.muiName = 'SvgIcon';
+
+	exports.default = NavigationMenu;
+
+/***/ },
 /* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -46089,6 +46509,10 @@
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
+	var _recomend = __webpack_require__(802);
+
+	var _recomend2 = _interopRequireDefault(_recomend);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46128,9 +46552,11 @@
 
 	    _this.componentWillMount = _this.componentWillMount.bind(_this);
 	    _this.getStepContent = _this.getStepContent.bind(_this);
+	    _this.getCourses = _this.getCourses.bind(_this);
 	    _this.state = {
 	      finished: false,
-	      stepIndex: 0
+	      stepIndex: 0,
+	      data: {}
 	    };
 	    return _this;
 	  }
@@ -46148,17 +46574,17 @@
 	  }, {
 	    key: 'getCourses',
 	    value: function getCourses() {
-	      console.log('Павлик Морозов');
 	      $.ajax({
 	        url: '/api/get/recommendcoursestest1',
 	        type: 'GET',
 	        dataType: 'json',
 	        cache: false,
-	        data: { "data": JSON.stringify(localStorage) },
-	        success: function success(data) {
-	          console.log(data);
-	        }
-	      });
+	        data: { "data": JSON.stringify(localStorage) }
+	      }).done(function (data) {
+	        this.setState({
+	          data: data
+	        });
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'getStepContent',
@@ -46263,7 +46689,8 @@
 	              })
 	            )
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(_recomend2.default, { data: this.state.data })
 	      );
 	    }
 	  }]);
@@ -48101,11 +48528,12 @@
 	        });
 	      }
 
-	      if (localStorage.getItem('age') === null) localStorage.setItem('age', '');else {
+	      if (localStorage.getItem('age') === null) localStorage.setItem('age', '5');else {
 	        this.setState({
 	          age: localStorage.getItem('age')
 	        });
 	      }
+	      this.props.getCourses();
 	    }
 	  }, {
 	    key: 'onUpdateInput',
@@ -48202,7 +48630,7 @@
 	          'div',
 	          null,
 	          _react2.default.createElement(_Slider2.default, {
-	            min: 0,
+	            min: 1,
 	            max: 18,
 	            step: 1,
 	            defaultValue: +this.state.age,
@@ -52677,6 +53105,7 @@
 	          });
 	        }.bind(this)
 	      });
+	      this.props.getCourses();
 	    }
 	  }, {
 	    key: 'render',
@@ -53331,6 +53760,7 @@
 	          });
 	        }.bind(this)
 	      });
+	      this.props.getCourses();
 	    }
 	  }, {
 	    key: 'render',
@@ -53372,6 +53802,803 @@
 	}(_react2.default.Component);
 
 	exports.default = StepTwo;
+
+/***/ },
+/* 802 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Drawer = __webpack_require__(803);
+
+	var _Drawer2 = _interopRequireDefault(_Drawer);
+
+	var _AppBar = __webpack_require__(522);
+
+	var _AppBar2 = _interopRequireDefault(_AppBar);
+
+	var _RaisedButton = __webpack_require__(742);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DrawerOpenRightExample = function (_React$Component) {
+	  _inherits(DrawerOpenRightExample, _React$Component);
+
+	  function DrawerOpenRightExample(props) {
+	    _classCallCheck(this, DrawerOpenRightExample);
+
+	    var _this = _possibleConstructorReturn(this, (DrawerOpenRightExample.__proto__ || Object.getPrototypeOf(DrawerOpenRightExample)).call(this, props));
+
+	    _this.handleToggle = function () {
+	      return _this.setState({ open: !_this.state.open });
+	    };
+
+	    _this.state = { open: false };
+	    return _this;
+	  }
+
+	  _createClass(DrawerOpenRightExample, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.props.data.amount);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_RaisedButton2.default, {
+	          label: 'Toggle Drawer',
+	          onTouchTap: this.handleToggle
+	        }),
+	        _react2.default.createElement(_Drawer2.default, { width: 200, openSecondary: true, open: this.state.open, overlayClassName: 'gfgfgfgf' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'fix-recom' },
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Для вас подобрано более ',
+	            this.props.data.amount,
+	            ' курсов'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DrawerOpenRightExample;
+	}(_react2.default.Component);
+
+	exports.default = DrawerOpenRightExample;
+
+/***/ },
+/* 803 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+
+	var _Drawer = __webpack_require__(804);
+
+	var _Drawer2 = _interopRequireDefault(_Drawer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Drawer2.default;
+
+/***/ },
+/* 804 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _simpleAssign = __webpack_require__(524);
+
+	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(330);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactEventListener = __webpack_require__(727);
+
+	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
+
+	var _keycode = __webpack_require__(534);
+
+	var _keycode2 = _interopRequireDefault(_keycode);
+
+	var _autoPrefix = __webpack_require__(537);
+
+	var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
+
+	var _transitions = __webpack_require__(527);
+
+	var _transitions2 = _interopRequireDefault(_transitions);
+
+	var _Overlay = __webpack_require__(805);
+
+	var _Overlay2 = _interopRequireDefault(_Overlay);
+
+	var _Paper = __webpack_require__(563);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _propTypes = __webpack_require__(528);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var openNavEventHandler = null;
+
+	var Drawer = function (_Component) {
+	  _inherits(Drawer, _Component);
+
+	  function Drawer() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Drawer);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Drawer)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleTouchTapOverlay = function (event) {
+	      event.preventDefault();
+	      _this.close('clickaway');
+	    }, _this.handleKeyUp = function (event) {
+	      if (_this.state.open && !_this.props.docked && (0, _keycode2.default)(event) === 'esc') {
+	        _this.close('escape');
+	      }
+	    }, _this.onBodyTouchStart = function (event) {
+	      var swipeAreaWidth = _this.props.swipeAreaWidth;
+
+	      var touchStartX = event.touches[0].pageX;
+	      var touchStartY = event.touches[0].pageY;
+
+	      // Open only if swiping from far left (or right) while closed
+	      if (swipeAreaWidth !== null && !_this.state.open) {
+	        if (_this.props.openSecondary) {
+	          // If openSecondary is true calculate from the far right
+	          if (touchStartX < document.body.offsetWidth - swipeAreaWidth) return;
+	        } else {
+	          // If openSecondary is false calculate from the far left
+	          if (touchStartX > swipeAreaWidth) return;
+	        }
+	      }
+
+	      if (!_this.state.open && (openNavEventHandler !== _this.onBodyTouchStart || _this.props.disableSwipeToOpen)) {
+	        return;
+	      }
+
+	      _this.maybeSwiping = true;
+	      _this.touchStartX = touchStartX;
+	      _this.touchStartY = touchStartY;
+
+	      document.body.addEventListener('touchmove', _this.onBodyTouchMove);
+	      document.body.addEventListener('touchend', _this.onBodyTouchEnd);
+	      document.body.addEventListener('touchcancel', _this.onBodyTouchEnd);
+	    }, _this.onBodyTouchMove = function (event) {
+	      var currentX = event.touches[0].pageX;
+	      var currentY = event.touches[0].pageY;
+
+	      if (_this.state.swiping) {
+	        event.preventDefault();
+	        _this.setPosition(_this.getTranslateX(currentX));
+	      } else if (_this.maybeSwiping) {
+	        var dXAbs = Math.abs(currentX - _this.touchStartX);
+	        var dYAbs = Math.abs(currentY - _this.touchStartY);
+	        // If the user has moved his thumb ten pixels in either direction,
+	        // we can safely make an assumption about whether he was intending
+	        // to swipe or scroll.
+	        var threshold = 10;
+
+	        if (dXAbs > threshold && dYAbs <= threshold) {
+	          _this.swipeStartX = currentX;
+	          _this.setState({
+	            swiping: _this.state.open ? 'closing' : 'opening'
+	          });
+	          _this.setPosition(_this.getTranslateX(currentX));
+	        } else if (dXAbs <= threshold && dYAbs > threshold) {
+	          _this.onBodyTouchEnd();
+	        }
+	      }
+	    }, _this.onBodyTouchEnd = function (event) {
+	      if (_this.state.swiping) {
+	        var currentX = event.changedTouches[0].pageX;
+	        var translateRatio = _this.getTranslateX(currentX) / _this.getMaxTranslateX();
+
+	        _this.maybeSwiping = false;
+	        var swiping = _this.state.swiping;
+	        _this.setState({
+	          swiping: null
+	        });
+
+	        // We have to open or close after setting swiping to null,
+	        // because only then CSS transition is enabled.
+	        if (translateRatio > 0.5) {
+	          if (swiping === 'opening') {
+	            _this.setPosition(_this.getMaxTranslateX());
+	          } else {
+	            _this.close('swipe');
+	          }
+	        } else {
+	          if (swiping === 'opening') {
+	            _this.open('swipe');
+	          } else {
+	            _this.setPosition(0);
+	          }
+	        }
+	      } else {
+	        _this.maybeSwiping = false;
+	      }
+
+	      document.body.removeEventListener('touchmove', _this.onBodyTouchMove);
+	      document.body.removeEventListener('touchend', _this.onBodyTouchEnd);
+	      document.body.removeEventListener('touchcancel', _this.onBodyTouchEnd);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Drawer, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.maybeSwiping = false;
+	      this.touchStartX = null;
+	      this.touchStartY = null;
+	      this.swipeStartX = null;
+
+	      this.setState({
+	        open: this.props.open !== null ? this.props.open : this.props.docked,
+	        swiping: null
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.enableSwipeHandling();
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      // If controlled then the open prop takes precedence.
+	      if (nextProps.open !== null) {
+	        this.setState({
+	          open: nextProps.open
+	        });
+	        // Otherwise, if docked is changed, change the open state for when uncontrolled.
+	      } else if (this.props.docked !== nextProps.docked) {
+	        this.setState({
+	          open: nextProps.docked
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this.enableSwipeHandling();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.disableSwipeHandling();
+	    }
+	  }, {
+	    key: 'getStyles',
+	    value: function getStyles() {
+	      var muiTheme = this.context.muiTheme;
+	      var theme = muiTheme.drawer;
+
+	      var x = this.getTranslateMultiplier() * (this.state.open ? 0 : this.getMaxTranslateX());
+
+	      var styles = {
+	        root: {
+	          height: '100%',
+	          width: this.props.width || theme.width,
+	          position: 'fixed',
+	          zIndex: muiTheme.zIndex.drawer,
+	          left: 0,
+	          top: 0,
+	          transform: 'translate(' + x + 'px, 0)',
+	          transition: !this.state.swiping && _transitions2.default.easeOut(null, 'transform', null),
+	          backgroundColor: theme.color,
+	          overflow: 'auto',
+	          WebkitOverflowScrolling: 'touch' },
+	        overlay: {
+	          zIndex: muiTheme.zIndex.drawerOverlay,
+	          pointerEvents: this.state.open ? 'auto' : 'none' },
+	        rootWhenOpenRight: {
+	          left: 'auto',
+	          right: 0
+	        }
+	      };
+
+	      return styles;
+	    }
+	  }, {
+	    key: 'shouldShow',
+	    value: function shouldShow() {
+	      return this.state.open || !!this.state.swiping; // component is swiping
+	    }
+	  }, {
+	    key: 'close',
+	    value: function close(reason) {
+	      if (this.props.open === null) this.setState({ open: false });
+	      if (this.props.onRequestChange) this.props.onRequestChange(false, reason);
+	      return this;
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open(reason) {
+	      if (this.props.open === null) this.setState({ open: true });
+	      if (this.props.onRequestChange) this.props.onRequestChange(true, reason);
+	      return this;
+	    }
+	  }, {
+	    key: 'getMaxTranslateX',
+	    value: function getMaxTranslateX() {
+	      var width = this.props.width || this.context.muiTheme.drawer.width;
+	      return width + 10;
+	    }
+	  }, {
+	    key: 'getTranslateMultiplier',
+	    value: function getTranslateMultiplier() {
+	      return this.props.openSecondary ? 1 : -1;
+	    }
+	  }, {
+	    key: 'enableSwipeHandling',
+	    value: function enableSwipeHandling() {
+	      if (!this.props.docked) {
+	        document.body.addEventListener('touchstart', this.onBodyTouchStart);
+	        if (!openNavEventHandler) {
+	          openNavEventHandler = this.onBodyTouchStart;
+	        }
+	      } else {
+	        this.disableSwipeHandling();
+	      }
+	    }
+	  }, {
+	    key: 'disableSwipeHandling',
+	    value: function disableSwipeHandling() {
+	      document.body.removeEventListener('touchstart', this.onBodyTouchStart);
+	      if (openNavEventHandler === this.onBodyTouchStart) {
+	        openNavEventHandler = null;
+	      }
+	    }
+	  }, {
+	    key: 'setPosition',
+	    value: function setPosition(translateX) {
+	      var drawer = _reactDom2.default.findDOMNode(this.refs.clickAwayableElement);
+	      var transformCSS = 'translate(' + this.getTranslateMultiplier() * translateX + 'px, 0)';
+	      this.refs.overlay.setOpacity(1 - translateX / this.getMaxTranslateX());
+	      _autoPrefix2.default.set(drawer.style, 'transform', transformCSS);
+	    }
+	  }, {
+	    key: 'getTranslateX',
+	    value: function getTranslateX(currentX) {
+	      return Math.min(Math.max(this.state.swiping === 'closing' ? this.getTranslateMultiplier() * (currentX - this.swipeStartX) : this.getMaxTranslateX() - this.getTranslateMultiplier() * (this.swipeStartX - currentX), 0), this.getMaxTranslateX());
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var children = _props.children;
+	      var className = _props.className;
+	      var containerClassName = _props.containerClassName;
+	      var containerStyle = _props.containerStyle;
+	      var docked = _props.docked;
+	      var openSecondary = _props.openSecondary;
+	      var overlayClassName = _props.overlayClassName;
+	      var overlayStyle = _props.overlayStyle;
+	      var style = _props.style;
+	      var zDepth = _props.zDepth;
+
+
+	      var styles = this.getStyles();
+
+	      var overlay = void 0;
+	      if (!docked) {
+	        overlay = _react2.default.createElement(_Overlay2.default, {
+	          ref: 'overlay',
+	          show: this.shouldShow(),
+	          className: overlayClassName,
+	          style: (0, _simpleAssign2.default)(styles.overlay, overlayStyle),
+	          transitionEnabled: !this.state.swiping,
+	          onTouchTap: this.handleTouchTapOverlay
+	        });
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        {
+	          className: className,
+	          style: style
+	        },
+	        _react2.default.createElement(_reactEventListener2.default, { target: 'window', onKeyUp: this.handleKeyUp }),
+	        overlay,
+	        _react2.default.createElement(
+	          _Paper2.default,
+	          {
+	            ref: 'clickAwayableElement',
+	            zDepth: zDepth,
+	            rounded: false,
+	            transitionEnabled: !this.state.swiping,
+	            className: containerClassName,
+	            style: (0, _simpleAssign2.default)(styles.root, openSecondary && styles.rootWhenOpenRight, containerStyle)
+	          },
+	          children
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Drawer;
+	}(_react.Component);
+
+	Drawer.propTypes = {
+	  /**
+	   * The contents of the `Drawer`
+	   */
+	  children: _react.PropTypes.node,
+	  /**
+	   * The CSS class name of the root element.
+	   */
+	  className: _react.PropTypes.string,
+	  /**
+	   * The CSS class name of the container element.
+	   */
+	  containerClassName: _react.PropTypes.string,
+	  /**
+	   * Override the inline-styles of the container element.
+	   */
+	  containerStyle: _react.PropTypes.object,
+	  /**
+	   * If true, swiping sideways when the `Drawer` is closed will not open it.
+	   */
+	  disableSwipeToOpen: _react.PropTypes.bool,
+	  /**
+	   * If true, the `Drawer` will be docked. In this state, the overlay won't show and
+	   * clicking on a menu item will not close the `Drawer`.
+	   */
+	  docked: _react.PropTypes.bool,
+	  /**
+	   * Callback function fired when the `open` state of the `Drawer` is requested to be changed.
+	   *
+	   * @param {boolean} open If true, the `Drawer` was requested to be opened.
+	   * @param {string} reason The reason for the open or close request. Possible values are
+	   * 'swipe' for open requests; 'clickaway' (on overlay clicks),
+	   * 'escape' (on escape key press), and 'swipe' for close requests.
+	   */
+	  onRequestChange: _react.PropTypes.func,
+	  /**
+	   * If true, the `Drawer` is opened.  Providing a value will turn the `Drawer`
+	   * into a controlled component.
+	   */
+	  open: _react.PropTypes.bool,
+	  /**
+	   * If true, the `Drawer` is positioned to open from the opposite side.
+	   */
+	  openSecondary: _react.PropTypes.bool,
+	  /**
+	   * The CSS class name to add to the `Overlay` component that is rendered behind the `Drawer`.
+	   */
+	  overlayClassName: _react.PropTypes.string,
+	  /**
+	   * Override the inline-styles of the `Overlay` component that is rendered behind the `Drawer`.
+	   */
+	  overlayStyle: _react.PropTypes.object,
+	  /**
+	   * Override the inline-styles of the root element.
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * The width of the left most (or right most) area in pixels where the `Drawer` can be
+	   * swiped open from. Setting this to `null` spans that area to the entire page
+	   * (**CAUTION!** Setting this property to `null` might cause issues with sliders and
+	   * swipeable `Tabs`: use at your own risk).
+	   */
+	  swipeAreaWidth: _react.PropTypes.number,
+	  /**
+	   * The width of the `Drawer` in pixels. Defaults to using the values from theme.
+	   */
+	  width: _react.PropTypes.number,
+	  /**
+	   * The zDepth of the `Drawer`.
+	   */
+	  zDepth: _propTypes2.default.zDepth
+
+	};
+	Drawer.defaultProps = {
+	  disableSwipeToOpen: false,
+	  docked: true,
+	  open: null,
+	  openSecondary: false,
+	  swipeAreaWidth: 30,
+	  width: null,
+	  zDepth: 2
+	};
+	Drawer.contextTypes = {
+	  muiTheme: _react.PropTypes.object.isRequired
+	};
+	exports.default = Drawer;
+
+/***/ },
+/* 805 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _simpleAssign = __webpack_require__(524);
+
+	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _transitions = __webpack_require__(527);
+
+	var _transitions2 = _interopRequireDefault(_transitions);
+
+	var _AutoLockScrolling = __webpack_require__(806);
+
+	var _AutoLockScrolling2 = _interopRequireDefault(_AutoLockScrolling);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function getStyles(props, context) {
+	  var overlay = context.muiTheme.overlay;
+
+
+	  var style = {
+	    root: {
+	      position: 'fixed',
+	      height: '100%',
+	      width: '100%',
+	      top: 0,
+	      left: '-100%',
+	      opacity: 0,
+	      backgroundColor: overlay.backgroundColor,
+	      WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', // Remove mobile color flashing (deprecated)
+
+	      // Two ways to promote overlay to its own render layer
+	      willChange: 'opacity',
+	      transform: 'translateZ(0)',
+
+	      transition: props.transitionEnabled && _transitions2.default.easeOut('0ms', 'left', '400ms') + ', ' + _transitions2.default.easeOut('400ms', 'opacity')
+	    }
+	  };
+
+	  if (props.show) {
+	    (0, _simpleAssign2.default)(style.root, {
+	      left: 0,
+	      opacity: 1,
+	      transition: _transitions2.default.easeOut('0ms', 'left') + ', ' + _transitions2.default.easeOut('400ms', 'opacity')
+	    });
+	  }
+
+	  return style;
+	}
+
+	var Overlay = function (_Component) {
+	  _inherits(Overlay, _Component);
+
+	  function Overlay() {
+	    _classCallCheck(this, Overlay);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Overlay).apply(this, arguments));
+	  }
+
+	  _createClass(Overlay, [{
+	    key: 'setOpacity',
+	    value: function setOpacity(opacity) {
+	      this.refs.overlay.style.opacity = opacity;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var autoLockScrolling = _props.autoLockScrolling;
+	      var show = _props.show;
+	      var style = _props.style;
+	      var transitionEnabled = _props.transitionEnabled;
+
+	      var other = _objectWithoutProperties(_props, ['autoLockScrolling', 'show', 'style', 'transitionEnabled']);
+
+	      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+	      var styles = getStyles(this.props, this.context);
+
+	      return _react2.default.createElement(
+	        'div',
+	        _extends({}, other, { ref: 'overlay', style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
+	        autoLockScrolling && _react2.default.createElement(_AutoLockScrolling2.default, { lock: show })
+	      );
+	    }
+	  }]);
+
+	  return Overlay;
+	}(_react.Component);
+
+	Overlay.propTypes = {
+	  autoLockScrolling: _react.PropTypes.bool,
+	  show: _react.PropTypes.bool.isRequired,
+	  /**
+	   * Override the inline-styles of the root element.
+	   */
+	  style: _react.PropTypes.object,
+	  transitionEnabled: _react.PropTypes.bool
+	};
+	Overlay.defaultProps = {
+	  autoLockScrolling: true,
+	  style: {},
+	  transitionEnabled: true
+	};
+	Overlay.contextTypes = {
+	  muiTheme: _react.PropTypes.object.isRequired
+	};
+	exports.default = Overlay;
+
+/***/ },
+/* 806 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(298);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var originalBodyOverflow = null;
+	var lockingCounter = 0;
+
+	var AutoLockScrolling = function (_Component) {
+	  _inherits(AutoLockScrolling, _Component);
+
+	  function AutoLockScrolling() {
+	    var _Object$getPrototypeO;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, AutoLockScrolling);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(AutoLockScrolling)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.locked = false, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(AutoLockScrolling, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.lock === true) this.preventScrolling();
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.props.lock !== nextProps.lock) {
+	        if (nextProps.lock) {
+	          this.preventScrolling();
+	        } else {
+	          this.allowScrolling();
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.allowScrolling();
+	    }
+
+	    // force to only lock/unlock once
+
+	  }, {
+	    key: 'preventScrolling',
+	    value: function preventScrolling() {
+	      if (this.locked === true) return;
+	      lockingCounter = lockingCounter + 1;
+	      this.locked = true;
+
+	      // only lock the first time the component is mounted.
+	      if (lockingCounter === 1) {
+	        var body = document.getElementsByTagName('body')[0];
+	        originalBodyOverflow = body.style.overflow;
+	        body.style.overflow = 'hidden';
+	      }
+	    }
+	  }, {
+	    key: 'allowScrolling',
+	    value: function allowScrolling() {
+	      if (this.locked === true) {
+	        lockingCounter = lockingCounter - 1;
+	        this.locked = false;
+	      }
+
+	      if (lockingCounter === 0 && originalBodyOverflow !== null) {
+	        var body = document.getElementsByTagName('body')[0];
+	        body.style.overflow = originalBodyOverflow || '';
+	        originalBodyOverflow = null;
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return null;
+	    }
+	  }]);
+
+	  return AutoLockScrolling;
+	}(_react.Component);
+
+	AutoLockScrolling.propTypes = {
+	  lock: _react.PropTypes.bool.isRequired
+	};
+	exports.default = AutoLockScrolling;
 
 /***/ }
 /******/ ]);

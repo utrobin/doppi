@@ -29,7 +29,8 @@ export default class StepTwo extends React.Component {
           isLoading: false
         });
       }.bind(this),
-    })
+    });
+    this.props.getCourses();
   }
 
   render() {

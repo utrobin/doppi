@@ -80,3 +80,25 @@ footer span{
 .partners a:hover{
     color: rgb(255, 64, 129);
 }
+.fix-recom{
+    font-family: Roboto, sans-serif;
+    background-color: rgba(0, 0, 0, 0.870588);
+    padding: 0px 24px;
+    height: 48px;
+    width: 600px;
+    top: calc(100% - 48px);
+    line-height: 48px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    max-width: 568px;
+    min-width: 288px;
+    flex-grow: 0;
+    margin: auto;
+    position: fixed;
+    z-index: 333;
+}
+.fix-recom span{
+    color: #fff;
+}

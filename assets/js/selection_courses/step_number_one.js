@@ -75,12 +75,13 @@ export default class StepOne extends React.Component {
     }
 
     if (localStorage.getItem('age') === null)
-      localStorage.setItem('age', '');
+      localStorage.setItem('age', '5');
     else {
       this.setState({
         age: localStorage.getItem('age')
       });
     }
+    this.props.getCourses();
   }
 
   onUpdateInput(searchText, value) {
@@ -162,7 +163,7 @@ export default class StepOne extends React.Component {
 
         <div>
           <Slider
-            min={0}
+            min={1}
             max={18}
             step={1}
             defaultValue={+this.state.age}

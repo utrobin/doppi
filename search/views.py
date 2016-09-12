@@ -361,6 +361,7 @@ def get_types(t):
 
 def test_to_ctype(request):
     test = json.loads(request.GET['data'])
+    print(test)
     damns = {'ЧХО': 0, 'ЧП': 0, 'ЧТ': 0, 'ЧС': 0, 'ЧЧ': 0, 'ЧЗ': 0}
     ids = []
     sick_types = []

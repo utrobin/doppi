@@ -12,6 +12,7 @@ import StepOne  from './step_number_one';
 import StepTwo  from './step_number_two';
 import StepThree  from './step_number_three';
 import Paper from 'material-ui/Paper';
+import DrawerOpenRightExample from  './test/recomend'
 
 
 class HorizontalLinearStepper extends React.Component {
@@ -19,9 +20,11 @@ class HorizontalLinearStepper extends React.Component {
     super(props);
     this.componentWillMount = this.componentWillMount.bind(this);
     this.getStepContent = this.getStepContent.bind(this);
+    this.getCourses = this.getCourses.bind(this);
     this.state = {
       finished: false,
       stepIndex: 0,
+      data: {}
     };
   }
 
@@ -54,17 +57,17 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   getCourses() {
-    console.log('Павлик Морозов')
     $.ajax({
       url: '/api/get/recommendcoursestest1',
       type: 'GET',
       dataType: 'json',
       cache: false,
       data: {"data": JSON.stringify(localStorage)},
-      success: function (data) {
-          console.log(data)
-      }
-    });
+    }).done(function (data) {
+      this.setState({
+        data: data
+      })
+    }.bind(this));
   }
 
   getStepContent(stepIndex) {
@@ -131,6 +134,7 @@ class HorizontalLinearStepper extends React.Component {
             </div>
           )}
         </div>
+        <DrawerOpenRightExample data={this.state.data} />
       </Paper>
     );
   }
