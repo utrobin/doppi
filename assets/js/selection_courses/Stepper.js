@@ -25,9 +25,10 @@ class HorizontalLinearStepper extends React.Component {
     this.state = {
       finished: false,
       stepIndex: 0,
-      data: {},
+      data: {data: []},
       errorName: true,
-      errorNameVisability: false
+      errorNameVisability: false,
+      loading: true
     };
   }
 
@@ -43,6 +44,8 @@ class HorizontalLinearStepper extends React.Component {
         finished: JSON.parse(localStorage.getItem('stepIndex')) > 2,
       });
     }
+
+    this.getCourses();
   }
 
   handleNext = () => {
@@ -75,16 +78,32 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   getCourses() {
+    this.setState({loading: true});
+    let data = {};
+
+    if (localStorage.getItem('age') !== null && localStorage.getItem('age') !== '' )
+      data.age = localStorage.getItem('age');
+
+    for (let i = 0; i < 30; i++)
+    {
+      let temp = 109 + i;
+      temp = 'id' + temp;
+      if (localStorage.getItem(temp) !== null && localStorage.getItem(temp) !== '' )
+        data[temp] = localStorage.getItem(temp);
+    }
+
     $.ajax({
       url: '/api/get/recommendcoursestest1',
       type: 'GET',
       dataType: 'json',
       cache: false,
-      data: {"data": JSON.stringify(localStorage)},
+      data: {"data": JSON.stringify(data)},
     }).done(function (data) {
       this.setState({
-        data: data
-      })
+        data: data,
+        loading: false
+      });
+      console.log(data);
     }.bind(this));
   }
 
@@ -134,7 +153,7 @@ class HorizontalLinearStepper extends React.Component {
         </Stepper>
         <div style={contentStyle}>
           {finished ? (
-            <Finish back={this.back}/>
+            <Finish back={this.back} data={this.state.data} loading={this.state.loading}/>
           ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>

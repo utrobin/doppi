@@ -248,10 +248,13 @@ var Courses = React.createClass({
                             <b>Категория:</b>
                             <span>{this.props.activity}</span>
                         </div>
-                        <div className="course-price">
-                            <b>Местонахождение:</b>
-                            <span>{this.props.location}</span>
-                        </div>
+                        {this.props.location !== '' ? (
+                            <div className="course-price">
+                                <b>Метро:</b>
+                                <span>{this.props.location}</span>
+                            </div>
+                        ) : ''}
+
                     </div>
                 </div>
             </div>

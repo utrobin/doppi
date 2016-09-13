@@ -46581,9 +46581,10 @@
 	    _this.state = {
 	      finished: false,
 	      stepIndex: 0,
-	      data: {},
+	      data: { data: [] },
 	      errorName: true,
-	      errorNameVisability: false
+	      errorNameVisability: false,
+	      loading: true
 	    };
 	    return _this;
 	  }
@@ -46599,20 +46600,35 @@
 	          finished: JSON.parse(localStorage.getItem('stepIndex')) > 2
 	        });
 	      }
+
+	      this.getCourses();
 	    }
 	  }, {
 	    key: 'getCourses',
 	    value: function getCourses() {
+	      this.setState({ loading: true });
+	      var data = {};
+
+	      if (localStorage.getItem('age') !== null && localStorage.getItem('age') !== '') data.age = localStorage.getItem('age');
+
+	      for (var i = 0; i < 30; i++) {
+	        var temp = 109 + i;
+	        temp = 'id' + temp;
+	        if (localStorage.getItem(temp) !== null && localStorage.getItem(temp) !== '') data[temp] = localStorage.getItem(temp);
+	      }
+
 	      $.ajax({
 	        url: '/api/get/recommendcoursestest1',
 	        type: 'GET',
 	        dataType: 'json',
 	        cache: false,
-	        data: { "data": JSON.stringify(localStorage) }
+	        data: { "data": JSON.stringify(data) }
 	      }).done(function (data) {
 	        this.setState({
-	          data: data
+	          data: data,
+	          loading: false
 	        });
+	        console.log(data);
 	      }.bind(this));
 	    }
 	  }, {
@@ -46675,7 +46691,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { style: contentStyle },
-	          finished ? _react2.default.createElement(_finish2.default, { back: this.back }) : _react2.default.createElement(
+	          finished ? _react2.default.createElement(_finish2.default, { back: this.back, data: this.state.data, loading: this.state.loading }) : _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
@@ -54630,9 +54646,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _course = __webpack_require__(808);
+
+	var _course2 = _interopRequireDefault(_course);
+
 	var _TextField = __webpack_require__(771);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
+
+	var _CircularProgress = __webpack_require__(754);
+
+	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54698,35 +54722,68 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { style: { fontSize: 24, textAlign: 'center' } },
+	        null,
 	        _react2.default.createElement(
-	          'p',
-	          null,
+	          'div',
+	          { style: { fontSize: 24, textAlign: 'center' } },
 	          _react2.default.createElement(
-	            'strong',
-	            { style: { color: 'rgb(255, 64, 129)', fontSize: 26, fontStyle: 'italic' } },
-	            this.getName()
+	            'p',
+	            null,
+	            _react2.default.createElement(
+	              'strong',
+	              { style: { color: 'rgb(255, 64, 129)', fontSize: 26, fontStyle: 'italic' } },
+	              this.getName()
+	            ),
+	            ' подойдут следующие дополнительные курсы:'
 	          ),
-	          ' подойдут следующие дополнительные курсы:'
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'В радиусе '
+	          ),
+	          this.state.getLocation ? _react2.default.createElement(_TextField2.default, {
+	            hintText: 'Hint Text'
+	          }) : _react2.default.createElement(
+	            'span',
+	            { style: { color: 'crimson' } },
+	            '(не удалось получить геопозицию)'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            ' км'
+	          ),
+	          _react2.default.createElement('br', null)
 	        ),
 	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'В радиусе '
+	          'div',
+	          { className: 'recom' },
+	          this.props.loading ? _react2.default.createElement(
+	            'div',
+	            { style: { textAlign: 'center' } },
+	            _react2.default.createElement(_CircularProgress2.default, { size: 0.6 })
+	          ) : this.props.data.data.map(function (el) {
+	            return _react2.default.createElement(_course2.default, {
+	              key: el.id,
+	              id: el.id,
+	              author: el.author,
+	              image: el.pic,
+	              title: el.title,
+	              introtext: el.introtext,
+	              age_from: el.age_from,
+	              age_to: el.age_to,
+	              time_from: el.time_from,
+	              time_to: el.time_to,
+	              activity: el.activity,
+	              location: el.location,
+	              price: el.price,
+	              frequency: el.frequency,
+	              rating: el.rating,
+	              liked: el.liked,
+	              authenticated: el.is_authenticated
+	            });
+	          })
 	        ),
-	        this.state.getLocation ? _react2.default.createElement(_TextField2.default, {
-	          hintText: 'Hint Text'
-	        }) : _react2.default.createElement(
-	          'span',
-	          { style: { color: 'crimson' } },
-	          '(не удалось получить геопозицию)'
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          ' км'
-	        ),
-	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'a',
 	          { href: '#', onClick: function onClick(event) {
@@ -54743,6 +54800,138 @@
 	}(_react2.default.Component);
 
 	exports.default = Finish;
+
+/***/ },
+/* 808 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Courses = _react2.default.createClass({
+	  displayName: 'Courses',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      liked: this.props.liked,
+	      rating: this.props.rating
+	    };
+	  },
+	  handleLike: function handleLike(event) {
+	    this.setState({
+	      liked: !this.state.liked,
+	      rating: this.state.liked ? this.state.rating - 1 : this.state.rating + 1
+	    });
+	    $.ajax({
+	      url: "/like",
+	      type: 'GET',
+	      dataType: 'json',
+	      cache: false,
+	      data: { course_id: this.props.id }
+	    }).done(function (data) {
+	      //
+	    }.bind(this));
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'course' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'course-wrapper' },
+	        _react2.default.createElement('img', { className: 'course-image', src: this.props.image, width: '250px' }),
+	        _react2.default.createElement('div', { className: 'Golubev' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'course-wrapper-title' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'rating' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'rating-number' },
+	              this.state.rating
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'wrapper-like', onClick: this.props.authenticated ? this.handleLike : '' },
+	              _react2.default.createElement('div', { className: this.state.liked ? "heart heart_red" : "heart" })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'course-name' },
+	            this.props.author
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/course/' + this.props.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'course-title' },
+	              this.props.title
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'age' },
+	            this.props.age_from,
+	            '+'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'course-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'course-description' },
+	            this.props.introtext
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'course-activity' },
+	            _react2.default.createElement(
+	              'b',
+	              null,
+	              'Категория:'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              this.props.activity
+	            )
+	          ),
+	          this.props.location !== '' ? _react2.default.createElement(
+	            'div',
+	            { className: 'course-price' },
+	            _react2.default.createElement(
+	              'b',
+	              null,
+	              'Метро:'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              this.props.location
+	            )
+	          ) : ''
+	        )
+	      )
+	    );
+	  }
+	}); /**
+	     * Created by utrobin on 13.09.16.
+	     */
+	exports.default = Courses;
 
 /***/ }
 /******/ ]);

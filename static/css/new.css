@@ -508,8 +508,8 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover{
     padding: 15px;
     font-size: 14px;
 }
-.course-activity{
-    border-bottom: 1px solid rgb(225, 228, 224);
+.course-price{
+    border-top: 1px solid rgb(225, 228, 224);
 }
 .course-map{
     height: 300px;
