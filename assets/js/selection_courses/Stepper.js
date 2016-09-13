@@ -13,6 +13,7 @@ import StepTwo  from './step_number_two';
 import StepThree  from './step_number_three';
 import Paper from 'material-ui/Paper';
 import DrawerOpenRightExample from  './test/recomend'
+import Finish from  './test/finish'
 
 
 class HorizontalLinearStepper extends React.Component {
@@ -24,11 +25,16 @@ class HorizontalLinearStepper extends React.Component {
     this.state = {
       finished: false,
       stepIndex: 0,
-      data: {}
+      data: {},
+      errorName: true,
+      errorNameVisability: false
     };
   }
 
   componentWillMount() {
+    if (localStorage.getItem('inputName') !== null && localStorage.getItem('inputName') !== '')
+      this.setState({errorName: false});
+
     if (localStorage.getItem('stepIndex') === null)
       localStorage.setItem('stepIndex', 0);
     else {
@@ -40,12 +46,19 @@ class HorizontalLinearStepper extends React.Component {
   }
 
   handleNext = () => {
-    const {stepIndex} = this.state;
-    localStorage.setItem('stepIndex', stepIndex + 1);
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    if (this.state.errorName){
+      this.setState({
+        errorNameVisability: true
+      })
+    }
+    else{
+      const {stepIndex} = this.state;
+      localStorage.setItem('stepIndex', stepIndex + 1);
+      this.setState({
+        stepIndex: stepIndex + 1,
+        finished: stepIndex >= 2,
+      });
+    }
   };
 
   handlePrev = () => {
@@ -54,6 +67,11 @@ class HorizontalLinearStepper extends React.Component {
       localStorage.setItem('stepIndex', stepIndex - 1);
       this.setState({stepIndex: stepIndex - 1});
     }
+  };
+
+  back = () => {
+    this.setState({stepIndex: 0, finished: false});
+    localStorage.setItem('stepIndex', 0);
   };
 
   getCourses() {
@@ -70,10 +88,24 @@ class HorizontalLinearStepper extends React.Component {
     }.bind(this));
   }
 
+  changeErrorName = (value) => {
+    value ? (
+      this.setState({
+        errorName: true,
+        errorNameVisability: true
+      })
+    ) : (
+      this.setState({
+        errorName: false,
+        errorNameVisability: false
+      })
+    )
+  };
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <StepOne getCourses={this.getCourses}/>;
+        return <StepOne errorNameVisability={this.state.errorNameVisability} changeErrorName={this.changeErrorName} getCourses={this.getCourses}/>;
       case 1:
         return <StepTwo getCourses={this.getCourses} get_url_test="/authentication/get/questions" />;
       case 2:
@@ -102,19 +134,7 @@ class HorizontalLinearStepper extends React.Component {
         </Stepper>
         <div style={contentStyle}>
           {finished ? (
-            <p>
-              <a
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.setState({stepIndex: 0, finished: false});
-                  localStorage.setItem('stepIndex', 0);
-                }}
-                style={{color: 'rgb(255, 64, 129)'}}
-              >
-                Вернуться на первый шаг
-              </a> Далее тут ещё не доделали.
-            </p>
+            <Finish back={this.back}/>
           ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
@@ -131,10 +151,10 @@ class HorizontalLinearStepper extends React.Component {
                   onTouchTap={this.handleNext}
                 />
               </div>
+              <DrawerOpenRightExample data={this.state.data} />
             </div>
           )}
         </div>
-        <DrawerOpenRightExample data={this.state.data} />
       </Paper>
     );
   }

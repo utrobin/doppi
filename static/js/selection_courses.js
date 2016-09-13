@@ -46513,6 +46513,10 @@
 
 	var _recomend2 = _interopRequireDefault(_recomend);
 
+	var _finish = __webpack_require__(807);
+
+	var _finish2 = _interopRequireDefault(_finish);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46532,13 +46536,19 @@
 	    var _this = _possibleConstructorReturn(this, (HorizontalLinearStepper.__proto__ || Object.getPrototypeOf(HorizontalLinearStepper)).call(this, props));
 
 	    _this.handleNext = function () {
-	      var stepIndex = _this.state.stepIndex;
+	      if (_this.state.errorName) {
+	        _this.setState({
+	          errorNameVisability: true
+	        });
+	      } else {
+	        var stepIndex = _this.state.stepIndex;
 
-	      localStorage.setItem('stepIndex', stepIndex + 1);
-	      _this.setState({
-	        stepIndex: stepIndex + 1,
-	        finished: stepIndex >= 2
-	      });
+	        localStorage.setItem('stepIndex', stepIndex + 1);
+	        _this.setState({
+	          stepIndex: stepIndex + 1,
+	          finished: stepIndex >= 2
+	        });
+	      }
 	    };
 
 	    _this.handlePrev = function () {
@@ -46550,13 +46560,30 @@
 	      }
 	    };
 
+	    _this.back = function () {
+	      _this.setState({ stepIndex: 0, finished: false });
+	      localStorage.setItem('stepIndex', 0);
+	    };
+
+	    _this.changeErrorName = function (value) {
+	      value ? _this.setState({
+	        errorName: true,
+	        errorNameVisability: true
+	      }) : _this.setState({
+	        errorName: false,
+	        errorNameVisability: false
+	      });
+	    };
+
 	    _this.componentWillMount = _this.componentWillMount.bind(_this);
 	    _this.getStepContent = _this.getStepContent.bind(_this);
 	    _this.getCourses = _this.getCourses.bind(_this);
 	    _this.state = {
 	      finished: false,
 	      stepIndex: 0,
-	      data: {}
+	      data: {},
+	      errorName: true,
+	      errorNameVisability: false
 	    };
 	    return _this;
 	  }
@@ -46564,6 +46591,8 @@
 	  _createClass(HorizontalLinearStepper, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      if (localStorage.getItem('inputName') !== null && localStorage.getItem('inputName') !== '') this.setState({ errorName: false });
+
 	      if (localStorage.getItem('stepIndex') === null) localStorage.setItem('stepIndex', 0);else {
 	        this.setState({
 	          stepIndex: JSON.parse(localStorage.getItem('stepIndex')),
@@ -46591,7 +46620,7 @@
 	    value: function getStepContent(stepIndex) {
 	      switch (stepIndex) {
 	        case 0:
-	          return _react2.default.createElement(_step_number_one2.default, { getCourses: this.getCourses });
+	          return _react2.default.createElement(_step_number_one2.default, { errorNameVisability: this.state.errorNameVisability, changeErrorName: this.changeErrorName, getCourses: this.getCourses });
 	        case 1:
 	          return _react2.default.createElement(_step_number_two2.default, { getCourses: this.getCourses, get_url_test: '/authentication/get/questions' });
 	        case 2:
@@ -46603,8 +46632,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-
 	      var _state = this.state;
 	      var finished = _state.finished;
 	      var stepIndex = _state.stepIndex;
@@ -46648,24 +46675,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { style: contentStyle },
-	          finished ? _react2.default.createElement(
-	            'p',
-	            null,
-	            _react2.default.createElement(
-	              'a',
-	              {
-	                href: '#',
-	                onClick: function onClick(event) {
-	                  event.preventDefault();
-	                  _this2.setState({ stepIndex: 0, finished: false });
-	                  localStorage.setItem('stepIndex', 0);
-	                },
-	                style: { color: 'rgb(255, 64, 129)' }
-	              },
-	              'Вернуться на первый шаг'
-	            ),
-	            ' Далее тут ещё не доделали.'
-	          ) : _react2.default.createElement(
+	          finished ? _react2.default.createElement(_finish2.default, { back: this.back }) : _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
@@ -46687,10 +46697,10 @@
 	                primary: true,
 	                onTouchTap: this.handleNext
 	              })
-	            )
+	            ),
+	            _react2.default.createElement(_recomend2.default, { data: this.state.data })
 	          )
-	        ),
-	        _react2.default.createElement(_recomend2.default, { data: this.state.data })
+	        )
 	      );
 	    }
 	  }]);
@@ -48504,10 +48514,18 @@
 
 	    var _this = _possibleConstructorReturn(this, (StepOne.__proto__ || Object.getPrototypeOf(StepOne)).call(this, props));
 
+	    _this.errorName = function (event, value) {
+	      if (event.target.value !== '') {
+	        _this.props.changeErrorName(false);
+	      } else {
+	        _this.props.changeErrorName(true);
+	      }
+	    };
+
 	    _this.componentWillMount = _this.componentWillMount.bind(_this);
 	    _this.state = {
 	      sex: '',
-	      name: '',
+	      inputName: '',
 	      age: 5
 	    };
 	    return _this;
@@ -48516,9 +48534,9 @@
 	  _createClass(StepOne, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      if (localStorage.getItem('name') === null) localStorage.setItem('name', '');else {
+	      if (localStorage.getItem('inputName') === null) localStorage.setItem('inputName', '');else {
 	        this.setState({
-	          name: localStorage.getItem('name')
+	          inputName: localStorage.getItem('inputName')
 	        });
 	      }
 
@@ -48538,9 +48556,9 @@
 	  }, {
 	    key: 'onUpdateInput',
 	    value: function onUpdateInput(searchText, value) {
-	      localStorage.setItem('name', value);
+	      localStorage.setItem('inputName', value);
 	      this.setState({
-	        name: value
+	        inputName: value
 	      });
 	      this.props.getCourses();
 	    }
@@ -48592,9 +48610,11 @@
 	            _this2.onUpdateInput(searchText, value);
 	          },
 	          hintText: 'Имя',
-	          defaultValue: this.state.name,
+	          defaultValue: this.state.inputName,
 	          style: { marginBottom: '15px' },
-	          floatingLabelText: 'Введите имя вашего ребенка'
+	          floatingLabelText: 'Введите имя вашего ребенка',
+	          onBlur: this.errorName,
+	          errorText: this.props.errorNameVisability ? 'Это поле обязательно' : ''
 	        }),
 	        _react2.default.createElement(
 	          'div',
@@ -53858,15 +53878,9 @@
 	  _createClass(DrawerOpenRightExample, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.data.amount);
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(_RaisedButton2.default, {
-	          label: 'Toggle Drawer',
-	          onTouchTap: this.handleToggle
-	        }),
-	        _react2.default.createElement(_Drawer2.default, { width: 200, openSecondary: true, open: this.state.open, overlayClassName: 'gfgfgfgf' }),
+	        { style: { marginLeft: 26 } },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'fix-recom' },
@@ -54599,6 +54613,136 @@
 	  lock: _react.PropTypes.bool.isRequired
 	};
 	exports.default = AutoLockScrolling;
+
+/***/ },
+/* 807 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(298);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _TextField = __webpack_require__(771);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by utrobin on 13.09.16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Finish = function (_React$Component) {
+	  _inherits(Finish, _React$Component);
+
+	  function Finish(props) {
+	    _classCallCheck(this, Finish);
+
+	    var _this = _possibleConstructorReturn(this, (Finish.__proto__ || Object.getPrototypeOf(Finish)).call(this, props));
+
+	    _this.success = function (position) {
+	      var latitude = position.coords.latitude;
+	      var longitude = position.coords.longitude;
+	      console.log(latitude, longitude);
+	      _this.setState({ getLocation: true });
+	    };
+
+	    _this.error = function () {
+	      console.log('jjjnj');
+	      _this.setState({ getLocation: false });
+	    };
+
+	    _this.getName = function () {
+	      console.log('gfg');
+	      var name = localStorage.getItem('inputName');
+	      try {
+	        var rn = new RussianName(name);
+	        var pred = rn.fullName(rn.gcaseDat);
+	        return pred;
+	      } catch (e) {
+	        return 'Вашему ребенку';
+	      }
+	    };
+
+	    _this.state = {
+	      data: [],
+	      isLoading: true,
+	      location: '',
+	      getLocation: true
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Finish, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      navigator.geolocation.getCurrentPosition(this.success, this.error);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { style: { fontSize: 24, textAlign: 'center' } },
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(
+	            'strong',
+	            { style: { color: 'rgb(255, 64, 129)', fontSize: 26, fontStyle: 'italic' } },
+	            this.getName()
+	          ),
+	          ' подойдут следующие дополнительные курсы:'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'В радиусе '
+	        ),
+	        this.state.getLocation ? _react2.default.createElement(_TextField2.default, {
+	          hintText: 'Hint Text'
+	        }) : _react2.default.createElement(
+	          'span',
+	          { style: { color: 'crimson' } },
+	          '(не удалось получить геопозицию)'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          ' км'
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '#', onClick: function onClick(event) {
+	              event.preventDefault();
+	              _this2.props.back();
+	            }, style: { color: 'rgb(255, 64, 129)' } },
+	          'Вернуться на первый шаг\u2028'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Finish;
+	}(_react2.default.Component);
+
+	exports.default = Finish;
 
 /***/ }
 /******/ ]);

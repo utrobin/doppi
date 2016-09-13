@@ -13,16 +13,8 @@ export default class DrawerOpenRightExample extends React.Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   render() {
-    console.log(this.props.data.amount)
     return (
-      <div>
-        <RaisedButton
-          label="Toggle Drawer"
-          onTouchTap={this.handleToggle}
-        />
-        <Drawer width={200} openSecondary={true} open={this.state.open} overlayClassName='gfgfgfgf'>
-
-        </Drawer>
+      <div style={{marginLeft: 26}}>
         <div className="fix-recom">
           <span>Для вас подобрано более {this.props.data.amount} курсов</span>
         </div>

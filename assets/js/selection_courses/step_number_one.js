@@ -52,17 +52,17 @@ export default class StepOne extends React.Component {
     this.componentWillMount = this.componentWillMount.bind(this);
     this.state = {
       sex: '',
-      name: '',
-      age: 5
+      inputName: '',
+      age: 5,
     };
   }
 
   componentWillMount() {
-    if (localStorage.getItem('name') === null)
-      localStorage.setItem('name', '');
+    if (localStorage.getItem('inputName') === null)
+      localStorage.setItem('inputName', '');
     else {
       this.setState({
-        name: localStorage.getItem('name')
+        inputName: localStorage.getItem('inputName')
       });
     }
 
@@ -85,9 +85,9 @@ export default class StepOne extends React.Component {
   }
 
   onUpdateInput(searchText, value) {
-    localStorage.setItem('name', value);
+    localStorage.setItem('inputName', value);
     this.setState({
-        name: value
+        inputName: value
     });
     this.props.getCourses();
   }
@@ -105,6 +105,15 @@ export default class StepOne extends React.Component {
     this.setState({age: value});
     this.props.getCourses();
   }
+
+  errorName = (event, value) => {
+    if (event.target.value !== ''){
+      this.props.changeErrorName(false)
+    }
+    else {
+      this.props.changeErrorName(true)
+    }
+  };
 
   getAge(){
     switch(this.state.age) {
@@ -132,9 +141,11 @@ export default class StepOne extends React.Component {
               this.onUpdateInput(searchText, value)
           }}
           hintText="Имя"
-          defaultValue={this.state.name}
+          defaultValue={this.state.inputName}
           style={{marginBottom: '15px'}}
           floatingLabelText="Введите имя вашего ребенка"
+          onBlur={this.errorName}
+          errorText={this.props.errorNameVisability ? 'Это поле обязательно' : ''}
         />
 
         <div style={{marginBottom: '35px', marginTop: '10px'}}>
@@ -181,6 +192,3 @@ export default class StepOne extends React.Component {
     );
   }
 }
-
-
-
