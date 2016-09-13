@@ -94,7 +94,7 @@ def get_courses(request):
         Q(info__age_to__lte=mk_int(options['ageTo'], True)),
         Q(info__level__in=mk_level(options['level'])),
         Q(moderation=True)
-    ).order_by(options['sortValue']).distinct()[page * 9:(page + 1) * 9]:
+    ).order_by(options['sortValue']).order_by('?').distinct()[page * 9:(page + 1) * 9]:
         data.append({'id': course.id,
                      'author': course.author.user.username,
                      'title': course.title,
@@ -373,7 +373,9 @@ def test_to_ctype(request):
     for a in ids:
         damns[damn(str(a))] += 1
 
-    sick_types = get_types(max(damns.keys(), key=(lambda k: damns[k])))
+    maxim = max(damns.keys(), key=(lambda k: damns[k]))
+    sick_types = get_types(maxim) if damns[maxim] != 0 else [c.title for c in  CourseType.objects.all()]
+    print(sick_types)
     sick_courses = Course.objects.filter(
             Q(info__activity__title__in=sick_types),
             Q(info__age_to__gte=mk_int(test['age'], False)),

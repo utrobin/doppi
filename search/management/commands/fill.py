@@ -2,12 +2,13 @@ from django.core.management.base import BaseCommand, CommandError
 from search.models import Course, CourseInfo, CourseType, Metro
 from authentication.models import UserProfile
 from django.contrib.auth.models import User
-from faker import Factory
+#from faker import Factory
+import requests
 import random
 import json
 
 
-fake = Factory.create('en_US')
+#fake = Factory.create('en_US')
 
 
 class Command(BaseCommand):
@@ -15,13 +16,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        with open('/home/pgolubev/PycharmProjects/doppi/doppi/search/management/commands/stations.json') as json_file:
-            stations = json.loads(json_file.read())
-        for line in stations:
-            for st in line['stations']:
-                m = Metro(title=st)
-                m.save()
-                print(m)
+        for c in Course.objects.all():
+            geoapi = 'https://geocode-maps.yandex.ru/1.x/'
+            ps = {'geocode': '+'.join(c.introtext.split()), 'format': 'json'}
+            r = requests.get(geoapi, params=ps)
+            point = json.loads(r.text)['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+            c.info.coordinate_x = point[0]
+            c.info.coordinate_y = point[1]
+            print(point)
+        #with open('/home/pgolubev/PycharmProjects/doppi/doppi/search/management/commands/stations.json') as json_file:
+        #    stations = json.loads(json_file.read())
+        #for line in stations:
+        #    for st in line['stations']:
+        #        m = Metro(title=st)
+        #        m.save()
+        #        print(m)
         #for c in CourseInfo.objects.all():
         #    c.level_id = random.randint(1, 3)
         #    c.activity = CourseType.objects.get(id = random.randint(1, 27))
