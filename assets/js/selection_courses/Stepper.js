@@ -181,7 +181,7 @@ class HorizontalLinearStepper extends React.Component {
                   onTouchTap={this.handleNext}
                 />
               </div>
-              <DrawerOpenRightExample data={this.state.data} />
+              <DrawerOpenRightExample data={this.state.data} loading={this.state.loading} />
             </div>
           )}
         </div>

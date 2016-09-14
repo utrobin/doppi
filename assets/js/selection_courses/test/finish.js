@@ -5,6 +5,9 @@ import React from 'react';
 import Course from './course';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class Finish extends React.Component {
 
@@ -15,7 +18,8 @@ export default class Finish extends React.Component {
       data: [],
       isLoading: true,
       location: '',
-      getLocation: true
+      getLocation: true,
+      open: false,
     };
   }
 
@@ -38,11 +42,20 @@ export default class Finish extends React.Component {
 
   componentDidMount() {
     ymaps.ready(this.init);
+    setTimeout(this.handleOpen, 5000);
   }
 
   radChange = (e) => {
     localStorage.setItem('rad', e.target.value);
     this.props.getCourses();
+  };
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
   };
 
   getName = () => {
@@ -58,6 +71,20 @@ export default class Finish extends React.Component {
   };
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Закрыть"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Зарегистрироваться"
+        primary={true}
+        keyboardFocused={true}
+        href="/authentication/signup"
+      />,
+    ];
+
     return (
       <div>
         <div style={{fontSize: 24, textAlign: 'center'}}>
@@ -118,6 +145,17 @@ export default class Finish extends React.Component {
           }} style={{fontSize: 16, marginTop: 20}}>
             Вернуться на первый шаг 
           </a>
+
+
+          <Dialog
+            title="Вы дошли до самого конца"
+            actions={actions}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}
+          >
+            Зарегистрируйтесь, чтобы сохранить результаты и получить больше курсов
+          </Dialog>
         </div>
 
       </div>

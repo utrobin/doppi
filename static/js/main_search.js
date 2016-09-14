@@ -41188,9 +41188,8 @@
 	            )
 	        );
 	    }
-	}); /**
-	     * Created by egorutrobin on 25.08.16.
-	     */
+	});
+
 	exports.default = Course;
 
 /***/ },

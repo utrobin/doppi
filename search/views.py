@@ -53,6 +53,9 @@ def mk_level(level):
 
 
 def main(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/search')
+
     completedProfile = True
     completedTests = True
 
