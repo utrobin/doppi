@@ -105,3 +105,15 @@ footer span{
 .recom .course{
     margin-left: 56px;
 }
+.recreg{
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+}
+.recreg a{
+    color: rgb(255, 64, 129);
+}
+.recreg a:hover{
+    color: rgba(255, 64, 129, 0.4);
+    cursor: pointer;
+}

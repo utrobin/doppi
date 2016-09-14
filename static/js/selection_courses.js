@@ -46611,13 +46611,21 @@
 
 	      if (localStorage.getItem('age') !== null && localStorage.getItem('age') !== '') data.age = localStorage.getItem('age');
 
+	      if (localStorage.getItem('coor_x') !== null && localStorage.getItem('coor_x') !== '') data.age = localStorage.getItem('coor_x');
+
+	      if (localStorage.getItem('coor_y') !== null && localStorage.getItem('coor_y') !== '') data.age = localStorage.getItem('coor_y');
+
+	      if (localStorage.getItem('rad') !== null && localStorage.getItem('rad') !== '') data.age = localStorage.getItem('rad');
+
 	      for (var i = 0; i < 30; i++) {
 	        var temp = 109 + i;
 	        temp = 'id' + temp;
 	        if (localStorage.getItem(temp) !== null && localStorage.getItem(temp) !== '') data[temp] = localStorage.getItem(temp);
 	      }
 
-	      $.ajax({
+	      var currentAjax = $.ajax();
+	      currentAjax.abort();
+	      currentAjax = $.ajax({
 	        url: '/api/get/recommendcoursestest1',
 	        type: 'GET',
 	        dataType: 'json',
@@ -46691,7 +46699,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { style: contentStyle },
-	          finished ? _react2.default.createElement(_finish2.default, { back: this.back, data: this.state.data, loading: this.state.loading }) : _react2.default.createElement(
+	          finished ? _react2.default.createElement(_finish2.default, { back: this.back, data: this.state.data, loading: this.state.loading, getCourses: this.getCourses }) : _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
@@ -54677,16 +54685,23 @@
 
 	    var _this = _possibleConstructorReturn(this, (Finish.__proto__ || Object.getPrototypeOf(Finish)).call(this, props));
 
-	    _this.success = function (position) {
-	      var latitude = position.coords.latitude;
-	      var longitude = position.coords.longitude;
-	      console.log(latitude, longitude);
-	      _this.setState({ getLocation: true });
+	    _this.init = function () {
+	      ymaps.geolocation.get({
+	        provider: 'browser',
+	        mapStateAutoApply: true
+	      }).then(function (result) {
+	        localStorage.setItem('coor_x', result.geoObjects.position[0]);
+	        localStorage.setItem('coor_y', result.geoObjects.position[1]);
+	      });
+	      if (localStorage.getItem('coor_x') !== null && localStorage.getItem('coor_x') !== '') {
+	        _this.props.getCourses();
+	        localStorage.setItem('rad', 10);
+	      } else _this.setState({ getLocation: false });
 	    };
 
-	    _this.error = function () {
-	      console.log('jjjnj');
-	      _this.setState({ getLocation: false });
+	    _this.radChange = function (e) {
+	      localStorage.setItem('rad', e.target.value);
+	      _this.props.getCourses();
 	    };
 
 	    _this.getName = function () {
@@ -54701,6 +54716,7 @@
 	      }
 	    };
 
+	    _this.componentDidMount = _this.componentDidMount.bind(_this);
 	    _this.state = {
 	      data: [],
 	      isLoading: true,
@@ -54713,7 +54729,7 @@
 	  _createClass(Finish, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      navigator.geolocation.getCurrentPosition(this.success, this.error);
+	      ymaps.ready(this.init);
 	    }
 	  }, {
 	    key: 'render',
@@ -54736,22 +54752,20 @@
 	            ),
 	            ' подойдут следующие дополнительные курсы:'
 	          ),
-	          _react2.default.createElement(
+	          this.state.getLocation ? _react2.default.createElement(
 	            'span',
 	            null,
-	            'В радиусе '
-	          ),
-	          this.state.getLocation ? _react2.default.createElement(_TextField2.default, {
-	            hintText: 'Hint Text'
-	          }) : _react2.default.createElement(
+	            'В радиусе  ',
+	            _react2.default.createElement(_TextField2.default, {
+	              onChange: this.radChange,
+	              style: { width: 35, textAlign: 'center', fontSize: '30px' },
+	              defaultValue: '10'
+	            }),
+	            '  км'
+	          ) : _react2.default.createElement(
 	            'span',
-	            { style: { color: 'crimson' } },
-	            '(не удалось получить геопозицию)'
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            ' км'
+	            { style: { color: 'rgb(255, 64, 129)' } },
+	            'не удалось получить геопозицию'
 	          ),
 	          _react2.default.createElement('br', null)
 	        ),
@@ -54785,12 +54799,23 @@
 	          })
 	        ),
 	        _react2.default.createElement(
-	          'a',
-	          { href: '#', onClick: function onClick(event) {
-	              event.preventDefault();
-	              _this2.props.back();
-	            }, style: { color: 'rgb(255, 64, 129)' } },
-	          'Вернуться на первый шаг\u2028'
+	          'div',
+	          { className: 'recreg' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/authentication/signup' },
+	            'Зарегистрируйтесь'
+	          ),
+	          ', чтобы сохранить результаты и получить больше курсов',
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', onClick: function onClick(event) {
+	                event.preventDefault();
+	                _this2.props.back();
+	              }, style: { fontSize: 16, marginTop: 20 } },
+	            'Вернуться на первый шаг\u2028'
+	          )
 	        )
 	      );
 	    }

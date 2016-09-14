@@ -12,7 +12,6 @@ def avatar_upload_to(instance, filename):
 class UserProfile(models.Model):
     USER_TYPES = (
         ('PA', u'Родитель'),
-        ('CH', u'Ребенок или подросток'),
         ('CO', u'Организация')
     )
     user = models.OneToOneField(User, unique=True)

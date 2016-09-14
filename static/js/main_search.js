@@ -41170,21 +41170,20 @@
 	                            this.props.activity
 	                        )
 	                    ),
-	                    _react2.default.createElement(
+	                    this.props.location !== '' ? _react2.default.createElement(
 	                        'div',
 	                        { className: 'course-price' },
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
-	                            'Стоимость:'
+	                            'Метро:'
 	                        ),
 	                        _react2.default.createElement(
 	                            'span',
 	                            null,
-	                            this.props.price,
-	                            ' руб.'
+	                            this.props.location
 	                        )
-	                    )
+	                    ) : ''
 	                )
 	            )
 	        );

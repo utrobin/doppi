@@ -10,6 +10,7 @@ export default class Finish extends React.Component {
 
   constructor(props) {
     super(props);
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       data: [],
       isLoading: true,
@@ -18,21 +19,31 @@ export default class Finish extends React.Component {
     };
   }
 
-  success = position => {
-    var latitude  = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    console.log(latitude, longitude)
-    this.setState({getLocation: true});
-  };
-
-  error = () => {
-    console.log('jjjnj')
-    this.setState({getLocation: false});
+  init = () => {
+    ymaps.geolocation.get({
+      provider: 'browser',
+      mapStateAutoApply: true
+    }).then(function (result) {
+      localStorage.setItem('coor_x', result.geoObjects.position[0]);
+      localStorage.setItem('coor_y', result.geoObjects.position[1]);
+    });
+    if (localStorage.getItem('coor_x') !== null && localStorage.getItem('coor_x') !== '')
+    {
+      this.props.getCourses();
+      localStorage.setItem('rad', 10);
+    }
+    else
+      this.setState({getLocation: false});
   };
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(this.success, this.error);
+    ymaps.ready(this.init);
   }
+
+  radChange = (e) => {
+    localStorage.setItem('rad', e.target.value);
+    this.props.getCourses();
+  };
 
   getName = () => {
     console.log('gfg');
@@ -54,13 +65,15 @@ export default class Finish extends React.Component {
             <strong style={{color: 'rgb(255, 64, 129)', fontSize: 26, fontStyle: 'italic'}}>
               {this.getName()}</strong> подойдут следующие дополнительные курсы:
           </p>
-          <span>В радиусе </span>
+
           { this.state.getLocation ? (
-            <TextField
-              hintText="Hint Text"
-            />
-          ) : (<span style={{color: 'crimson'}}>(не удалось получить геопозицию)</span>)}
-          <span> км</span><br/>
+            <span>В радиусе  <TextField
+              onChange={this.radChange}
+              style={{width: 35, textAlign: 'center', fontSize: '30px'}}
+              defaultValue="10"
+            />  км</span>
+          ) : (<span style={{color: 'rgb(255, 64, 129)'}}>не удалось получить геопозицию</span>)}
+          <br/>
         </div>
 
         <div className="recom">
@@ -97,12 +110,16 @@ export default class Finish extends React.Component {
           }
         </div>
 
-        <a href="#" onClick={(event) => {
-          event.preventDefault();
-          this.props.back()
-        }} style={{color: 'rgb(255, 64, 129)'}}>
-          Вернуться на первый шаг 
-        </a>
+        <div className="recreg">
+           <a href="/authentication/signup">Зарегистрируйтесь</a>, чтобы сохранить результаты и получить больше курсов<br/>
+          <a href="#" onClick={(event) => {
+            event.preventDefault();
+            this.props.back()
+          }} style={{fontSize: 16, marginTop: 20}}>
+            Вернуться на первый шаг 
+          </a>
+        </div>
+
       </div>
     );
   }

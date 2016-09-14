@@ -84,6 +84,15 @@ class HorizontalLinearStepper extends React.Component {
     if (localStorage.getItem('age') !== null && localStorage.getItem('age') !== '' )
       data.age = localStorage.getItem('age');
 
+    if (localStorage.getItem('coor_x') !== null && localStorage.getItem('coor_x') !== '' )
+      data.age = localStorage.getItem('coor_x');
+
+    if (localStorage.getItem('coor_y') !== null && localStorage.getItem('coor_y') !== '' )
+      data.age = localStorage.getItem('coor_y');
+
+    if (localStorage.getItem('rad') !== null && localStorage.getItem('rad') !== '' )
+      data.age = localStorage.getItem('rad');
+
     for (let i = 0; i < 30; i++)
     {
       let temp = 109 + i;
@@ -92,7 +101,9 @@ class HorizontalLinearStepper extends React.Component {
         data[temp] = localStorage.getItem(temp);
     }
 
-    $.ajax({
+    var currentAjax = $.ajax();
+    currentAjax.abort();
+    currentAjax = $.ajax({
       url: '/api/get/recommendcoursestest1',
       type: 'GET',
       dataType: 'json',
@@ -153,7 +164,7 @@ class HorizontalLinearStepper extends React.Component {
         </Stepper>
         <div style={contentStyle}>
           {finished ? (
-            <Finish back={this.back} data={this.state.data} loading={this.state.loading}/>
+            <Finish back={this.back} data={this.state.data} loading={this.state.loading} getCourses={this.getCourses}/>
           ) : (
             <div>
               <div>{this.getStepContent(stepIndex)}</div>
